@@ -1,6 +1,5 @@
 /**
  * api.js — TJ노래방 데이터 레이어
- * 인기차트 장애 대응용 가수별/수록곡 데이터 레이어 구현
  */
 
 const TJ_BASE = 'https://www.tjmedia.com';
@@ -33,9 +32,6 @@ async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
   }
 }
 
-/**
- * J-POP 전체 수록목록 가져오기 (가수별 분류 및 titleKo 발음 유지)
- */
 export async function getJPopSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.jpopList);
@@ -54,9 +50,6 @@ export async function getJPopSongs() {
   }
 }
 
-/**
- * TJ 신곡 데이터 가져오기
- */
 export async function getJPopNewSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.jpopNew);
@@ -68,9 +61,6 @@ export async function getJPopNewSongs() {
   }
 }
 
-/**
- * 보컬로이드 전체 목록 가져오기
- */
 export async function getVocaloidSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.vocaloid);
@@ -82,9 +72,6 @@ export async function getVocaloidSongs() {
   }
 }
 
-/**
- * 보컬로이드 캐릭터 이름 → CSS 클래스 매핑
- */
 export function getVocaloidClass(vocaloidStr = '') {
   const v = vocaloidStr.toLowerCase();
   if (v.includes('初音') || v.includes('miku')) return 'voca-miku char-miku';
@@ -98,9 +85,6 @@ export function getVocaloidClass(vocaloidStr = '') {
   return 'voca-miku char-miku';
 }
 
-/**
- * 날짜 포맷 유틸
- */
 export function getRelativeDateLabel(dateStr) {
   if (!dateStr) return '최근';
   return dateStr.replace(/-/g, '.');

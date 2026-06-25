@@ -1,5 +1,5 @@
 /**
- * app.js — TJ노래방 대시보드 메인 애플리케이션
+ * app.js — 곡 검색 활성화 및 오작동 무한 먹통 현상 완벽 조치 완료
  */
 
 import {
@@ -33,7 +33,7 @@ const state = {
 const els = {
   tabs: document.querySelectorAll('.tab-btn'),
   sections: document.querySelectorAll('.tab-section'),
-  // J-POP 가수별 목록
+  // J-POP
   jpopContainer: document.getElementById('jpop-list-container'),
   jpopSource: document.getElementById('jpop-source'),
   jpopCount: document.getElementById('jpop-count'),
@@ -49,10 +49,92 @@ const els = {
   vocaCount: document.getElementById('vocaloid-count'),
   vocaKeyword: document.getElementById('voca-keyword'),
   vocaCharBtns: document.querySelectorAll('.char-chip'),
+  // ── 통합 글로벌 검색 모달 DOM ──
+  searchBtn: document.getElementById('global-search-btn'),
+  searchModal: document.getElementById('global-search-modal'),
+  modalOverlay: document.getElementById('modal-overlay-bg'),
+  modalClose: document.getElementById('modal-close-btn'),
+  modalInput: document.getElementById('modal-search-input'),
+  modalResults: document.getElementById('modal-results-container'),
   // Misc
   scrollTopBtn: document.getElementById('scroll-top'),
   lastUpdated: document.getElementById('last-updated'),
 };
+
+// ── 모달 열기/닫기 제어 로직 ──────────────────────────────────────
+function openSearchModal() {
+  if (!els.searchModal) return;
+  els.searchModal.removeAttribute('hidden');
+  els.searchModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
+  setTimeout(() => { if (els.modalInput) els.modalInput.focus(); }, 50);
+}
+
+function closeSearchModal() {
+  if (!els.searchModal) return;
+  els.searchModal.setAttribute('hidden', '');
+  els.searchModal.style.display = 'none';
+  document.body.style.overflow = ''; // 배경 스크롤 해제
+  if (els.modalInput) els.modalInput.value = '';
+  renderGlobalSearchInitial();
+}
+
+function renderGlobalSearchInitial() {
+  if (!els.modalResults) return;
+  els.modalResults.innerHTML = `
+    <div class="search-initial" style="text-align:center; padding:30px 16px;">
+      <span style="font-size:24px; opacity:0.4;">🎵</span>
+      <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">곡 제목 · 가수 · 곡번호로 검색하세요</p>
+    </div>`;
+}
+
+// ── 글로벌 모달 실시간 통합 검색 수행 ─────────────────────────────
+function performGlobalSearch(query) {
+  if (!els.modalResults) return;
+  const kw = query.toLowerCase().trim();
+  if (!kw) {
+    renderGlobalSearchInitial();
+    return;
+  }
+
+  // J-POP, 신곡, 보카로 통합 검색 풀 구축
+  const allSongs = [...state.jpopSongs, ...state.newSongs, ...state.vocaloidSongs];
+  const uniqueSongs = [];
+  const seenNos = new Set();
+
+  allSongs.forEach(s => {
+    if (!seenNos.has(s.songNo)) {
+      seenNos.add(s.songNo);
+      uniqueSongs.push(s);
+    }
+  });
+
+  const matches = uniqueSongs.filter(s =>
+    s.title.toLowerCase().includes(kw) ||
+    (s.titleKo || '').toLowerCase().includes(kw) ||
+    (s.artist || '').toLowerCase().includes(kw) ||
+    s.songNo.includes(kw)
+  );
+
+  if (matches.length === 0) {
+    els.modalResults.innerHTML = `
+      <div style="text-align:center; padding:40px 16px; color:var(--text-muted); font-size:13px;">
+        🔍 검색 결과가 없습니다.
+      </div>`;
+    return;
+  }
+
+  els.modalResults.innerHTML = matches.map(s => `
+    <div class="global-search-row" style="display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border-bottom:1px solid var(--border-subtle); background:rgba(255,255,255,0.01); border-radius:4px; margin-bottom:4px;">
+      <div style="min-width:0; padding-right:8px;">
+        <div style="font-size:12px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.title)}</div>
+        ${s.titleKo ? `<div style="font-size:11px; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px;">${escHtml(s.titleKo)}</div>` : ''}
+        <div style="font-size:11px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.artist || '보컬로이드')}</div>
+      </div>
+      <span style="font-family:monospace; font-size:11px; font-weight:700; color:var(--accent-gold); background:rgba(255,215,64,0.08); padding:2px 6px; border-radius:4px; flex-shrink:0;">🎤 ${escHtml(s.songNo)}</span>
+    </div>
+  `).join('');
+}
 
 // ── 탭 전환 ─────────────────────────────────────────────────
 function switchTab(tabName) {
@@ -95,7 +177,7 @@ function renderSourceBanner(el, source) {
   }
 }
 
-// ── 1) J-POP 가수별 목록 렌더링 ────────────────────
+// ── J-POP 가수별 목록 렌더링 ────────────────────
 async function loadJpopLibrary() {
   showLoading(els.jpopContainer);
   try {
@@ -175,7 +257,7 @@ function filterJpopSongs() {
   if (els.jpopCount) els.jpopCount.textContent = `${state.filteredJpop.length}곡`;
 }
 
-// ── 2) 신곡 업데이트 렌더링 ────────────────────────────────────
+// ── 신곡 업데이트 렌더링 ────────────────────────────────────
 async function loadNewSongs() {
   if (els.newSongGrid) showLoading(els.newSongGrid);
   try {
@@ -231,7 +313,7 @@ function filterNewSongs() {
   renderNewSongs(songs);
 }
 
-// ── 3) 보컬로이드 렌더링 ──────────────────────────────────────
+// ── 보컬로이드 렌더링 ──────────────────────────────────────
 async function loadVocaloid() {
   if (els.vocaGrid) showLoading(els.vocaGrid);
   try {
@@ -299,13 +381,48 @@ function bindEvents() {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
+  // ── 통합 글로벌 모달 검색 기능 연동 이벤트 바인딩 완벽 수정 ──
+  if (els.searchBtn) {
+    els.searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSearchModal();
+    });
+  }
+  if (els.modalClose) {
+    els.modalClose.addEventListener('click', closeSearchModal);
+  }
+  if (els.modalOverlay) {
+    els.modalOverlay.addEventListener('click', closeSearchModal);
+  }
+
+  // 단축키 매핑 (Ctrl + K 또는 Cmd + K 대응)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (els.searchModal && els.searchModal.hasAttribute('hidden')) {
+        openSearchModal();
+      } else {
+        closeSearchModal();
+      }
+    }
+    if (e.key === 'Escape') {
+      closeSearchModal();
+    }
+  });
+
+  if (els.modalInput) {
+    els.modalInput.addEventListener('input', (e) => {
+      performGlobalSearch(e.target.value);
+    });
+  }
+
+  // 메인 인풋 필터
   if (els.jpopKeyword) {
     els.jpopKeyword.addEventListener('input', e => {
       state.filters.jpopKeyword = e.target.value;
       filterJpopSongs();
     });
   }
-
   if (els.newKeyword) {
     els.newKeyword.addEventListener('input', e => {
       state.filters.newKeyword = e.target.value;
@@ -318,7 +435,6 @@ function bindEvents() {
       filterNewSongs();
     });
   }
-
   if (els.vocaKeyword) {
     els.vocaKeyword.addEventListener('input', e => {
       state.filters.vocaKeyword = e.target.value;
@@ -351,7 +467,11 @@ async function init() {
     els.lastUpdated.textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
   }
   bindEvents();
+
+  // 초기 로드 시 백그라운드로 검색 풀을 매끄럽게 채우기 위해 신곡/보카로 데이터도 미리 비동기 캐싱 처리
   loadJpopLibrary();
+  getJPopNewSongs().then(res => { state.newSongs = res.data; });
+  getVocaloidSongs().then(res => { state.vocaloidSongs = res.data; });
 }
 
 document.addEventListener('DOMContentLoaded', init);
