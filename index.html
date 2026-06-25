@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>\" />
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>" />
 </head>
 
 <body>
@@ -23,7 +23,7 @@
     <header class="hero-section" role="banner">
       <div class="hero-badge">TJ MEDIA DATABASE</div>
       <h1 class="hero-title">TJ노래방 J-POP & <span class="text-gradient-voca">보컬로이드</span></h1>
-      <p class="hero-subtitle">TJ 노래방에 수록된 일본 인기곡 및 신곡 번호를 실시간으로 확인하세요.</p>
+      <p class="hero-subtitle">TJ 노래방에 수록된 일본 인기곡 및 신곡 번호를 실시간으로 확인하고 저장하세요.</p>
 
       <div class="hero-stats">
         <div class="stat-card">
@@ -37,6 +37,10 @@
         <div class="stat-card">
           <span class="stat-num" id="stat-voca">-</span>
           <span class="stat-label">보컬로이드 수록곡</span>
+        </div>
+        <div class="stat-card bookmark-stat">
+          <span class="stat-num" id="stat-bookmark" style="color:var(--accent-gold);">0</span>
+          <span class="stat-label">내 즐겨찾기</span>
         </div>
       </div>
 
@@ -63,6 +67,10 @@
       </button>
       <button class="tab-btn" data-tab="vocaloid" aria-selected="false" role="tab">
         보컬로이드 목록 <span class="tab-count" id="count-badge-vocaloid">0</span>
+      </button>
+      <button class="tab-btn tab-bookmark-btn" data-tab="bookmark" aria-selected="false" role="tab">
+        ⭐ 내 즐겨찾기 <span class="tab-count" id="count-badge-bookmark"
+          style="background:rgba(255,215,64,0.2);color:var(--accent-gold);">0</span>
       </button>
     </nav>
 
@@ -123,7 +131,7 @@
 
         <div class="char-filter-container" aria-label="보컬로이드 캐릭터 필터">
           <button class="char-chip active" data-char="all">전체</button>
-          <button class="char-chip" data-char="miku">하츠네 미크</button>
+          <button class="char-chip" data-char="miku">하츠네 미쿠</button>
           <button class="char-chip" data-char="rin">카가미네 린</button>
           <button class="char-chip" data-char="len">카가미네 렌</button>
           <button class="char-chip" data-char="luka">메구리네 루카</button>
@@ -139,6 +147,19 @@
         </div>
       </section>
 
+      <section id="section-bookmark" class="tab-section" role="tabpanel">
+        <div class="section-header">
+          <div class="header-left">
+            <h2 class="section-title" style="color:var(--accent-gold);">⭐ 나만의 노래방 책</h2>
+            <p class="section-desc">별 마크를 누른 애창곡들을 모아서 빠르게 찾아보세요.</p>
+          </div>
+        </div>
+        <div class="total-count-label">저장된 곡: <span id="bookmark-count" class="highlight"
+            style="color:var(--accent-gold);">0곡</span></div>
+        <div id="bookmark-grid" class="song-grid">
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -147,7 +168,7 @@
     <div class="modal-window fade-in-scale">
       <div class="modal-search-box">
         <span class="modal-search-icon">🔍</span>
-        <input type="text" id="modal-search-input" placeholder="곡 번호, 제목, 가수를 입력하고 매칭 버튼을 누르세요..." autofocus />
+        <input type="text" id="modal-search-input" placeholder="곡 번호, 제목, 가수를 입력하세요..." autofocus />
         <button id="close-search-btn" class="modal-close-x" aria-label="검색창 닫기">✕</button>
       </div>
 
@@ -164,6 +185,12 @@
             <span class="search-tip-item"><kbd>Esc</kbd> 닫기</span>
           </div>
         </div>
+
+        <div id="search-empty-state" class="search-empty" hidden>
+          <span class="search-empty-icon">🔍</span>
+          <div class="search-empty-title">검색 결과가 없습니다</div>
+          <div class="search-empty-sub">단어를 올바르게 입력했는지 확인해 주세요.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -175,7 +202,8 @@
       <div class="footer-links">
         <a href="https://www.tjmedia.com/tjsong/song_search_list.asp" target="_blank" rel="noopener noreferrer"
           class="footer-link" aria-label="TJ미디어 공식 곡 검색 (새 탭)">🔍 TJ 곡 검색 ↗</a>
-        <a href="https://namu.wiki/" target="_blank" rel="noopener noreferrer" class="footer-link">📚 출처 가이드 ↗</a>
+        <a href="https://namu.wiki/w/%EC%9D%8C%EC%84%B1%20%ED%95%A9%EC%84%B1%20%EC%97%94%EC%A7%84%20%EC%96%B4%EB%A7%83%20%EC%88%98%EB%A1%9D%EA%B2%A1/TJ%EB%AF%B8%EB%94%94%EC%96%B4"
+          target="_blank" rel="noopener noreferrer" class="footer-link">📚 출처 가이드 ↗</a>
       </div>
       <p class="footer-copy">© 2026 TJ 노래방 J-POP Dashboard. All rights reserved.</p>
     </div>

@@ -13,7 +13,7 @@ const PROXY_LIST = [
 const TJ_URLS = {
   chartJpop: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
   chartVoca: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
-  newSong: `${TJ_BASE}/tjsong/song_monthNew.asp?strType=4`, // 실시간 신곡 주소로 정확하게 매핑
+  newSong: `${TJ_BASE}/tjsong/song_search_list.asp?searchType=4&strType=4`,
 };
 
 const FALLBACK = {
@@ -57,7 +57,7 @@ async function fetchViaProxy(targetUrl) {
       }
       return text;
     } catch {
-      // 다음 프록시로 이동
+      // 실패 시 다음 프록시로 무해하게 이동
     }
   }
   throw new Error('모든 프록시 실패');
@@ -66,7 +66,7 @@ async function fetchViaProxy(targetUrl) {
 // ── HTML 파싱 ─────────────────────────────────────────────────
 
 /**
- * TJ 인기차트 HTML → 곡 배열 파싱
+ * TJ 인기차트 HTML → 곡 배열 파싱 (순위 변동값 수집 개선)
  */
 function parseChartHTML(html) {
   const parser = new DOMParser();
@@ -84,6 +84,16 @@ function parseChartHTML(html) {
     const title = cols[2]?.textContent.trim();
     const artist = cols[3]?.textContent.trim() || '';
 
+    // TJ 사이트의 순위 변동값 파싱
+    let rankChange = 0;
+    if (cols.length >= 5) {
+      const changeRaw = cols[4]?.textContent.trim();
+      const num = parseInt(changeRaw.replace(/[^0-9]/g, ''), 10);
+      if (!isNaN(num)) {
+        rankChange = changeRaw.includes('▼') ? -num : num;
+      }
+    }
+
     const rank = parseInt(rankText, 10);
     if (!rank || !title) return;
 
@@ -93,7 +103,7 @@ function parseChartHTML(html) {
       title,
       titleKo: title,
       artist,
-      rankChange: 0,
+      rankChange: rankChange || 0,
     });
   });
 
@@ -101,14 +111,14 @@ function parseChartHTML(html) {
 }
 
 /**
- * TJ 신곡 HTML → 곡 배열 파싱 (중복 제거 적용)
+ * TJ 신곡 HTML → 곡 배열 파싱
  */
 function parseNewSongHTML(html) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const rows = doc.querySelectorAll('#BoardType1 tr, table tr');
   const songs = [];
-  const seenSongNumbers = new Set(); // 중복 곡 번호 체크용 변수 생성
+  const seenSongNumbers = new Set();
 
   rows.forEach((row, idx) => {
     if (idx === 0) return;
@@ -122,7 +132,6 @@ function parseNewSongHTML(html) {
 
     if (!songNo || !title) return;
 
-    // 이미 추가된 곡 번호라면 배열에 넣지 않고 패스 (1차 중복 방어)
     if (seenSongNumbers.has(songNo)) return;
     seenSongNumbers.add(songNo);
 
@@ -156,7 +165,8 @@ export async function getJPopChart() {
 
   const res = await fetch(FALLBACK.jpopChart);
   const json = await res.json();
-  return { data: json.songs, source: 'fallback', meta: json };
+  const songs = (json.songs || []).map(s => ({ ...s, rankChange: s.rankChange || 0 }));
+  return { data: songs, source: 'fallback', meta: json };
 }
 
 export async function getJPopNewSongs() {
@@ -182,6 +192,9 @@ export async function getVocaloidSongs() {
   return { data: json.songs, source: 'curated', meta: json };
 }
 
+/**
+ * 보컬로이드 캐릭터 이름 → CSS 클래스 매핑
+ */
 export function getVocaloidClass(vocaloidStr = '') {
   const v = vocaloidStr.toLowerCase();
   if (v.includes('初音') || v.includes('miku')) return 'voca-miku char-miku';
@@ -196,19 +209,20 @@ export function getVocaloidClass(vocaloidStr = '') {
 }
 
 /**
- * 순위 변동 표시 텍스트 반환
+ * 순위 변동 표시 텍스트 및 클래스 반환
  */
 export function getRankChangeText(change) {
-  if (change > 0) return { text: `▲${change}`, cls: 'up' };
-  if (change < 0) return { text: `▼${Math.abs(change)}`, cls: 'down' };
-  return { text: '—', cls: 'same' };
+  const num = parseInt(change, 10) || 0;
+  if (num > 0) return { text: `▲${num}`, cls: 'rank-up' };
+  if (num < 0) return { text: `▼${Math.abs(num)}`, cls: 'rank-down' };
+  return { text: '—', cls: 'rank-same' };
 }
 
 export function getRelativeDateLabel(dateStr) {
+  if (!dateStr) return '최근';
   const date = new Date(dateStr);
   const now = new Date();
-  const diffM = (now.getFullYear() - date.getFullYear()) * 12
-    + (now.getMonth() - date.getMonth());
+  const diffM = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
 
   if (diffM === 0) return '이번 달';
   if (diffM === 1) return '지난 달';
