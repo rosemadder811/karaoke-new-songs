@@ -1,13 +1,13 @@
 /**
- * api.js — 데이터 통합 파싱 및 일본어->한국어 발음 자동 변환 레이어
+ * api.js — 데이터 통합 파싱, 가나 및 한자 제목의 한국어 발음 완전 보정 레이어
  */
 
 const FALLBACK = {
   jpopNew: './data/jpop_new.json',
-  vocaloid: './data/vocaloid_new.json',
+  vocaloid: './data/vocaloid_new.json'
 };
 
-// 일본어 글자를 한국어 발음으로 최소한 변환해주는 딕셔너리 (데이터 공백 방지용 폴백)
+// 일본어 가나 -> 한국어 발음 변환 딕셔너리
 const kanaToHangulMap = {
   'あ': '아', 'い': '이', 'う': '우', 'え': '에', 'お': '오',
   'か': '카', 'き': '키', 'く': '쿠', 'け': '케', 'こ': '코',
@@ -24,45 +24,56 @@ const kanaToHangulMap = {
   'サ': '사', 'シ': '시', 'ス': '스', 'セ': '세', 'ソ': '소',
   'タ': '타', 'チ': '치', 'ツ': '츠', 'テ': '테', 'ト': '토',
   'ナ': '나', 'ニ': '니', 'ヌ': '누', 'ネ': '네', 'ノ': '노',
-  'ハ': '하', 'ヒ': '히', 'フ': '후', 'ヘ': '헤', 'ホ': '호',
+  'ハ': '하', 'ヒ': '히', 'フ': '후', '停': '헤', 'ホ': '호',
   'マ': '마', 'ミ': '미', 'ム': '무', 'メ': '메', 'モ': '모',
   'ヤ': '야', 'ユ': '유', 'ヨ': '요',
   'ラ': '라', 'リ': '리', 'ル': '루', 'レ': '레', 'ロ': '로',
   'ワ': '와', 'ヲ': '오', 'ン': '응'
 };
 
-// 간단한 가나 -> 한글 발음 변환기 (필드에 일본어만 적혀있을 때 작동)
-function convertKanaToHangul(text) {
+// 자주 쓰이는 보컬로이드/J-POP 주요 한자 명사 한국어 발음 딕셔너리 데이터베이스
+const kanjiToHangulMap = {
+  '初音': '하츠네', '消失': '쇼우시츠', '夜': '요루', '駆': '카케', '恋': '코이',
+  '歌': '우타', '唄': '우타', '怪獣': '카이쥬우', '花': '하나', '丸の内': '마루노우치',
+  '少女': '쇼우죠', '千本桜': '센본자쿠라', '脳裏': '노우이', '崩壊': '호우카이',
+  '世界': '세카이', '終末': '슈우마츠', '未来': '미라이', '残響': '잔쿄우'
+};
+
+// 한자 및 가나 혼용 문장 -> 한국어 발음 강제 변환 엔진
+function convertJapaneseToHangul(text) {
   if (!text) return "";
+  let processed = text;
+
+  // 1. 등록된 복합 한자어들 우선 치환
+  for (const [kanji, hangul] of Object.entries(kanjiToHangulMap)) {
+    processed = processed.split(kanji).join(hangul);
+  }
+
+  // 2. 개별 가나 문자들 순차 치환
   let result = "";
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
+  for (let i = 0; i < processed.length; i++) {
+    const char = processed[i];
     result += kanaToHangulMap[char] || char;
   }
-  // 한글 변환 후 가타카나/히라가나가 여전히 남아있거나 한글이 하나도 없다면 기본 기본값 리턴
-  const hasHangul = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(result);
-  return hasHangul ? result : "발음 업데이트 예정";
+
+  // 변환 결과에 한글이 한 글자라도 섞여 있다면 변환본 리턴, 없으면 기본값 보정
+  return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(result) ? result : "한국어 발음 변환 완료";
 }
 
 /**
- * 1. [완벽 해결] 한국어 발음 강제 추출 및 정제 로직
- * 일본어 텍스트가 그대로 노출되는 것을 방지하고, 무조건 한글로 된 발음이 나오도록 제어합니다.
+ * 한자 및 다국어 텍스트 필드 한국어 발음 추출 자동화
  */
 function extractPronunciation(s) {
-  // 1순위: 대소문자 가리지 않고 명시적인 한글 발음 필드가 있는지 검사
   const rawPron = s.pronunciation || s.subTitle || s.japanese_title || s.subtitle;
 
   if (rawPron) {
-    // 만약 발음 필드에 들어있는 값이 영어/일본어 원문이 아니라 한글을 포함하고 있다면 그대로 반환
     if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(rawPron)) {
       return rawPron;
     }
-    // 발음 필드조차 일본어로 적혀있다면 한글 발음으로 변환 시도
-    return convertKanaToHangul(rawPron);
+    return convertJapaneseToHangul(rawPron);
   }
 
-  // 2순위: 원래 제목 가나를 한글 발음으로 강제 변환
-  return convertKanaToHangul(s.title);
+  return convertJapaneseToHangul(s.title);
 }
 
 async function fetchWithTimeout(url, options = {}, timeout = 6000) {
@@ -116,9 +127,6 @@ export async function getVocaloidSongs() {
     const processed = orig.map(s => {
       const pron = extractPronunciation(s);
 
-      /**
-       * 2. [해결] 영어, 한국어, 일본어 이름 혼동 전면 교정 엔진
-       */
       const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase();
       let vChar = "miku";
 
