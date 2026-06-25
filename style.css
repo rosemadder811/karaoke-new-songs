@@ -1,6 +1,6 @@
 /* ==============================================
    TJ노래방 J-POP & 보컬로이드 대시보드
-   Design System - Dark Neon Theme (rparentexpected Fix)
+   Design System - Dark Neon Theme 
    ============================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
@@ -170,7 +170,7 @@ body {
   max-width: 600px;
 }
 
-/* 탭 메뉴 */
+/* 탭 네비게이션 메뉴 */
 .tab-nav-wrapper {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -216,7 +216,7 @@ body {
   margin-left: 3px;
 }
 
-/* 메인 그리드 프레임 */
+/* 메인 대시보드 레이아웃 */
 .main-content {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -247,10 +247,10 @@ body {
   align-items: center;
 }
 
-/* 컴팩트 노래방 카드 리스트 */
+/* 신설 한국어 발음 포함 카드 프레임 */
 .song-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 12px;
 }
 
@@ -260,7 +260,7 @@ body {
   border-radius: 8px;
   padding: 16px;
   position: relative;
-  min-height: 110px;
+  min-height: 125px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -271,7 +271,7 @@ body {
   transform: translateY(-3px);
   background: var(--bg-card-hover);
   border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .song-card .card-title {
@@ -282,6 +282,15 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 22px;
+}
+
+/* [추가사항] 제목 한국어 발음 구획 전용 네온 텍스트 */
+.card-pronunciation {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-pink);
+  margin-top: 2px;
+  letter-spacing: 0.3px;
 }
 
 .song-card .card-artist {
@@ -346,74 +355,6 @@ body {
   color: #fff;
   background: var(--accent-pink);
   border-color: var(--accent-pink);
-}
-
-/* 차트 아이템 스타일 */
-.chart-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.chart-item {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  align-items: center;
-  padding: 12px 18px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  position: relative;
-}
-
-.rank-num {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--accent-cyan);
-}
-
-.rank-change {
-  font-size: 11px;
-  display: block;
-}
-
-.rank-change.up {
-  color: var(--accent-green);
-}
-
-.rank-change.down {
-  color: #ff5252;
-}
-
-.item-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.item-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 3px;
-}
-
-.song-no-badge {
-  color: var(--accent-gold);
-  font-weight: 600;
-  font-family: monospace;
-}
-
-.item-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.item-actions .btn-bookmark {
-  position: static;
-  font-size: 18px;
 }
 
 /* 보컬로이드 캐릭터 구분선 라벨 */
@@ -489,7 +430,7 @@ body {
   border-color: var(--accent-cyan);
 }
 
-/* 글로벌 실시간 모달 팝업 레이아웃 (정상 컴파일 반영단 완료) */
+/* 글로벌 실시간 모달 팝업 레이아웃 (괄호 및 모달 인덱스 정상 설계 컴파일단 완료) */
 .search-modal {
   position: fixed;
   top: 0;
@@ -603,13 +544,6 @@ body {
   padding: 1px 3px;
   border-radius: 3px;
   font-family: monospace;
-}
-
-.data-source-banner {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  padding-left: 4px;
 }
 
 .scroll-top {
