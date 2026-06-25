@@ -12,39 +12,39 @@ import {
 
 // ── 전역 상태 ─────────────────────────────────────────────────
 const state = {
-  activeTab:      'newsong',
-  newSongs:       [],
-  vocaloidSongs:  [],
-  filteredNew:    [],
-  filteredVoca:   [],
-  isLoading:      { newsong: false, vocaloid: false },
-  source:         { newsong: null, vocaloid: null },
+  activeTab: 'newsong',
+  newSongs: [],
+  vocaloidSongs: [],
+  filteredNew: [],
+  filteredVoca: [],
+  isLoading: { newsong: false, vocaloid: false },
+  source: { newsong: null, vocaloid: null },
   filters: {
-    newKeyword:   '',
-    newSort:      'date',
-    vocaChar:     'all',
-    vocaKeyword:  '',
+    newKeyword: '',
+    newSort: 'date',
+    vocaChar: 'all',
+    vocaKeyword: '',
   },
 };
 
 // ── DOM 참조 ─────────────────────────────────────────────────
 const els = {
-  tabs:         document.querySelectorAll('.tab-btn'),
-  sections:     document.querySelectorAll('.tab-section'),
+  tabs: document.querySelectorAll('.tab-btn'),
+  sections: document.querySelectorAll('.tab-section'),
   // New Songs
-  newSongGrid:  document.getElementById('newsong-grid'),
-  newSource:    document.getElementById('newsong-source'),
-  newCount:     document.getElementById('newsong-count'),
-  newKeyword:   document.getElementById('new-keyword'),
-  newSort:      document.getElementById('new-sort'),
+  newSongGrid: document.getElementById('newsong-grid'),
+  newSource: document.getElementById('newsong-source'),
+  newCount: document.getElementById('newsong-count'),
+  newKeyword: document.getElementById('new-keyword'),
+  newSort: document.getElementById('new-sort'),
   // Vocaloid
-  vocaGrid:     document.getElementById('vocaloid-grid'),
-  vocaCount:    document.getElementById('vocaloid-count'),
-  vocaKeyword:  document.getElementById('voca-keyword'),
+  vocaGrid: document.getElementById('vocaloid-grid'),
+  vocaCount: document.getElementById('vocaloid-count'),
+  vocaKeyword: document.getElementById('voca-keyword'),
   vocaCharBtns: document.querySelectorAll('.char-chip'),
   // Misc
   scrollTopBtn: document.getElementById('scroll-top'),
-  lastUpdated:  document.getElementById('last-updated'),
+  lastUpdated: document.getElementById('last-updated'),
 };
 
 // ── 탭 전환 ─────────────────────────────────────────────────
@@ -63,8 +63,8 @@ function switchTab(tabName) {
   history.replaceState(null, '', `#${tabName}`);
 
   // 해당 탭 데이터 로드 (아직 없을 때만)
-  if (tabName === 'newsong' && state.newSongs.length === 0)     loadNewSongs();
-  if (tabName === 'vocaloid'&& state.vocaloidSongs.length === 0)loadVocaloid();
+  if (tabName === 'newsong' && state.newSongs.length === 0) loadNewSongs();
+  if (tabName === 'vocaloid' && state.vocaloidSongs.length === 0) loadVocaloid();
 }
 
 // ── 로딩 상태 ─────────────────────────────────────────────────
@@ -108,16 +108,23 @@ async function loadNewSongs() {
 
   try {
     const { data, source } = await getJPopNewSongs();
-    state.newSongs = data;
-    state.filteredNew = [...data];
+
+    // 👈 2차 안전장치: 가져온 데이터 내부에서 곡 번호(songNo) 기준으로 완전 중복 제거
+    const uniqueData = Array.from(new Map(data.map(song => [song.songNo, song])).values());
+
+    state.newSongs = uniqueData;
+    state.filteredNew = [...uniqueData];
     state.source.newsong = source;
+
     renderNewSongs(state.filteredNew);
     renderSourceBanner(els.newSource, source);
-    setTabCount('newsong', data.length);
-    if (els.newCount) els.newCount.textContent = `${data.length}곡`;
+
+    setTabCount('newsong', uniqueData.length);
+    if (els.newCount) els.newCount.textContent = `${uniqueData.length}곡`;
+
     // Update hero stat
     const statEl = document.getElementById('stat-newsong');
-    if (statEl) statEl.textContent = `${data.length}+`;
+    if (statEl) statEl.textContent = `${uniqueData.length}+`;
   } catch (e) {
     if (els.newSongGrid) {
       els.newSongGrid.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><p>데이터를 불러올 수 없습니다.</p></div>`;
@@ -138,9 +145,9 @@ function renderNewSongs(data) {
   }
 
   els.newSongGrid.innerHTML = data.map(song => {
-    const label    = getRelativeDateLabel(song.addedDate);
-    const isNew    = song.isNew;
-    const tjLink   = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
+    const label = getRelativeDateLabel(song.addedDate);
+    const isNew = song.isNew;
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
     return `
       <div class="song-card fade-in-up">
         <div class="card-badges">
@@ -165,7 +172,7 @@ function renderNewSongs(data) {
 
 function filterNewSongs() {
   let songs = [...state.newSongs];
-  const kw  = state.filters.newKeyword.toLowerCase();
+  const kw = state.filters.newKeyword.toLowerCase();
 
   if (kw) {
     songs = songs.filter(s =>
@@ -177,8 +184,8 @@ function filterNewSongs() {
   }
 
   const sort = state.filters.newSort;
-  if (sort === 'date')   songs.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));
-  if (sort === 'title')  songs.sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === 'date') songs.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));
+  if (sort === 'title') songs.sort((a, b) => a.title.localeCompare(b.title));
   if (sort === 'songno') songs.sort((a, b) => parseInt(a.songNo) - parseInt(b.songNo));
 
   state.filteredNew = songs;
@@ -194,7 +201,7 @@ async function loadVocaloid() {
   try {
     const { data, source } = await getVocaloidSongs();
     state.vocaloidSongs = data;
-    state.filteredVoca  = [...data];
+    state.filteredVoca = [...data];
     renderVocaloid(data);
     setTabCount('vocaloid', data.length);
     if (els.vocaCount) els.vocaCount.textContent = `${data.length}곡`;
@@ -221,11 +228,11 @@ function renderVocaloid(data) {
   }
 
   els.vocaGrid.innerHTML = data.map(song => {
-    const cls      = getVocaloidClass(song.vocaloid);
-    const charCls  = cls.split(' ')[1] || 'char-miku';
-    const cardCls  = cls.split(' ')[0] || 'voca-miku';
+    const cls = getVocaloidClass(song.vocaloid);
+    const charCls = cls.split(' ')[1] || 'char-miku';
+    const cardCls = cls.split(' ')[0] || 'voca-miku';
     const charName = getCharDisplayName(song.vocaloid);
-    const tjLink   = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
     const dateLabel = getRelativeDateLabel(song.addedDate);
 
     return `
@@ -239,7 +246,7 @@ function renderVocaloid(data) {
         <div class="voca-producer">${escHtml(song.producer || song.artist)}</div>
         <div class="voca-footer">
           <div class="voca-songno">
-            <span class="no-label ${charCls.replace('char-','').includes('miku') ? '' : ''}">🎤 NO.</span>
+            <span class="no-label ${charCls.replace('char-', '').includes('miku') ? '' : ''}">🎤 NO.</span>
             &nbsp;${escHtml(song.songNo)}
           </div>
           <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">
@@ -252,7 +259,7 @@ function renderVocaloid(data) {
 
 function filterVocaloid() {
   let songs = [...state.vocaloidSongs];
-  const kw  = state.filters.vocaKeyword.toLowerCase();
+  const kw = state.filters.vocaKeyword.toLowerCase();
   const chr = state.filters.vocaChar;
 
   if (kw) {
@@ -269,13 +276,13 @@ function filterVocaloid() {
     songs = songs.filter(s => {
       const v = (s.vocaloid || '').toLowerCase();
       const a = (s.artist || '').toLowerCase();
-      if (chr === 'miku')  return v.includes('初音') || v.includes('miku');
-      if (chr === 'rin')   return v.includes('鏡音リン') || v.includes('rin');
-      if (chr === 'len')   return v.includes('鏡音レン') || v.includes('len');
-      if (chr === 'luka')  return v.includes('巡音') || v.includes('luka');
+      if (chr === 'miku') return v.includes('初音') || v.includes('miku');
+      if (chr === 'rin') return v.includes('鏡音リン') || v.includes('rin');
+      if (chr === 'len') return v.includes('鏡音렌') || v.includes('len');
+      if (chr === 'luka') return v.includes('巡音') || v.includes('luka');
       if (chr === 'kaito') return v.includes('kaito');
       if (chr === 'meiko') return v.includes('meiko');
-      if (chr === 'gumi')  return v.includes('gumi');
+      if (chr === 'gumi') return v.includes('gumi');
       return true;
     });
   }
@@ -296,14 +303,14 @@ function escHtml(str) {
 }
 
 function getCharDisplayName(vocaloid = '') {
-  if (vocaloid.includes('初音') || vocaloid.toLowerCase().includes('miku'))  return '初音ミク';
-  if (vocaloid.includes('鏡音リン'))  return '鏡音リン';
-  if (vocaloid.includes('鏡音レン'))  return '鏡音レン';
-  if (vocaloid.includes('巡音'))      return '巡音ルカ';
-  if (vocaloid.includes('KAITO'))     return 'KAITO';
-  if (vocaloid.includes('MEIKO'))     return 'MEIKO';
-  if (vocaloid.includes('GUMI'))      return 'GUMI';
-  if (vocaloid.includes('IA'))        return 'IA';
+  if (vocaloid.includes('初音') || vocaloid.toLowerCase().includes('miku')) return '初音ミ크';
+  if (vocaloid.includes('鏡音リン')) return '鏡音リン';
+  if (vocaloid.includes('鏡音렌')) return '鏡音렌';
+  if (vocaloid.includes('巡音')) return '巡音루카';
+  if (vocaloid.includes('KAITO')) return 'KAITO';
+  if (vocaloid.includes('MEIKO')) return 'MEIKO';
+  if (vocaloid.includes('GUMI')) return 'GUMI';
+  if (vocaloid.includes('IA')) return 'IA';
   return vocaloid;
 }
 
@@ -315,7 +322,7 @@ function initParticles() {
   const ctx = canvas.getContext('2d');
 
   function resize() {
-    canvas.width  = window.innerWidth;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
   resize();
@@ -323,9 +330,9 @@ function initParticles() {
 
   const COLORS = ['#00e5ff', '#e040fb', '#7c4dff', '#69ff47'];
   const particles = Array.from({ length: 60 }, () => ({
-    x:  Math.random() * canvas.width,
-    y:  Math.random() * canvas.height,
-    r:  Math.random() * 2 + 0.5,
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
     dx: (Math.random() - 0.5) * 0.4,
     dy: (Math.random() - 0.5) * 0.4,
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
@@ -343,7 +350,7 @@ function initParticles() {
 
       p.x += p.dx;
       p.y += p.dy;
-      if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
       if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
     });
     ctx.globalAlpha = 1;
@@ -412,12 +419,12 @@ async function init() {
   if (els.lastUpdated) {
     const now = new Date();
     els.lastUpdated.textContent =
-      `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} 기준`;
+      `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} 기준`;
   }
 
   // URL hash로 초기 탭 결정
   const hash = location.hash.slice(1);
-  const initialTab = ['newsong','vocaloid'].includes(hash) ? hash : 'newsong';
+  const initialTab = ['newsong', 'vocaloid'].includes(hash) ? hash : 'newsong';
 
   bindEvents();
   initParticles();
