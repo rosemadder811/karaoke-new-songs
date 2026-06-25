@@ -4,6 +4,7 @@
  */
 
 import {
+  getJPopChart,
   getJPopNewSongs,
   getVocaloidSongs,
   getVocaloidClass,
@@ -13,12 +14,14 @@ import {
 // ── 전역 상태 ─────────────────────────────────────────────────
 const state = {
   activeTab: 'newsong',
+  jpopChart: [], // J-POP 차트 상태 배열 추가
   newSongs: [],
   vocaloidSongs: [],
+  filteredJpop: [], // 필터링 결과 배열 추가
   filteredNew: [],
   filteredVoca: [],
-  isLoading: { newsong: false, vocaloid: false },
-  source: { newsong: null, vocaloid: null },
+  isLoading: { newsong: false, jpopchart: false, vocaloid: false },
+  source: { newsong: null, jpopchart: null, vocaloid: null },
   filters: {
     newKeyword: '',
     newSort: 'date',
@@ -37,6 +40,10 @@ const els = {
   newCount: document.getElementById('newsong-count'),
   newKeyword: document.getElementById('new-keyword'),
   newSort: document.getElementById('new-sort'),
+  // J-POP Chart
+  jpopGrid: document.getElementById('jpopchart-grid'),
+  jpopSource: document.getElementById('jpopchart-source'),
+  jpopCount: document.getElementById('jpopchart-count'),
   // Vocaloid
   vocaGrid: document.getElementById('vocaloid-grid'),
   vocaCount: document.getElementById('vocaloid-count'),
@@ -62,12 +69,13 @@ function switchTab(tabName) {
   // URL hash 동기화
   history.replaceState(null, '', `#${tabName}`);
 
-  // 해당 탭 데이터 로드 (아직 없을 때만)
+  // 해당 탭 데이터 로드 (아직 없을 때만 비동기 로드)
+  if (tabName === 'jpopchart' && state.jpopChart.length === 0) loadJPopChart();
   if (tabName === 'newsong' && state.newSongs.length === 0) loadNewSongs();
   if (tabName === 'vocaloid' && state.vocaloidSongs.length === 0) loadVocaloid();
 }
 
-// ── 로딩 상태 ─────────────────────────────────────────────────
+// ── 로딩 상태 표시 ───────────────────────────────────────────
 
 function showLoading(containerId) {
   const el = document.getElementById(containerId);
@@ -80,7 +88,7 @@ function showLoading(containerId) {
 }
 
 function setTabCount(tabName, count) {
-  const btn = document.querySelector(`[data-tab="${tabName}"] .tab-count`);
+  const btn = document.getElementById(`count-badge-${tabName}`);
   if (btn) btn.textContent = count;
 }
 
@@ -94,14 +102,74 @@ function renderSourceBanner(el, source) {
     el.innerHTML = '🟢 &nbsp;TJ미디어 실시간 데이터';
   } else if (source === 'curated') {
     el.className = 'data-source-banner fallback';
-    el.innerHTML = '📋 &nbsp;나무위키 기반 큐레이션 데이터 (TJ 전체 보카로 수록곡 목록)';
+    el.innerHTML = '📋 &nbsp;나무위키 기반 큐레이션 데이터';
   } else {
     el.className = 'data-source-banner fallback';
-    el.innerHTML = '⚠️ &nbsp;오프라인 데이터 (TJ 사이트 점검 중 — 저장된 최신 데이터 표시)';
+    el.innerHTML = '⚠️ &nbsp;오프라인 데이터 (TJ 사이트 점검 중 — 저장된 백업 표시)';
   }
 }
 
-// ── 신곡 렌더링 ──────────────────────────────────────────────
+// ── J-POP 인기 차트 로드 및 렌더링 ───────────────────────────
+
+async function loadJPopChart() {
+  if (els.jpopGrid) showLoading('jpopchart-grid');
+
+  try {
+    const { data, source } = await getJPopChart();
+    state.jpopChart = data;
+    state.filteredJpop = [...data];
+    state.source.jpopchart = source;
+
+    renderJPopChart(state.filteredJpop);
+    renderSourceBanner(els.jpopSource, source);
+
+    setTabCount('jpopchart', data.length);
+    if (els.jpopCount) els.jpopCount.textContent = `${data.length}곡`;
+
+    const statEl = document.getElementById('stat-jpopchart');
+    if (statEl) statEl.textContent = `${data.length}+`;
+  } catch (e) {
+    if (els.jpopGrid) {
+      els.jpopGrid.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><p>인기 차트를 불러올 수 없습니다.</p></div>`;
+    }
+  }
+}
+
+function renderJPopChart(data) {
+  if (!els.jpopGrid) return;
+
+  if (data.length === 0) {
+    els.jpopGrid.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🎵</span>
+        <p>차트 데이터가 존재하지 않습니다.</p>
+      </div>`;
+    return;
+  }
+
+  els.jpopGrid.innerHTML = data.map(song => {
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
+    return `
+      <div class="song-card fade-in-up">
+        <div class="card-badges">
+          <span class="badge badge-new" style="background:var(--grad-jpop); color:#fff; font-weight:bold;">🏆 TOP ${song.rank}</span>
+          <span class="badge badge-genre">인기곡</span>
+        </div>
+        <div class="card-title">${escHtml(song.title)}</div>
+        <div class="card-artist">${escHtml(song.artist)}</div>
+        <div class="card-footer">
+          <div class="card-songno">
+            <span class="no-label">🎤 NO.</span>&nbsp;${escHtml(song.songNo)}
+          </div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">
+            TJ검색 ↗
+          </a>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── 신곡 로드 및 렌더링 ──────────────────────────────────────
 
 async function loadNewSongs() {
   if (els.newSongGrid) showLoading('newsong-grid');
@@ -109,7 +177,7 @@ async function loadNewSongs() {
   try {
     const { data, source } = await getJPopNewSongs();
 
-    // 👈 2차 안전장치: 가져온 데이터 내부에서 곡 번호(songNo) 기준으로 완전 중복 제거
+    // 2차 안전장치: 곡 번호(songNo) 기준으로 클라이언트 단에서 중복 완전 제거
     const uniqueData = Array.from(new Map(data.map(song => [song.songNo, song])).values());
 
     state.newSongs = uniqueData;
@@ -122,7 +190,6 @@ async function loadNewSongs() {
     setTabCount('newsong', uniqueData.length);
     if (els.newCount) els.newCount.textContent = `${uniqueData.length}곡`;
 
-    // Update hero stat
     const statEl = document.getElementById('stat-newsong');
     if (statEl) statEl.textContent = `${uniqueData.length}+`;
   } catch (e) {
@@ -156,7 +223,6 @@ function renderNewSongs(data) {
           <span class="badge badge-genre">J-POP</span>
         </div>
         <div class="card-title">${escHtml(song.title)}</div>
-        <div class="card-title-ko">${escHtml(song.titleKo || '')}</div>
         <div class="card-artist">${escHtml(song.artist)}</div>
         <div class="card-footer">
           <div class="card-songno">
@@ -177,7 +243,6 @@ function filterNewSongs() {
   if (kw) {
     songs = songs.filter(s =>
       s.title.toLowerCase().includes(kw) ||
-      (s.titleKo || '').toLowerCase().includes(kw) ||
       s.artist.toLowerCase().includes(kw) ||
       s.songNo.includes(kw)
     );
@@ -190,10 +255,10 @@ function filterNewSongs() {
 
   state.filteredNew = songs;
   renderNewSongs(songs);
-  if (els.newCount) els.newCount.textContent = songs.length;
+  if (els.newCount) els.newCount.textContent = `${songs.length}곡`;
 }
 
-// ── 보컬로이드 렌더링 ─────────────────────────────────────────
+// ── 보컬로이드 로드 및 렌더링 ─────────────────────────────────
 
 async function loadVocaloid() {
   if (els.vocaGrid) showLoading('vocaloid-grid');
@@ -203,9 +268,11 @@ async function loadVocaloid() {
     state.vocaloidSongs = data;
     state.filteredVoca = [...data];
     renderVocaloid(data);
+    renderSourceBanner(document.getElementById('vocaloid-source'), source);
+
     setTabCount('vocaloid', data.length);
     if (els.vocaCount) els.vocaCount.textContent = `${data.length}곡`;
-    // Update hero stat
+
     const statEl = document.getElementById('stat-voca');
     if (statEl) statEl.textContent = `${data.length}+`;
   } catch (e) {
@@ -233,7 +300,6 @@ function renderVocaloid(data) {
     const cardCls = cls.split(' ')[0] || 'voca-miku';
     const charName = getCharDisplayName(song.vocaloid);
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
-    const dateLabel = getRelativeDateLabel(song.addedDate);
 
     return `
       <div class="voca-card ${cardCls} fade-in-up">
@@ -242,12 +308,10 @@ function renderVocaloid(data) {
           ${song.isNew ? '<span class="voca-new-badge">✨ 신곡</span>' : ''}
         </div>
         <div class="voca-title">${escHtml(song.title)}</div>
-        <div class="voca-title-ko">${escHtml(song.titleKo || '')}</div>
         <div class="voca-producer">${escHtml(song.producer || song.artist)}</div>
         <div class="voca-footer">
           <div class="voca-songno">
-            <span class="no-label ${charCls.replace('char-', '').includes('miku') ? '' : ''}">🎤 NO.</span>
-            &nbsp;${escHtml(song.songNo)}
+            <span class="no-label">🎤 NO.</span>&nbsp;${escHtml(song.songNo)}
           </div>
           <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">
             TJ검색 ↗
@@ -265,7 +329,6 @@ function filterVocaloid() {
   if (kw) {
     songs = songs.filter(s =>
       s.title.toLowerCase().includes(kw) ||
-      (s.titleKo || '').toLowerCase().includes(kw) ||
       s.artist.toLowerCase().includes(kw) ||
       (s.producer || '').toLowerCase().includes(kw) ||
       s.songNo.includes(kw)
@@ -275,10 +338,9 @@ function filterVocaloid() {
   if (chr !== 'all') {
     songs = songs.filter(s => {
       const v = (s.vocaloid || '').toLowerCase();
-      const a = (s.artist || '').toLowerCase();
       if (chr === 'miku') return v.includes('初音') || v.includes('miku');
       if (chr === 'rin') return v.includes('鏡音リン') || v.includes('rin');
-      if (chr === 'len') return v.includes('鏡音렌') || v.includes('len');
+      if (chr === 'len') return v.includes('鏡音レン') || v.includes('len');
       if (chr === 'luka') return v.includes('巡音') || v.includes('luka');
       if (chr === 'kaito') return v.includes('kaito');
       if (chr === 'meiko') return v.includes('meiko');
@@ -289,10 +351,10 @@ function filterVocaloid() {
 
   state.filteredVoca = songs;
   renderVocaloid(songs);
-  if (els.vocaCount) els.vocaCount.textContent = songs.length;
+  if (els.vocaCount) els.vocaCount.textContent = `${songs.length}곡`;
 }
 
-// ── 유틸 ─────────────────────────────────────────────────────
+// ── 유틸리티 함수 ─────────────────────────────────────────────
 
 function escHtml(str) {
   return String(str ?? '')
@@ -303,9 +365,9 @@ function escHtml(str) {
 }
 
 function getCharDisplayName(vocaloid = '') {
-  if (vocaloid.includes('初音') || vocaloid.toLowerCase().includes('miku')) return '初音ミ크';
-  if (vocaloid.includes('鏡音リン')) return '鏡音リン';
-  if (vocaloid.includes('鏡音렌')) return '鏡音렌';
+  if (vocaloid.includes('初音') || vocaloid.toLowerCase().includes('miku')) return '初音미쿠';
+  if (vocaloid.includes('鏡音リン')) return '鏡音린';
+  if (vocaloid.includes('鏡音レン')) return '鏡音렌';
   if (vocaloid.includes('巡音')) return '巡音루카';
   if (vocaloid.includes('KAITO')) return 'KAITO';
   if (vocaloid.includes('MEIKO')) return 'MEIKO';
@@ -314,7 +376,7 @@ function getCharDisplayName(vocaloid = '') {
   return vocaloid;
 }
 
-// ── 파티클 애니메이션 ─────────────────────────────────────────
+// ── 파티클 애니메이션 배경 효과 ──────────────────────────────────
 
 function initParticles() {
   const canvas = document.getElementById('particles-canvas');
@@ -329,14 +391,14 @@ function initParticles() {
   window.addEventListener('resize', resize);
 
   const COLORS = ['#00e5ff', '#e040fb', '#7c4dff', '#69ff47'];
-  const particles = Array.from({ length: 60 }, () => ({
+  const particles = Array.from({ length: 40 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     r: Math.random() * 2 + 0.5,
     dx: (Math.random() - 0.5) * 0.4,
     dy: (Math.random() - 0.5) * 0.4,
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    alpha: Math.random() * 0.5 + 0.15,
+    alpha: Math.random() * 0.4 + 0.1,
   }));
 
   function draw() {
@@ -362,12 +424,10 @@ function initParticles() {
 // ── 이벤트 바인딩 ─────────────────────────────────────────────
 
 function bindEvents() {
-  // 탭 전환
   els.tabs.forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // 신곡 키워드 필터
   if (els.newKeyword) {
     els.newKeyword.addEventListener('input', e => {
       state.filters.newKeyword = e.target.value;
@@ -375,7 +435,6 @@ function bindEvents() {
     });
   }
 
-  // 신곡 정렬
   if (els.newSort) {
     els.newSort.addEventListener('change', e => {
       state.filters.newSort = e.target.value;
@@ -383,7 +442,6 @@ function bindEvents() {
     });
   }
 
-  // 보컬로이드 키워드 필터
   if (els.vocaKeyword) {
     els.vocaKeyword.addEventListener('input', e => {
       state.filters.vocaKeyword = e.target.value;
@@ -391,7 +449,6 @@ function bindEvents() {
     });
   }
 
-  // 보컬로이드 캐릭터 필터 칩
   els.vocaCharBtns.forEach(chip => {
     chip.addEventListener('click', () => {
       els.vocaCharBtns.forEach(c => c.classList.remove('active'));
@@ -401,7 +458,6 @@ function bindEvents() {
     });
   });
 
-  // 스크롤 상단 버튼
   if (els.scrollTopBtn) {
     window.addEventListener('scroll', () => {
       els.scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
@@ -412,19 +468,17 @@ function bindEvents() {
   }
 }
 
-// ── 초기화 ───────────────────────────────────────────────────
+// ── 초기화 실행 ───────────────────────────────────────────────
 
 async function init() {
-  // 현재 시간 표시
   if (els.lastUpdated) {
     const now = new Date();
     els.lastUpdated.textContent =
       `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} 기준`;
   }
 
-  // URL hash로 초기 탭 결정
   const hash = location.hash.slice(1);
-  const initialTab = ['newsong', 'vocaloid'].includes(hash) ? hash : 'newsong';
+  const initialTab = ['newsong', 'jpopchart', 'vocaloid'].includes(hash) ? hash : 'newsong';
 
   bindEvents();
   initParticles();

@@ -13,7 +13,7 @@ const PROXY_LIST = [
 const TJ_URLS = {
   chartJpop: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
   chartVoca: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
-  newSong: `${TJ_BASE}/tjsong/song_monthNew.asp?strType=4`, // 실시간 신곡 주소
+  newSong: `${TJ_BASE}/tjsong/song_monthNew.asp?strType=4`, // 실시간 신곡 주소로 정확하게 매핑
 };
 
 const FALLBACK = {
@@ -57,7 +57,7 @@ async function fetchViaProxy(targetUrl) {
       }
       return text;
     } catch {
-      // 다음 프록시로 계속
+      // 다음 프록시로 이동
     }
   }
   throw new Error('모든 프록시 실패');
@@ -122,7 +122,7 @@ function parseNewSongHTML(html) {
 
     if (!songNo || !title) return;
 
-    // 이미 추가된 곡 번호라면 배열에 넣지 않고 패스
+    // 이미 추가된 곡 번호라면 배열에 넣지 않고 패스 (1차 중복 방어)
     if (seenSongNumbers.has(songNo)) return;
     seenSongNumbers.add(songNo);
 
