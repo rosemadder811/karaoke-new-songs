@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TJ노래방 J-POP & 보컬로이드 차트 | 신곡·인기차트 대시보드</title>
+  <meta name="description" content="TJ노래방의 J-POP 인기차트 TOP 50, 최신 신곡 업데이트, 보컬로이드 전체 수록곡을 한눈에 확인하세요. 곡번호 바로 확인 가능." />
+  <meta name="keywords" content="TJ노래방, 일본노래방, JPOP차트, 보컬로이드, 하츠네미쿠, 신곡, 인기차트" />
+  <meta property="og:title" content="TJ노래방 J-POP & 보컬로이드 대시보드" />
+  <meta property="og:description" content="TJ노래방 인기차트, 신곡 업데이트, 보컬로이드 전체 수록목록 대시보드" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>" />
+</head>
+<body>
+
+<!-- 파티클 배경 캔버스 -->
+<canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+<!-- ════════ 헤더 ════════ -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon" aria-hidden="true">🎤</div>
+      <div class="logo-text">
+        <span class="logo-main">TJ노래방 차트</span>
+        <span class="logo-sub">J-POP & VOCALOID DASHBOARD</span>
+      </div>
+    </div>
+    <div class="header-meta">
+      <button id="global-search-btn" class="global-search-btn" aria-label="전체 검색 열기" title="검색 (Ctrl+K)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <span class="search-btn-text">곡 검색</span>
+        <kbd class="search-kbd">Ctrl+K</kbd>
+      </button>
+      <span class="live-badge">
+        <span class="live-dot" aria-hidden="true"></span>
+        LIVE
+      </span>
+      <span class="update-time" id="last-updated" aria-label="마지막 업데이트 시간">--</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ 히어로 ════════ -->
+<section class="hero" aria-label="대시보드 소개">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">
+        🎵 TJ 노래방 공식 데이터 기반
+      </div>
+      <h1 class="hero-title">
+        J-POP &amp; <span class="gradient-text">보컬로이드</span><br />
+        노래방 차트
+      </h1>
+      <p class="hero-desc">
+        TJ노래방의 JPOP 인기차트 TOP 50, 최신 신곡 업데이트,<br />
+        그리고 하츠네 미쿠부터 GUMI까지 — 전체 보컬로이드 수록곡을<br />
+        곡번호와 함께 한눈에 확인하세요.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">50</span>
+          <span class="stat-label">인기 차트</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="stat-newsong">30+</span>
+          <span class="stat-label">최신 신곡</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="stat-voca">120+</span>
+          <span class="stat-label">보카로 수록곡</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <img
+        src="./assets/hero_banner.png"
+        alt="TJ노래방 J-POP & 보컬로이드 대시보드 배너"
+        loading="eager"
+        onerror="this.parentElement.innerHTML='<div class=\'hero-visual-placeholder\'>🎤<br/><span style=\'font-size:14px;color:rgba(255,255,255,0.6)\'>TJ노래방</span></div>'"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 탭 네비게이션 ════════ -->
+<nav class="tab-nav-wrapper" role="navigation" aria-label="콘텐츠 탭">
+  <div class="tab-nav" role="tablist">
+    <button
+      id="tab-chart"
+      class="tab-btn tab-chart active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="section-chart"
+      data-tab="chart"
+    >
+      🏆 인기차트
+      <span class="tab-count" aria-label="50곡">50</span>
+    </button>
+    <button
+      id="tab-newsong"
+      class="tab-btn tab-newsong"
+      role="tab"
+      aria-selected="false"
+      aria-controls="section-newsong"
+      data-tab="newsong"
+    >
+      ✨ 신곡 업데이트
+      <span class="tab-count" aria-label="신곡 수">—</span>
+    </button>
+    <button
+      id="tab-vocaloid"
+      class="tab-btn tab-vocaloid"
+      role="tab"
+      aria-selected="false"
+      aria-controls="section-vocaloid"
+      data-tab="vocaloid"
+    >
+      💜 보컬로이드
+      <span class="tab-count" aria-label="보카로 곡 수">—</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════ 메인 ════════ -->
+<main class="main-content" id="main-content">
+
+  <!-- ─── Tab 1: 인기차트 ─── -->
+  <section
+    id="section-chart"
+    class="tab-section active"
+    role="tabpanel"
+    aria-labelledby="tab-chart"
+  >
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon icon-chart" aria-hidden="true">🏆</span>
+        JPOP 인기차트 TOP 50
+      </h2>
+      <div id="chart-source"></div>
+    </div>
+
+    <!-- TOP 3 포디움 -->
+    <div id="chart-top3" class="chart-top3" aria-label="TOP 3 곡" role="list">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">차트 데이터 로딩 중...</p>
+      </div>
+    </div>
+
+    <!-- 4위~ 리스트 -->
+    <ol id="chart-list" class="chart-list" aria-label="4위부터 50위 차트"></ol>
+  </section>
+
+  <!-- ─── Tab 2: 신곡 ─── -->
+  <section
+    id="section-newsong"
+    class="tab-section"
+    role="tabpanel"
+    aria-labelledby="tab-newsong"
+  >
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon icon-newsong" aria-hidden="true">✨</span>
+        최신 신곡 업데이트
+        <span id="newsong-count" style="font-size:14px;color:var(--text-muted);font-weight:400;margin-left:8px"></span>
+      </h2>
+      <div class="filter-bar" role="search" aria-label="신곡 검색 및 필터">
+        <label class="filter-input">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            id="new-keyword"
+            type="search"
+            placeholder="곡명 / 아티스트 / 곡번호 검색"
+            aria-label="신곡 검색"
+            autocomplete="off"
+          />
+        </label>
+        <select id="new-sort" class="filter-select" aria-label="정렬 기준 선택">
+          <option value="date">최신순</option>
+          <option value="title">가나다순</option>
+          <option value="songno">곡번호순</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="newsong-source" class="data-source-banner fallback" style="display:none"></div>
+    <div id="newsong-grid" class="song-grid" aria-label="신곡 목록"></div>
+  </section>
+
+  <!-- ─── Tab 3: 보컬로이드 ─── -->
+  <section
+    id="section-vocaloid"
+    class="tab-section"
+    role="tabpanel"
+    aria-labelledby="tab-vocaloid"
+  >
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon icon-vocaloid" aria-hidden="true">💜</span>
+        보컬로이드 전체 수록곡
+        <span id="vocaloid-count" style="font-size:14px;color:var(--text-muted);font-weight:400;margin-left:8px"></span>
+      </h2>
+      <label class="filter-input">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          id="voca-keyword"
+          type="search"
+          placeholder="곡명 / 프로듀서 / 번호 검색"
+          aria-label="보컬로이드 곡 검색"
+          autocomplete="off"
+        />
+      </label>
+    </div>
+
+    <!-- 보컬로이드 히어로 배너 + 캐릭터 필터 -->
+    <div class="vocaloid-hero-banner" aria-label="보컬로이드 섹션 소개">
+      <div class="voca-hero-text">
+        <h3>TJ노래방 보카로 전체 수록곡</h3>
+        <p>ryo(supercell), DECO*27, ハチ(米津玄師) 등 유명 보카로P 작품 총망라</p>
+      </div>
+      <div class="voca-char-chips" role="group" aria-label="보컬로이드 캐릭터 필터">
+        <button class="char-chip char-all active" data-char="all" aria-pressed="true">전체</button>
+        <button class="char-chip char-miku" data-char="miku" aria-pressed="false">초音ミク</button>
+        <button class="char-chip char-rin"  data-char="rin"  aria-pressed="false">鏡音リン</button>
+        <button class="char-chip char-len"  data-char="len"  aria-pressed="false">鏡音レン</button>
+        <button class="char-chip char-luka" data-char="luka" aria-pressed="false">巡音ルカ</button>
+        <button class="char-chip char-kaito"data-char="kaito"aria-pressed="false">KAITO</button>
+        <button class="char-chip char-meiko"data-char="meiko"aria-pressed="false">MEIKO</button>
+        <button class="char-chip char-gumi" data-char="gumi" aria-pressed="false">GUMI</button>
+      </div>
+    </div>
+
+    <div id="vocaloid-grid" class="vocaloid-grid" aria-label="보컬로이드 곡 목록"></div>
+  </section>
+
+</main>
+
+<!-- ════════ 전역 검색 모달 ════════ -->
+<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="전체 곡 검색" hidden>
+  <div class="search-modal-backdrop" id="search-backdrop"></div>
+  <div class="search-modal-panel">
+    <div class="search-modal-header">
+      <label class="search-modal-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true" class="search-modal-icon">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          id="global-search-input"
+          type="search"
+          placeholder="곡 제목, 가수(아티스트), 곡번호로 검색..."
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="전체 곡 검색 입력"
+        />
+        <button id="search-clear-btn" class="search-clear-btn" aria-label="검색어 지우기" hidden>✕</button>
+      </label>
+      <button id="search-close-btn" class="search-close-btn" aria-label="검색 닫기">닫기</button>
+    </div>
+
+    <div id="search-results-info" class="search-results-info" hidden></div>
+
+    <div id="search-results" class="search-results" role="listbox" aria-label="검색 결과"></div>
+
+    <div id="search-empty" class="search-empty" hidden>
+      <span class="search-empty-icon">🔍</span>
+      <p class="search-empty-title">검색 결과가 없습니다</p>
+      <p class="search-empty-sub">다른 키워드로 검색해 보세요</p>
+    </div>
+
+    <div id="search-initial" class="search-initial">
+      <span style="font-size:32px">🎵</span>
+      <p style="color:var(--text-muted);font-size:14px;margin-top:8px">곡 제목 · 가수 · 곡번호로 검색하세요</p>
+      <div class="search-tips">
+        <span class="search-tip-item"><kbd>↑↓</kbd> 이동</span>
+        <span class="search-tip-item"><kbd>Enter</kbd> 선택</span>
+        <span class="search-tip-item"><kbd>Esc</kbd> 닫기</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 스크롤 상단 버튼 ════════ -->
+<button
+  id="scroll-top"
+  class="scroll-top"
+  aria-label="페이지 맨 위로 이동"
+  title="맨 위로"
+>↑</button>
+
+<!-- ════════ 풋터 ════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a
+        href="https://www.tjmedia.com/tjsong/song_monthPopular.asp"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+        aria-label="TJ미디어 공식 인기차트 (새 탭)"
+      >
+        🏆 TJ 공식 인기차트 ↗
+      </a>
+      <a
+        href="https://www.tjmedia.com/tjsong/song_search_list.asp"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+        aria-label="TJ미디어 공식 곡 검색 (새 탭)"
+      >
+        🔍 TJ 곡 검색 ↗
+      </a>
+      <a
+        href="https://namu.wiki/w/%EC%9D%8C%EC%84%B1%20%ED%95%A9%EC%84%B1%20%EC%97%94%EC%A7%84%20%EC%98%A4%EB%A6%AC%EC%A7%80%EB%84%90%20%EA%B3%A1/%EB%85%B8%EB%9E%98%EB%B0%A9%20%EC%88%98%EB%A1%9D%20%EB%AA%A9%EB%A1%9D"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+        aria-label="나무위키 보카로 노래방 수록 목록 (새 탭)"
+      >
+        💜 보카로 수록 목록 (나무위키) ↗
+      </a>
+    </div>
+    <p class="footer-copy">
+      ⓒ 2026 TJ노래방 대시보드 — 비공식 팬 사이트 · TJ미디어 데이터 기반
+    </p>
+  </div>
+</footer>
+
+<!-- ── 스크립트 ── -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
