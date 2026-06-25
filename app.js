@@ -1,5 +1,5 @@
 /**
- * app.js — TJ노래방 대시보드 메인 애플리케이션
+ * app.js — TJ노래방 대시보드 메인 애플리케이션 (클라이언트 중복 필터링 전면 가드 장착)
  */
 
 import {
@@ -30,23 +30,18 @@ const state = {
 const els = {
   tabs: document.querySelectorAll('.tab-btn'),
   sections: document.querySelectorAll('.tab-section'),
-  // 신곡
   newSongGrid: document.getElementById('newsong-grid'),
   newCount: document.getElementById('newsong-count'),
   newKeyword: document.getElementById('new-keyword'),
   newSort: document.getElementById('new-sort'),
-  // J-POP 라이브러리
   jpopGrid: document.getElementById('jpoplib-grid'),
   jpopCount: document.getElementById('jpoplib-count'),
   jpopKeyword: document.getElementById('jpop-keyword'),
-  // 보컬로이드
   vocaGrid: document.getElementById('vocaloid-grid'),
   vocaCount: document.getElementById('vocaloid-count'),
   vocaKeyword: document.getElementById('voca-keyword'),
   vocaCharBtns: document.querySelectorAll('.char-chip'),
-  // 북마크
   bookmarkGrid: document.getElementById('bookmark-grid'),
-  // 모달 및 헤더 요소
   searchBtn: document.getElementById('global-search-btn'),
   searchModal: document.getElementById('global-search-modal'),
   modalOverlay: document.getElementById('modal-overlay-bg'),
@@ -60,6 +55,17 @@ const els = {
 function escHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// 클라이언트 렌더링 직전 최종 중복 제거 함수
+function getUniqueList(array) {
+  const seen = new Set();
+  return array.filter(s => {
+    if (!s || !s.songNo) return false;
+    if (seen.has(s.songNo)) return false;
+    seen.add(s.songNo);
+    return true;
+  });
 }
 
 // ── 검색 모달 제어 함수 ──
@@ -94,14 +100,10 @@ function performGlobalSearch(query) {
     return;
   }
 
-  const pool = [...state.newSongs, ...state.jpopLibSongs, ...state.vocaloidSongs];
-  const unique = [];
-  const seen = new Set();
-  pool.forEach(s => {
-    if (!seen.has(s.songNo)) { seen.add(s.songNo); unique.push(s); }
-  });
+  // 검색 풀 생성 단계에서 완벽 중복 제거
+  const pool = getUniqueList([...state.newSongs, ...state.jpopLibSongs, ...state.vocaloidSongs]);
 
-  const matches = unique.filter(s =>
+  const matches = pool.filter(s =>
     s.title.toLowerCase().includes(kw) ||
     (s.pronunciation || '').toLowerCase().includes(kw) ||
     (s.artist || '').toLowerCase().includes(kw) ||
@@ -144,14 +146,16 @@ function switchTab(tabName) {
 
 function updateBookmarkBadge() {
   const btn = document.querySelector('[data-tab="bookmark"] .tab-count');
-  if (btn) btn.textContent = state.bookmarks.length;
+  if (btn) btn.textContent = getUniqueList(state.bookmarks).length;
 }
 
 function toggleBookmark(song) {
-  const idx = state.bookmarks.findIndex(b => b.songNo === song.songNo);
-  if (idx > -1) { state.bookmarks.splice(idx, 1); }
-  else { state.bookmarks.push(song); }
-  localStorage.setItem('tj_bookmarks', JSON.stringify(state.bookmarks));
+  let list = getUniqueList(state.bookmarks);
+  const idx = list.findIndex(b => b.songNo === song.songNo);
+  if (idx > -1) { list.splice(idx, 1); }
+  else { list.push(song); }
+  state.bookmarks = list;
+  localStorage.setItem('tj_bookmarks', JSON.stringify(list));
   updateBookmarkBadge();
 
   if (state.activeTab === 'newsong') renderNewSongs(state.filteredNew);
@@ -162,11 +166,12 @@ function toggleBookmark(song) {
 
 function renderBookmarks() {
   if (!els.bookmarkGrid) return;
-  if (state.bookmarks.length === 0) {
+  const list = getUniqueList(state.bookmarks);
+  if (list.length === 0) {
     els.bookmarkGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted); font-size:13px;">북마크된 곡이 없습니다. 별(★)을 눌러 북마크를 지정해 보세요.</div>`;
     return;
   }
-  els.bookmarkGrid.innerHTML = state.bookmarks.map(s => {
+  els.bookmarkGrid.innerHTML = list.map(s => {
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
       <div class="song-card">
@@ -189,19 +194,21 @@ function renderBookmarks() {
   });
 }
 
-// ── 데이터 수집 및 렌더링 파트 ──
+// ── 데이터 바인딩 연동 ──
 async function loadNewSongs() {
   const { data } = await getJPopNewSongs();
-  state.newSongs = data; state.filteredNew = [...data];
-  renderNewSongs(data);
+  const clean = getUniqueList(data);
+  state.newSongs = clean; state.filteredNew = [...clean];
+  renderNewSongs(clean);
   const btn = document.querySelector('[data-tab="newsong"] .tab-count');
-  if (btn) btn.textContent = data.length;
-  if (els.newCount) els.newCount.textContent = `${data.length}곡`;
+  if (btn) btn.textContent = clean.length;
+  if (els.newCount) els.newCount.textContent = `${clean.length}곡`;
 }
 
 function renderNewSongs(data) {
   if (!els.newSongGrid) return;
-  els.newSongGrid.innerHTML = data.map(s => {
+  const clean = getUniqueList(data);
+  els.newSongGrid.innerHTML = clean.map(s => {
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
@@ -226,30 +233,32 @@ function renderNewSongs(data) {
 
 function filterNewSongs() {
   let songs = [...state.newSongs];
-  const kw = state.filters.newKeyword.toLowerCase();
+  const kw = state.filters.newKeyword.toLowerCase().trim();
   if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || (s.pronunciation || '').includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
   if (state.filters.newSort === 'title') songs.sort((a, b) => a.title.localeCompare(b.title));
   if (state.filters.newSort === 'songno') songs.sort((a, b) => a.songNo.localeCompare(b.songNo));
-  state.filteredNew = songs;
-  renderNewSongs(songs);
+  state.filteredNew = getUniqueList(songs);
+  renderNewSongs(state.filteredNew);
 }
 
 async function loadJpopLibrary() {
   const data = await getJPopFullLibrary();
-  state.jpopLibSongs = data; state.filteredJpop = [...data];
-  renderJpopLibrary(data);
+  const clean = getUniqueList(data);
+  state.jpopLibSongs = clean; state.filteredJpop = [...clean];
+  renderJpopLibrary(clean);
   const btn = document.querySelector('[data-tab="jpoplib"] .tab-count');
-  if (btn) btn.textContent = data.length;
-  if (els.jpopCount) els.jpopCount.textContent = `${data.length}곡`;
+  if (btn) btn.textContent = clean.length;
+  if (els.jpopCount) els.jpopCount.textContent = `${clean.length}곡`;
 }
 
 function renderJpopLibrary(data) {
   if (!els.jpopGrid) return;
-  if (data.length === 0) {
+  const clean = getUniqueList(data);
+  if (clean.length === 0) {
     els.jpopGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">검색 조건에 맞는 곡이 없습니다.</div>`;
     return;
   }
-  els.jpopGrid.innerHTML = data.map(s => {
+  els.jpopGrid.innerHTML = clean.map(s => {
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
@@ -283,22 +292,24 @@ function filterJpopLibrary() {
       s.songNo.includes(kw)
     );
   }
-  state.filteredJpop = songs;
-  renderJpopLibrary(songs);
+  state.filteredJpop = getUniqueList(songs);
+  renderJpopLibrary(state.filteredJpop);
 }
 
 async function loadVocaloid() {
   const { data } = await getVocaloidSongs();
-  state.vocaloidSongs = data; state.filteredVoca = [...data];
-  renderVocaloid(data);
+  const clean = getUniqueList(data);
+  state.vocaloidSongs = clean; state.filteredVoca = [...clean];
+  renderVocaloid(clean);
   const btn = document.querySelector('[data-tab="vocaloid"] .tab-count');
-  if (btn) btn.textContent = data.length;
-  if (els.vocaCount) els.vocaCount.textContent = `${data.length}곡`;
+  if (btn) btn.textContent = clean.length;
+  if (els.vocaCount) els.vocaCount.textContent = `${clean.length}곡`;
 }
 
 function renderVocaloid(data) {
   if (!els.vocaGrid) return;
-  els.vocaGrid.innerHTML = data.map(s => {
+  const clean = getUniqueList(data);
+  els.vocaGrid.innerHTML = clean.map(s => {
     const cls = getVocaloidClass(s.vocaloid || s.artist);
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
@@ -324,12 +335,12 @@ function renderVocaloid(data) {
 
 function filterVocaloid() {
   let songs = [...state.vocaloidSongs];
-  const kw = state.filters.vocaKeyword.toLowerCase();
+  const kw = state.filters.vocaKeyword.toLowerCase().trim();
   const chip = state.filters.vocaChar;
   if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || (s.pronunciation || '').includes(kw) || s.artist.toLowerCase().includes(kw));
   if (chip !== 'all') songs = songs.filter(s => (s.vocaloid || s.artist || '').toLowerCase().includes(chip));
-  state.filteredVoca = songs;
-  renderVocaloid(songs);
+  state.filteredVoca = getUniqueList(songs);
+  renderVocaloid(state.filteredVoca);
 }
 
 function bindEvents() {
@@ -368,5 +379,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (els.lastUpdated) { const now = new Date(); els.lastUpdated.textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`; }
   bindEvents();
   updateBookmarkBadge();
-  switchTab('newsong'); // 초기 탭 세팅
+  switchTab('newsong');
 });

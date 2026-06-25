@@ -1,5 +1,5 @@
 /**
- * api.js — TJ노래방 데이터 레이어
+ * api.js — TJ노래방 데이터 레이어 (중복 검증 가드 내장형)
  */
 
 const FALLBACK = {
@@ -19,22 +19,34 @@ async function fetchWithTimeout(url, options = {}, timeout = 6000) {
   }
 }
 
+// 중복 제거 가용 헬퍼 함수
+function deduplicateSongs(songsArray) {
+  const seen = new Set();
+  return songsArray.filter(item => {
+    if (!item || !item.songNo) return false;
+    if (seen.has(item.songNo)) return false;
+    seen.add(item.songNo);
+    return true;
+  });
+}
+
 export async function getJPopNewSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.jpopNew);
     const data = await res.json();
-    const processed = (data.songs || data || []).map(s => ({
+    const orig = data.songs || data || [];
+    const processed = orig.map(s => ({
       ...s,
-      pronunciation: s.pronunciation || getMockPronunciation(s.title) // 발음 누락 방지 보정
+      pronunciation: s.pronunciation || getMockPronunciation(s.title)
     }));
-    return { data: processed, source: 'live' };
+    return { data: deduplicateSongs(processed), source: 'live' };
   } catch {
     const mock = [
       { songNo: "68992", title: "アイドル", pronunciation: "아이도루", artist: "YOASOBI", addedDate: "2024-01-10", isNew: true },
       { songNo: "68341", title: "Lemon", pronunciation: "레몬", artist: "Yonezu Kenshi", addedDate: "2024-01-05", isNew: false },
       { songNo: "28744", title: "丸の内サディスティック", pronunciation: "마루노우치 사디스팃쿠", artist: "Shiina Ringo", addedDate: "2023-12-15", isNew: false }
     ];
-    return { data: mock, source: 'backup' };
+    return { data: deduplicateSongs(mock), source: 'backup' };
   }
 }
 
@@ -42,22 +54,22 @@ export async function getVocaloidSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.vocaloid);
     const data = await res.json();
-    const processed = (data.songs || data || []).map(s => ({
+    const orig = data.songs || data || [];
+    const processed = orig.map(s => ({
       ...s,
       pronunciation: s.pronunciation || getMockPronunciation(s.title)
     }));
-    return { data: processed, source: 'voca_list' };
+    return { data: deduplicateSongs(processed), source: 'voca_list' };
   } catch {
     const mock = [
       { songNo: "27610", title: "初音ミク의 消失", pronunciation: "하츠네미쿠노 쇼우시츠", artist: "cosMo@폭주P", vocaloid: "miku" },
       { songNo: "28655", title: "メルト", pronunciation: "메루토", artist: "ryo", vocaloid: "miku" },
-      { songNo: "28911", title: "ロミ오와 シンデレラ", pronunciation: "로미오토 신데레라", artist: "doriko", vocaloid: "miku" }
+      { songNo: "28911", title: "ロ미오와 シンデレラ", pronunciation: "로미오토 신데레라", artist: "doriko", vocaloid: "miku" }
     ];
-    return { data: mock, source: 'backup' };
+    return { data: deduplicateSongs(mock), source: 'backup' };
   }
 }
 
-// J-POP 라이브러리용 전체 목록 목업 제네레이터
 export async function getJPopFullLibrary() {
   const { data: newSongs } = await getJPopNewSongs();
   const baseLib = [
@@ -69,22 +81,12 @@ export async function getJPopFullLibrary() {
     { songNo: "68710", title: "Kick Back", pronunciation: "킥밧쿠", artist: "Yonezu Kenshi" }
   ];
 
-  // 중복 제거 결합
-  const pool = [...newSongs, ...baseLib];
-  const unique = [];
-  const seen = new Set();
-  pool.forEach(item => {
-    if (!seen.has(item.songNo)) {
-      seen.add(item.songNo);
-      unique.push(item);
-    }
-  });
-  return unique;
+  return deduplicateSongs([...newSongs, ...baseLib]);
 }
 
 function getMockPronunciation(title) {
   if (/^[a-zA-Z\s]+$/.test(title)) return title;
-  return "한국어 발음 제공 예정";
+  return "한국어 발음 가이드";
 }
 
 export function getVocaloidClass(vocaloidStr = '') {
