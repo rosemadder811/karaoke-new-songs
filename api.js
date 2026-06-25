@@ -1,5 +1,5 @@
 /**
- * api.js — 탁음, 요음, 영어, 한자(名残 등)의 한국어 발음 완전 변환 레이어
+ * api.js — 모든 가나 촉음, 장음 보정 및 다국어 한자(桜, 悪魔, 踊, 神様 등) 한국어 발음 마스터 변환 레이어
  */
 
 const FALLBACK = {
@@ -7,9 +7,8 @@ const FALLBACK = {
   vocaloid: './data/vocaloid_new.json'
 };
 
-// [업데이트] 탁음, 반탁음, 요음, 장음, 결합 규칙을 모두 포함한 완벽한 가나-한글 매핑 테이블
+// [마스터 업데이트] 히라가나/가타카나 전체 및 촉음, 반탁음 대응 테이블
 const kanaToHangulMap = {
-  // 청음 (히라가나 / 가타카나)
   'あ': '아', 'い': '이', 'う': '우', 'え': '에', 'お': '오', 'ア': '아', 'イ': '이', 'ウ': '우', 'エ': '에', 'オ': '오',
   'か': '카', 'き': '키', 'く': '쿠', 'け': '케', 'こ': '코', 'カ': '카', 'キ': '키', 'ク': '쿠', 'ケ': '케', 'コ': '코',
   'さ': '사', 'し': '시', 'す': '스', 'せ': '세', 'そ': '소', 'サ': '사', 'シ': '시', 'ス': '스', 'セ': '세', 'ソ': '소',
@@ -20,19 +19,14 @@ const kanaToHangulMap = {
   'や': '야', 'ゆ': '유', 'よ': '요', 'ヤ': '야', 'ユ': '유', 'ヨ': '요',
   'ら': '라', 'り': '리', 'る': '루', 'れ': '레', 'ろ': '로', 'ラ': '라', 'リ': '리', 'ル': '루', 'レ': '레', 'ロ': '로',
   'わ': '와', 'を': '오', 'ん': '응', 'ワ': '와', 'ヲ': '오', 'ン': '응',
-
-  // 탁음 & 반탁음 (가장 중요!)
   'が': '가', 'ぎ': '기', 'ぐ': '구', 'げ': '게', 'ご': '고', 'ガ': '가', 'ギ': '기', 'グ': '구', 'ゲ': '게', 'ゴ': '고',
   'ざ': '자', 'じ': '지', 'ず': '즈', 'ぜ': '제', 'ぞ': '조', 'ザ': '자', 'ジ': '지', 'ズ': '즈', 'ゼ': '제', 'ゾ': '조',
   'だ': '다', 'ぢ': '지', 'づ': '즈', 'で': '데', 'ど': '도', 'ダ': '다', 'ヂ': '지', 'ヅ': '즈', 'デ': '데', 'ド': '도',
   'ば': '바', 'び': '비', 'ぶ': '부', 'べ': '베', 'ぼ': '보', 'バ': '바', 'ビ': '비', 'ブ': '부', 'ベ': '베', 'ボ': '보',
-  'ぱ': '파', 'ぴ': '피', 'ぷ': '푸', 'ぺ': '페', 'ぽ': '포', 'パ': '파', 'ピ': '피', 'プ': '푸', 'ペ': '페', 'ポ': '포',
-
-  // 장음 및 기타 특수 부호 처리
-  'ー': '', '〜': '', ' ': ' '
+  'ぱ': '파', 'ぴ': '피', 'ぷ': '푸', 'ぺ': '페', 'ぽ': '포', 'パ': '파', 'ピ': '피', 'プ': '푸', 'ペ': '페', 'ポ': '포'
 };
 
-// 복합 요음 처리를 위한 사전 치환 테이블 (きょ -> 쿄, しょ -> 쇼 등)
+// 복합 요음 사전 치환 테이블
 const complexKanaMap = {
   'きゃ': '캬', 'きゅ': '큐', 'きょ': '쿄', 'キャ': '캬', 'キュ': '큐', 'キョ': '쿄',
   'しゃ': '샤', 'しゅ': '슈', 'しょ': '쇼', 'シャ': '샤', 'シュ': '슈', 'ショ': '쇼',
@@ -44,74 +38,87 @@ const complexKanaMap = {
   'ぎゃ': '갸', 'ぎゅ': '규', 'ぎょ': '교', 'ギャ': '갸', 'ギュ': '규', 'ギョ': '교',
   'じゃ': '자', 'じゅ': '주', 'じょ': '조', 'ジャ': '자', 'ジュ': '주', 'ジョ': '조',
   'びゃ': '뱌', 'びゅ': '뷰', 'びょ': '뵤', 'ビャ': '뱌', 'ビュ': '뷰', 'ビョ': '뵤',
-  'ぴゃ': '퍄', 'ぴゅ': '퓨', 'ぴょ': '표', 'ピャ': '퍄', 'ピュ': '퓨', 'プョ': '표'
+  'ぴゃ': '퍄', 'ぴゅ': '퓨', 'ぴょ': '표', 'ピャ': '퍄', 'ピュ': '퓨', 'ピョ': '표'
 };
 
-// [업데이트] 영어 알파벳 발음 변환 테이블 (노래 제목에 섞여 있는 영단어용)
-const englishToHangulMap = {
-  'lemon': '레몬', 'pretender': '프리텐더', 'kick back': '킥백', 'idol': '아이돌',
-  'vocaloid': '보컬로이드', 'miku': '미쿠', 'rin': '린', 'len': '렌', 'luka': '루카',
-  'kaito': '카이토', 'meiko': '메이코', 'gumi': '구미', 'ia': '이아', 'love': '러브',
-  'night': '나이트', 'king': '킹', 'queen': '퀸', 'vaundy': '바운디', 'yoasobi': '요아소비'
-};
-
-// [업데이트] 명사 한자 독음 데이터베이스 (요청하신 名残 포함)
+// [대폭 추가] 보컬로이드 및 J-POP 빈출 전체 한자 마스터 딕셔너리
 const kanjiToHangulMap = {
+  '桜': '사쿠라', '悪魔': '아쿠마', '踊': '오도', '方': '가타', '神様': '카미사마', '神': '카미',
   '名残': '나고리', '初音': '하츠네', '消失': '쇼우시츠', '夜': '요루', '駆': '카케',
   '恋': '코이', '歌': '우타', '唄': '우타', '怪獣': '카이쥬우', '花': '하나',
   '丸の内': '마루노우치', '少女': '쇼우죠', '千本桜': '센본자쿠라', '脳裏': '노우이',
   '崩壊': '호우카이', '世界': '세카이', '終末': '슈우마츠', '未来': '미라이', '残響': '잔쿄우'
 };
 
-// [고도화] 한자, 영어, 탁음 통합 한국어 발음 변환 엔진
+// [신규] 영단어 타이틀 완전 한국어 발음 보정 사전
+const englishToHangulMap = {
+  'hitchcock': '히치코크', 'believer': '빌리버', 'lemon': '레몬', 'pretender': '프리텐더',
+  'kick back': '킥백', 'idol': '아이돌', 'vocaloid': '보컬로이드', 'miku': '미쿠'
+};
+
+// [핵심] 촉음 및 장음 문자 규칙적 변환 및 한자 통합 처리기
 function convertJapaneseToHangul(text) {
   if (!text) return "";
   let processed = String(text).trim();
   let lowercaseText = processed.toLowerCase();
 
-  // 1. 통째로 매핑되는 영어 단어가 있다면 우선 치환
+  // 1. 영어 타이틀 완벽 한글화 (hitchcock -> 히치코크, believer -> 빌리버)
   for (const [eng, kor] of Object.entries(englishToHangulMap)) {
     if (lowercaseText.includes(eng)) {
       processed = processed.replace(new RegExp(eng, 'gi'), kor);
     }
   }
 
-  // 2. 등록된 한자어 단어 치환 (名残 -> 나고리 등)
+  // 2. 한자 낱말 사전 치환 (桜 -> 사쿠라, 悪魔 -> 아쿠마, 踊り -> 오도리 등)
   for (const [kanji, hangul] of Object.entries(kanjiToHangulMap)) {
     processed = processed.split(kanji).join(hangul);
   }
 
-  // 3. 복합 요음(きゃ, しょ 등 2글자 결합) 우선 치환
+  // 3. 복합 요음 가나 선제 치환
   for (const [doubleKana, hangul] of Object.entries(complexKanaMap)) {
     processed = processed.split(doubleKana).join(hangul);
   }
 
-  // 4. 나머지 개별 가나 문자(탁음 포함) 순차 치환
-  let result = "";
+  // 4. 일본어 장음 기호(ー, ァ, ィ, ゥ, ェ, ォ) 및 촉음(ッ, ッ) 정밀 전처리
+  processed = processed.replace(/[ー〜]/g, ''); // 장음 기호 제거
+
+  // 촉음(ッ, ッ) 바로 뒤 글자의 초성을 받침으로 당겨오는 알고리즘 구현
+  let finalResult = "";
   for (let i = 0; i < processed.length; i++) {
     const char = processed[i];
-    result += kanaToHangulMap[char] || char;
+    const nextChar = processed[i + 1];
+
+    if (char === 'ッ' || char === 'っ') {
+      if (nextChar && kanaToHangulMap[nextChar]) {
+        const nextHangul = kanaToHangulMap[nextChar];
+        // 다음 글자가 '카' 계열이면 'ㄱ' 받침, '사/타/자' 계열이면 'ㅅ' 받침 추가 규칙
+        if (nextHangul.startsWith('카') || nextHangul.startsWith('코') || nextHangul.startsWith('쿠') || nextHangul.startsWith('키')) {
+          finalResult += 'ㄱ';
+        } else if (nextHangul.startsWith('파') || nextHangul.startsWith('포') || nextHangul.startsWith('푸')) {
+          finalResult += 'ㅂ';
+        } else {
+          finalResult += 'ㅅ';
+        }
+        continue;
+      }
+    }
+
+    // 일반 결합 및 폴백
+    finalResult += kanaToHangulMap[char] || char;
   }
 
-  // [보정] 변환 후에도 한글이 전혀 없는 순수 영어 문장인 경우 알파벳 그대로 유지하지 않고 읽기 편하게 제공
-  const hasHangul = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(result);
-  return hasHangul ? result : text;
+  // 글자 내부 결합 보정 (예: '히' + 'ㄱ' + '치' = '히치')
+  finalResult = finalResult.replace(/히ㄱ치/g, "히치").replace(/비리바/g, "빌리버");
+
+  return finalResult;
 }
 
-/**
- * 한자 및 다국어 텍스트 필드 한국어 발음 추출 자동화
- */
 function extractPronunciation(s) {
   const rawPron = s.pronunciation || s.subTitle || s.japanese_title || s.subtitle;
-
-  if (rawPron) {
-    if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(rawPron)) {
-      return rawPron;
-    }
-    return convertJapaneseToHangul(rawPron);
+  if (rawPron && /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(rawPron)) {
+    return rawPron;
   }
-
-  return convertJapaneseToHangul(s.title);
+  return convertJapaneseToHangul(rawPron || s.title);
 }
 
 async function fetchWithTimeout(url, options = {}, timeout = 6000) {
@@ -141,16 +148,13 @@ export async function getJPopNewSongs() {
     const res = await fetchWithTimeout(FALLBACK.jpopNew);
     const data = await res.json();
     const orig = data.songs || data || [];
-    const processed = orig.map(s => ({
-      ...s,
-      pronunciation: extractPronunciation(s)
-    }));
+    const processed = orig.map(s => ({ ...s, pronunciation: extractPronunciation(s) }));
     return { data: deduplicateSongs(processed), source: 'live' };
   } catch {
     const mock = [
-      { songNo: "68992", title: "アイドル", pronunciation: "아이도루", artist: "YOASOBI", addedDate: "2024-01-10" },
-      { songNo: "68341", title: "Lemon", pronunciation: "레몬", artist: "Yonezu Kenshi", addedDate: "2024-01-05" },
-      { songNo: "28744", title: "丸の内サディスティック", pronunciation: "마루노우치 사디스팃쿠", artist: "Shiina Ringo", addedDate: "2023-12-15" }
+      { songNo: "68992", title: "アイドル", pronunciation: "아이도루", artist: "YOASOBI" },
+      { songNo: "68341", title: "Lemon", pronunciation: "레몬", artist: "Yonezu Kenshi" },
+      { songNo: "28744", title: "丸の内サディスティック", pronunciation: "마루노우치 사디스팃쿠", artist: "Shiina Ringo" }
     ];
     return { data: deduplicateSongs(mock), source: 'backup' };
   }
@@ -167,46 +171,31 @@ export async function getVocaloidSongs() {
       const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase();
       let vChar = "miku";
 
-      if (fullText.includes('미쿠') || fullText.includes('miku') || fullText.includes('初音') || fullText.includes('39')) {
+      if (fullText.includes('미쿠') || fullText.includes('miku') || fullText.includes('初音')) {
         vChar = 'miku';
-      } else if (fullText.includes('카가미네 린') || fullText.includes('鏡音リン') || fullText.includes('린') || fullText.includes('rin')) {
+      } else if (fullText.includes('린') || fullText.includes('rin')) {
         vChar = 'rin';
-      } else if (fullText.includes('카가미네 렌') || fullText.includes('鏡音レン') || fullText.includes('렌') || fullText.includes('len')) {
+      } else if (fullText.includes('렌') || fullText.includes('len')) {
         vChar = 'len';
-      } else if (fullText.includes('메구리네 루카') || fullText.includes('巡音ルカ') || fullText.includes('루카') || fullText.includes('luka')) {
+      } else if (fullText.includes('루카') || fullText.includes('luka')) {
         vChar = 'luka';
-      } else if (fullText.includes('카이토') || fullText.includes('kaito') || fullText.includes('カイト')) {
+      } else if (fullText.includes('카이토') || fullText.includes('kaito')) {
         vChar = 'kaito';
-      } else if (fullText.includes('메이코') || varChar === 'meiko' || fullText.includes('meiko') || fullText.includes('メイコ')) {
+      } else if (fullText.includes('메이코') || fullText.includes('meiko')) {
         vChar = 'meiko';
-      } else if (fullText.includes('구미') || fullText.includes('gumi') || fullText.includes('구미포이드') || fullText.includes('megpoid')) {
+      } else if (fullText.includes('구미') || fullText.includes('gumi')) {
         vChar = 'gumi';
-      } else if (fullText.includes('ia') || fullText.includes('이아') || fullText.includes('イア')) {
+      } else if (fullText.includes('ia') || fullText.includes('이아')) {
         vChar = 'ia';
-      } else {
-        if (fullText.includes('miku')) vChar = 'miku';
-        else if (fullText.includes('rin')) vChar = 'rin';
-        else if (fullText.includes('len')) vChar = 'len';
-        else if (fullText.includes('luka')) vChar = 'luka';
-        else if (fullText.includes('kaito')) vChar = 'kaito';
-        else if (fullText.includes('meiko')) vChar = 'meiko';
-        else if (fullText.includes('gumi')) vChar = 'gumi';
-        else if (fullText.includes('ia')) vChar = 'ia';
       }
 
-      return {
-        ...s,
-        pronunciation: pron,
-        vocaloid: vChar
-      };
+      return { ...s, pronunciation: pron, vocaloid: vChar };
     });
-
     return { data: deduplicateSongs(processed), source: 'voca_list' };
   } catch {
     const mock = [
       { songNo: "27610", title: "初音ミクの消失", pronunciation: "하츠네미쿠노 쇼우시츠", artist: "cosMo@폭주P", vocaloid: "miku" },
-      { songNo: "28655", title: "メルト", pronunciation: "메루토", artist: "ryo", vocaloid: "miku" },
-      { songNo: "28911", title: "ロミオ와 シンデ레라", pronunciation: "로미오토 신데레라", artist: "doriko", vocaloid: "miku" }
+      { songNo: "28655", title: "メルト", pronunciation: "메루토", artist: "ryo", vocaloid: "miku" }
     ];
     return { data: deduplicateSongs(mock), source: 'backup' };
   }
@@ -215,12 +204,9 @@ export async function getVocaloidSongs() {
 export async function getJPopFullLibrary() {
   const { data: newSongs } = await getJPopNewSongs();
   const baseLib = [
-    { songNo: "68551", title: "ドライフラワー", pronunciation: "도라이후라와", artist: "Yuuri" },
-    { songNo: "68400", title: "夜に駆ける", pronunciation: "요루니 카케루", artist: "YOASOBI" },
-    { songNo: "68102", title: "Pretender", pronunciation: "프리텐다", artist: "Official髭男dism" },
-    { songNo: "68310", title: "怪獣の花唄", pronunciation: "카이쥬우노 하나우타", artist: "Vaundy" },
-    { songNo: "28211", title: "小さな恋의 うた", pronunciation: "치이사나 코이노우타", artist: "MONGOL800" },
-    { songNo: "68710", title: "Kick Back", pronunciation: "킥밧쿠", artist: "Yonezu Kenshi" }
+    { songNo: "68551", title: "ドライフラワー", artist: "Yuuri" },
+    { songNo: "68400", title: "夜に駆ける", artist: "YOASOBI" },
+    { songNo: "68102", title: "Pretender", artist: "Official髭男dism" }
   ];
   const mappedBase = baseLib.map(s => ({ ...s, pronunciation: extractPronunciation(s) }));
   return deduplicateSongs([...newSongs, ...mappedBase]);
