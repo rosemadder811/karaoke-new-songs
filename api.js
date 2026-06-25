@@ -1,9 +1,8 @@
 /**
  * api.js — TJ노래방 데이터 레이어
- * 하이브리드 전략: TJ 공식 API 호출 시도 → 실패 시 정적 JSON fallback
+ * 인기차트 장애 대응용 가수별/수록곡 데이터 레이어 구현
  */
 
-// ── 상수 ─────────────────────────────────────────────────────
 const TJ_BASE = 'https://www.tjmedia.com';
 const PROXY_LIST = [
   'https://corsproxy.io/?',
@@ -11,24 +10,17 @@ const PROXY_LIST = [
 ];
 
 const TJ_URLS = {
-  chartJpop: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
-  chartVoca: `${TJ_BASE}/tjsong/song_monthPopular.asp?strType=4`,
   newSong: `${TJ_BASE}/tjsong/song_search_list.asp?searchType=4&strType=4`,
 };
 
 const FALLBACK = {
-  jpopChart: './data/jpop_chart.json',
+  jpopList: './data/jpop_chart.json',
   jpopNew: './data/jpop_new.json',
   vocaloid: './data/vocaloid_new.json',
 };
 
 const FETCH_TIMEOUT_MS = 6000;
 
-// ── 유틸 ─────────────────────────────────────────────────────
-
-/**
- * timeout이 있는 fetch 래퍼
- */
 async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
@@ -42,154 +34,55 @@ async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
 }
 
 /**
- * 프록시 순서대로 시도하고 성공한 응답 텍스트 반환
+ * J-POP 전체 수록목록 가져오기 (가수별 분류 및 titleKo 발음 유지 대응)
  */
-async function fetchViaProxy(targetUrl) {
-  for (const proxy of PROXY_LIST) {
-    try {
-      const proxyUrl = proxy + encodeURIComponent(targetUrl);
-      const res = await fetchWithTimeout(proxyUrl);
-      const text = await res.text();
-
-      if (proxy.includes('allorigins')) {
-        const json = JSON.parse(text);
-        return json.contents;
-      }
-      return text;
-    } catch {
-      // 실패 시 다음 프록시로 무해하게 이동
-    }
-  }
-  throw new Error('모든 프록시 실패');
-}
-
-// ── HTML 파싱 ─────────────────────────────────────────────────
-
-/**
- * TJ 인기차트 HTML → 곡 배열 파싱 (순위 변동값 수집 개선)
- */
-function parseChartHTML(html) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  const rows = doc.querySelectorAll('#BoardType1 tr, .chartList tr, table.chart tr');
-  const songs = [];
-
-  rows.forEach((row, idx) => {
-    if (idx === 0) return; // 헤더 스킵
-    const cols = row.querySelectorAll('td');
-    if (cols.length < 3) return;
-
-    const rankText = cols[0]?.textContent.trim();
-    const songNo = cols[1]?.textContent.trim();
-    const title = cols[2]?.textContent.trim();
-    const artist = cols[3]?.textContent.trim() || '';
-
-    // TJ 사이트의 순위 변동값 파싱
-    let rankChange = 0;
-    if (cols.length >= 5) {
-      const changeRaw = cols[4]?.textContent.trim();
-      const num = parseInt(changeRaw.replace(/[^0-9]/g, ''), 10);
-      if (!isNaN(num)) {
-        rankChange = changeRaw.includes('▼') ? -num : num;
-      }
-    }
-
-    const rank = parseInt(rankText, 10);
-    if (!rank || !title) return;
-
-    songs.push({
-      rank,
-      songNo,
-      title,
-      titleKo: title,
-      artist,
-      rankChange: rankChange || 0,
-    });
-  });
-
-  return songs;
-}
-
-/**
- * TJ 신곡 HTML → 곡 배열 파싱
- */
-function parseNewSongHTML(html) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  const rows = doc.querySelectorAll('#BoardType1 tr, table tr');
-  const songs = [];
-  const seenSongNumbers = new Set();
-
-  rows.forEach((row, idx) => {
-    if (idx === 0) return;
-    const cols = row.querySelectorAll('td');
-    if (cols.length < 3) return;
-
-    const songNo = cols[0]?.textContent.trim();
-    const title = cols[1]?.textContent.trim();
-    const artist = cols[2]?.textContent.trim() || '';
-    const dateRaw = cols[3]?.textContent.trim() || '';
-
-    if (!songNo || !title) return;
-
-    if (seenSongNumbers.has(songNo)) return;
-    seenSongNumbers.add(songNo);
-
-    songs.push({
-      songNo,
-      title,
-      titleKo: title,
-      artist,
-      addedDate: dateRaw || new Date().toISOString().slice(0, 10),
-      genre: 'J-POP',
-      isNew: true,
-    });
-  });
-
-  return songs;
-}
-
-// ── 공개 API ─────────────────────────────────────────────────
-
-export async function getJPopChart() {
+export async function getJPopSongs() {
   try {
-    const html = await fetchViaProxy(TJ_URLS.chartJpop);
-    const songs = parseChartHTML(html);
-    if (songs.length > 0) {
-      return { data: songs, source: 'live' };
-    }
-    throw new Error('파싱 결과 없음');
-  } catch (err) {
-    console.warn('[api] 실시간 차트 로드 실패, fallback 사용:', err.message);
-  }
+    const res = await fetchWithTimeout(FALLBACK.jpopList);
+    const data = await res.json();
 
-  const res = await fetch(FALLBACK.jpopChart);
-  const json = await res.json();
-  const songs = (json.songs || []).map(s => ({ ...s, rankChange: s.rankChange || 0 }));
-  return { data: songs, source: 'fallback', meta: json };
+    // 구조가 { songs: [...] } 형태이거나 단일 배열일 때의 유연한 대응
+    const songArray = data.songs || data || [];
+    return { data: songArray, source: 'offline_library' };
+  } catch (e) {
+    // 로드 실패 시 유동 백업 Mock 구조 제공
+    const mockData = [
+      { songNo: "68341", title: "Lemon", titleKo: "레몬", artist: "Yonezu Kenshi" },
+      { songNo: "68725", title: "Pretender", titleKo: "프리텐더", artist: "Official HIGE DANDISM" },
+      { songNo: "68601", title: "Marigold", titleKo: "메리골드", artist: "Aimyon" },
+      { songNo: "68992", title: "Idol", titleKo: "아이돌", artist: "YOASOBI" },
+      { songNo: "68843", title: "Dry Flower", titleKo: "드라이 플라워", artist: "Yuuri" }
+    ];
+    return { data: mockData, source: 'mock_fallback' };
+  }
 }
 
+/**
+ * TJ 신곡 데이터 가져오기
+ */
 export async function getJPopNewSongs() {
   try {
-    const html = await fetchViaProxy(TJ_URLS.newSong);
-    const songs = parseNewSongHTML(html);
-    if (songs.length > 0) {
-      return { data: songs, source: 'live' };
-    }
-    throw new Error('파싱 결과 없음');
-  } catch (err) {
-    console.warn('[api] 신곡 실시간 로드 실패, fallback 사용:', err.message);
+    const res = await fetchWithTimeout(FALLBACK.jpopNew);
+    const data = await res.json();
+    const songArray = data.songs || data || [];
+    return { data: songArray.slice(0, 60), source: 'cached' };
+  } catch {
+    return { data: [], source: 'error' };
   }
-
-  const res = await fetch(FALLBACK.jpopNew);
-  const json = await res.json();
-  return { data: json.songs, source: 'fallback', meta: json };
 }
 
+/**
+ * 보컬로이드 전체 목록 가져오기
+ */
 export async function getVocaloidSongs() {
-  const res = await fetch(FALLBACK.vocaloid);
-  const json = await res.json();
-  return { data: json.songs, source: 'curated', meta: json };
+  try {
+    const res = await fetchWithTimeout(FALLBACK.vocaloid);
+    const data = await res.json();
+    const songArray = data.songs || data || [];
+    return { data: songArray, source: 'curated' };
+  } catch {
+    return { data: [], source: 'error' };
+  }
 }
 
 /**
@@ -201,31 +94,17 @@ export function getVocaloidClass(vocaloidStr = '') {
   if (v.includes('鏡音リン') || v.includes('rin')) return 'voca-rin char-rin';
   if (v.includes('鏡音レン') || v.includes('len')) return 'voca-len char-len';
   if (v.includes('巡音') || v.includes('luka')) return 'voca-luka char-luka';
-  if (v.includes('kaito') || v.includes('KAITO')) return 'voca-kaito char-kaito';
-  if (v.includes('meiko') || v.includes('MEIKO')) return 'voca-meiko char-meiko';
-  if (v.includes('gumi') || v.includes('GUMI')) return 'voca-gumi char-gumi';
-  if (v.includes('ia') || v.includes('IA')) return 'voca-ia char-ia';
+  if (v.includes('kaito')) return 'voca-kaito char-kaito';
+  if (v.includes('meiko')) return 'voca-meiko char-meiko';
+  if (v.includes('gumi')) return 'voca-gumi char-gumi';
+  if (v.includes('ia')) return 'voca-ia char-ia';
   return 'voca-miku char-miku';
 }
 
 /**
- * 순위 변동 표시 텍스트 및 클래스 반환
+ * 날짜 포맷 유틸
  */
-export function getRankChangeText(change) {
-  const num = parseInt(change, 10) || 0;
-  if (num > 0) return { text: `▲${num}`, cls: 'rank-up' };
-  if (num < 0) return { text: `▼${Math.abs(num)}`, cls: 'rank-down' };
-  return { text: '—', cls: 'rank-same' };
-}
-
 export function getRelativeDateLabel(dateStr) {
-  if (!dateStr) return '최근';
-  const date = new Date(dateStr);
-  const now = new Date();
-  const diffM = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
-
-  if (diffM === 0) return '이번 달';
-  if (diffM === 1) return '지난 달';
-  if (diffM <= 3) return `${diffM}달 전`;
-  return dateStr.slice(0, 7).replace('-', '년 ') + '월';
+  if (!dateStr) return '최근 수록';
+  return dateStr.replace(/-/g, '.');
 }
