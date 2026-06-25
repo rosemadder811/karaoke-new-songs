@@ -73,9 +73,9 @@ function switchTab(tabName) {
 function showLoading(container) {
   if (!container) return;
   container.innerHTML = `
-    <div class="loading-container" style="text-align:center; padding:40px;">
-      <div class="loading-spinner" style="margin:0 auto 12px; width:30px; height:30px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--accent-cyan); border-radius:50%; animation: spin 1s linear infinite;"></div>
-      <p style="color:var(--text-secondary); font-size:14px;">데이터 라이브러리를 가공 중입니다...</p>
+    <div class="loading-container" style="text-align:center; padding:20px;">
+      <div class="loading-spinner" style="margin:0 auto 8px; width:24px; height:24px; border:2.5px solid rgba(255,255,255,0.1); border-top-color:var(--accent-cyan); border-radius:50%; animation: spin 1s linear infinite;"></div>
+      <p style="color:var(--text-secondary); font-size:12px;">데이터 라이브러리를 가공 중입니다...</p>
     </div>`;
 }
 
@@ -95,7 +95,7 @@ function renderSourceBanner(el, source) {
   }
 }
 
-// ── 1) J-POP 가수별 목록 및 발음 수록 렌더링 ────────────────────
+// ── 1) J-POP 가수별 목록 렌더링 ────────────────────
 async function loadJpopLibrary() {
   showLoading(els.jpopContainer);
   try {
@@ -113,7 +113,7 @@ async function loadJpopLibrary() {
     if (heroStat) heroStat.textContent = `${data.length}곡`;
   } catch (e) {
     if (els.jpopContainer) {
-      els.jpopContainer.innerHTML = `<p style="color:red; text-align:center;">J-POP 수록 목록 로드 실패</p>`;
+      els.jpopContainer.innerHTML = `<p style="color:red; text-align:center; font-size:13px;">J-POP 목록 로드 실패</p>`;
     }
   }
 }
@@ -121,11 +121,10 @@ async function loadJpopLibrary() {
 function renderJpopGroups(songs) {
   if (!els.jpopContainer) return;
   if (songs.length === 0) {
-    els.jpopContainer.innerHTML = `<div class="empty-state" style="text-align:center;padding:40px;"><p style="color:var(--text-muted)">검색 결과가 없습니다.</p></div>`;
+    els.jpopContainer.innerHTML = `<div class="empty-state" style="text-align:center;padding:20px;"><p style="color:var(--text-muted); font-size:13px;">검색 결과가 없습니다.</p></div>`;
     return;
   }
 
-  // 가수 이름 단위로 그룹화
   const groups = {};
   songs.forEach(song => {
     const artist = song.artist || '기타/미분류';
@@ -137,19 +136,19 @@ function renderJpopGroups(songs) {
   Object.keys(groups).sort().forEach(artist => {
     const artistSongs = groups[artist];
     html += `
-      <div class="artist-card" style="background:var(--bg-card); border-radius:12px; padding:18px; margin-bottom:16px; border:1px solid var(--border-subtle)">
-        <h3 class="artist-title" style="font-size:16px; font-weight:700; color:var(--accent-cyan); margin-bottom:12px; display:flex; justify-content:between; align-items:center;">
+      <div class="artist-card" style="background:var(--bg-card); border-radius:8px; padding:12px; margin-bottom:10px; border:1px solid var(--border-subtle)">
+        <h3 class="artist-title" style="font-size:14px; font-weight:700; color:var(--accent-cyan); margin-bottom:8px; display:flex; justify-content:between; align-items:center;">
           👨‍🎤 ${escHtml(artist)} 
-          <span style="font-size:12px; background:rgba(0,229,255,0.1); padding:2px 8px; border-radius:10px; margin-left:8px;">${artistSongs.length}곡</span>
+          <span style="font-size:11px; background:rgba(0,229,255,0.08); padding:1px 6px; border-radius:8px; margin-left:6px;">${artistSongs.length}곡</span>
         </h3>
-        <div class="artist-songs-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:10px;">
+        <div class="artist-songs-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:6px;">
           ${artistSongs.map(s => `
-            <div class="jpop-song-item" style="background:rgba(255,255,255,0.02); padding:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
-              <div style="min-width:0; padding-right:8px;">
-                <div class="card-title" style="font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escHtml(s.title)}">${escHtml(s.title)}</div>
-                ${s.titleKo ? `<div class="card-title-ko" style="font-size:11px; color:var(--text-muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.titleKo)}</div>` : ''}
+            <div class="jpop-song-item" style="background:rgba(255,255,255,0.015); padding:6px 8px; border-radius:4px; display:flex; justify-content:space-between; align-items:center; border: 1px solid rgba(255,255,255,0.03);">
+              <div style="min-width:0; padding-right:6px;">
+                <div class="card-title" style="font-size:12px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text-primary);" title="${escHtml(s.title)}">${escHtml(s.title)}</div>
+                ${s.titleKo ? `<div class="card-title-ko" style="font-size:11px; color:var(--text-muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.titleKo)}</div>` : ''}
               </div>
-              <span style="font-family:monospace; font-size:12px; font-weight:700; color:var(--accent-gold); background:rgba(255,215,64,0.08); padding:2px 6px; border-radius:4px; flex-shrink:0;">🎤 ${escHtml(s.songNo)}</span>
+              <span style="font-family:monospace; font-size:11px; font-weight:700; color:var(--accent-gold); background:rgba(255,215,64,0.06); padding:1px 4px; border-radius:3px; flex-shrink:0;">🎤 ${escHtml(s.songNo)}</span>
             </div>
           `).join('')}
         </div>
@@ -192,31 +191,30 @@ async function loadNewSongs() {
     const statEl = document.getElementById('stat-newsong');
     if (statEl) statEl.textContent = `${data.length}+`;
   } catch (e) {
-    if (els.newSongGrid) els.newSongGrid.innerHTML = `<p>신곡 로드 중 오류가 발생했습니다.</p>`;
+    if (els.newSongGrid) els.newSongGrid.innerHTML = `<p style="font-size:12px;">신곡 로드 실패</p>`;
   }
 }
 
 function renderNewSongs(data) {
   if (!els.newSongGrid) return;
   if (data.length === 0) {
-    els.newSongGrid.innerHTML = `<div class="empty-state"><p>검색 결과가 없습니다.</p></div>`;
+    els.newSongGrid.innerHTML = `<div class="empty-state"><p style="font-size:12px;">검색 결과가 없습니다.</p></div>`;
     return;
   }
   els.newSongGrid.innerHTML = data.map(song => {
     const label = getRelativeDateLabel(song.addedDate);
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
     return `
-      <div class="song-card">
+      <div class="song-card compact">
         <div class="card-badges">
           <span class="badge badge-date">📅 ${label}</span>
-          <span class="badge badge-genre">J-POP</span>
         </div>
         <div class="card-title">${escHtml(song.title)}</div>
         ${song.titleKo ? `<div class="card-title-ko">${escHtml(song.titleKo)}</div>` : ''}
         <div class="card-artist">${escHtml(song.artist)}</div>
-        <div class="card-footer" style="display:flex; justify-content:space-between; margin-top:10px;">
-          <div class="card-songno" style="color:var(--accent-green)">🎤 NO. ${escHtml(song.songNo)}</div>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link" style="color:var(--accent-cyan); font-size:12px;">검색 ↗</a>
+        <div class="card-footer" style="display:flex; justify-content:space-between; margin-top:6px; align-items:center;">
+          <div class="card-songno" style="color:var(--accent-green); font-size:11px; font-weight:700;">🎤 ${escHtml(song.songNo)}</div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link" style="color:var(--accent-cyan); font-size:11px;">검색 ↗</a>
         </div>
       </div>`;
   }).join('');
@@ -249,24 +247,24 @@ async function loadVocaloid() {
     const statEl = document.getElementById('stat-voca');
     if (statEl) statEl.textContent = `${data.length}곡`;
   } catch (e) {
-    if (els.vocaGrid) els.vocaGrid.innerHTML = `<p>보컬로이드 데이터 로드 실패</p>`;
+    if (els.vocaGrid) els.vocaGrid.innerHTML = `<p style="font-size:12px;">보컬로이드 로드 실패</p>`;
   }
 }
 
 function renderVocaloid(data) {
   if (!els.vocaGrid) return;
   if (data.length === 0) {
-    els.vocaGrid.innerHTML = `<div class="empty-state"><p>결과 없음</p></div>`;
+    els.vocaGrid.innerHTML = `<div class="empty-state"><p style="font-size:12px;">결과 없음</p></div>`;
     return;
   }
   els.vocaGrid.innerHTML = data.map(song => {
     const cls = getVocaloidClass(song.vocaloid || song.artist);
     return `
-      <div class="song-card ${cls}">
+      <div class="song-card compact ${cls}">
         <div class="card-title">${escHtml(song.title)}</div>
-        ${song.titleKo ? `<div class="card-title-ko" style="font-size:11px; opacity:0.7; margin-bottom:4px;">${escHtml(song.titleKo)}</div>` : ''}
+        ${song.titleKo ? `<div class="card-title-ko" style="font-size:11px; opacity:0.6; margin-bottom:2px;">${escHtml(song.titleKo)}</div>` : ''}
         <div class="card-artist">${escHtml(song.artist || '보컬로이드')}</div>
-        <div style="font-size:12px; color:var(--accent-pink); margin-top:8px; font-weight:bold;">🎤 NO. ${escHtml(song.songNo)}</div>
+        <div style="font-size:11px; color:var(--accent-pink); margin-top:5px; font-weight:700;">🎤 NO. ${escHtml(song.songNo)}</div>
       </div>`;
   }).join('');
 }

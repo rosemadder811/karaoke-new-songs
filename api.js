@@ -34,18 +34,15 @@ async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
 }
 
 /**
- * J-POP 전체 수록목록 가져오기 (가수별 분류 및 titleKo 발음 유지 대응)
+ * J-POP 전체 수록목록 가져오기 (가수별 분류 및 titleKo 발음 유지)
  */
 export async function getJPopSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.jpopList);
     const data = await res.json();
-
-    // 구조가 { songs: [...] } 형태이거나 단일 배열일 때의 유연한 대응
     const songArray = data.songs || data || [];
     return { data: songArray, source: 'offline_library' };
   } catch (e) {
-    // 로드 실패 시 유동 백업 Mock 구조 제공
     const mockData = [
       { songNo: "68341", title: "Lemon", titleKo: "레몬", artist: "Yonezu Kenshi" },
       { songNo: "68725", title: "Pretender", titleKo: "프리텐더", artist: "Official HIGE DANDISM" },
@@ -65,7 +62,7 @@ export async function getJPopNewSongs() {
     const res = await fetchWithTimeout(FALLBACK.jpopNew);
     const data = await res.json();
     const songArray = data.songs || data || [];
-    return { data: songArray.slice(0, 60), source: 'cached' };
+    return { data: songArray.slice(0, 100), source: 'cached' };
   } catch {
     return { data: [], source: 'error' };
   }
@@ -105,6 +102,6 @@ export function getVocaloidClass(vocaloidStr = '') {
  * 날짜 포맷 유틸
  */
 export function getRelativeDateLabel(dateStr) {
-  if (!dateStr) return '최근 수록';
+  if (!dateStr) return '최근';
   return dateStr.replace(/-/g, '.');
 }
