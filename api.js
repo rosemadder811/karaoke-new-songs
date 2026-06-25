@@ -2,25 +2,12 @@
  * api.js — TJ노래방 데이터 레이어
  */
 
-const TJ_BASE = 'https://www.tjmedia.com';
-const PROXY_LIST = [
-  'https://corsproxy.io/?',
-  'https://api.allorigins.win/get?url=',
-];
-
-const TJ_URLS = {
-  newSong: `${TJ_BASE}/tjsong/song_search_list.asp?searchType=4&strType=4`,
-};
-
 const FALLBACK = {
-  jpopList: './data/jpop_chart.json',
   jpopNew: './data/jpop_new.json',
   vocaloid: './data/vocaloid_new.json',
 };
 
-const FETCH_TIMEOUT_MS = 6000;
-
-async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
+async function fetchWithTimeout(url, options = {}, timeout = 6000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
@@ -32,32 +19,18 @@ async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT_MS) {
   }
 }
 
-export async function getJPopSongs() {
-  try {
-    const res = await fetchWithTimeout(FALLBACK.jpopList);
-    const data = await res.json();
-    const songArray = data.songs || data || [];
-    return { data: songArray, source: 'offline_library' };
-  } catch (e) {
-    const mockData = [
-      { songNo: "68341", title: "Lemon", titleKo: "레몬", artist: "Yonezu Kenshi" },
-      { songNo: "68725", title: "Pretender", titleKo: "프리텐더", artist: "Official HIGE DANDISM" },
-      { songNo: "68601", title: "Marigold", titleKo: "메리골드", artist: "Aimyon" },
-      { songNo: "68992", title: "Idol", titleKo: "아이돌", artist: "YOASOBI" },
-      { songNo: "68843", title: "Dry Flower", titleKo: "드라이 플라워", artist: "Yuuri" }
-    ];
-    return { data: mockData, source: 'mock_fallback' };
-  }
-}
-
 export async function getJPopNewSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.jpopNew);
     const data = await res.json();
-    const songArray = data.songs || data || [];
-    return { data: songArray.slice(0, 100), source: 'cached' };
+    return { data: data.songs || data || [], source: 'live' };
   } catch {
-    return { data: [], source: 'error' };
+    // 오프라인/실패 시 예시 데이터 반환
+    const mock = [
+      { songNo: "68992", title: "Idol", artist: "YOASOBI", addedDate: "2024-01-10", isNew: true },
+      { songNo: "68341", title: "Lemon", artist: "Yonezu Kenshi", addedDate: "2024-01-05", isNew: false }
+    ];
+    return { data: mock, source: 'backup' };
   }
 }
 
@@ -65,27 +38,34 @@ export async function getVocaloidSongs() {
   try {
     const res = await fetchWithTimeout(FALLBACK.vocaloid);
     const data = await res.json();
-    const songArray = data.songs || data || [];
-    return { data: songArray, source: 'curated' };
+    return { data: data.songs || data || [], source: 'voca_list' };
   } catch {
-    return { data: [], source: 'error' };
+    const mock = [
+      { songNo: "27610", title: "소실 (消失)", artist: "cosMo@폭주P", vocaloid: "miku" },
+      { songNo: "28655", title: "멜트 (Melt)", artist: "ryo", vocaloid: "miku" },
+      { songNo: "28911", title: "로미오와 신데렐라", artist: "doriko", vocaloid: "miku" }
+    ];
+    return { data: mock, source: 'backup' };
   }
 }
 
 export function getVocaloidClass(vocaloidStr = '') {
-  const v = vocaloidStr.toLowerCase();
-  if (v.includes('初音') || v.includes('miku')) return 'voca-miku char-miku';
-  if (v.includes('鏡音リン') || v.includes('rin')) return 'voca-rin char-rin';
-  if (v.includes('鏡音レン') || v.includes('len')) return 'voca-len char-len';
-  if (v.includes('巡音') || v.includes('luka')) return 'voca-luka char-luka';
-  if (v.includes('kaito')) return 'voca-kaito char-kaito';
-  if (v.includes('meiko')) return 'voca-meiko char-meiko';
-  if (v.includes('gumi')) return 'voca-gumi char-gumi';
-  if (v.includes('ia')) return 'voca-ia char-ia';
-  return 'voca-miku char-miku';
+  const v = String(vocaloidStr).toLowerCase();
+  if (v.includes('miku') || v.includes('미쿠')) return 'voca-miku';
+  if (v.includes('rin') || v.includes('린')) return 'voca-rin';
+  if (v.includes('len') || v.includes('렌')) return 'voca-len';
+  if (v.includes('luka') || v.includes('루카')) return 'voca-luka';
+  if (v.includes('gumi') || v.includes('구미')) return 'voca-gumi';
+  return 'voca-miku';
 }
 
 export function getRelativeDateLabel(dateStr) {
   if (!dateStr) return '최근';
   return dateStr.replace(/-/g, '.');
+}
+
+export function getRankChangeText(change) {
+  if (change > 0) return { text: `▲${change}`, cls: 'up' };
+  if (change < 0) return { text: `▼${Math.abs(change)}`, cls: 'down' };
+  return { text: '-', cls: 'same' };
 }
