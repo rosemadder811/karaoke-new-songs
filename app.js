@@ -1,5 +1,5 @@
 /**
- * app.js — TJ노래방 대시보드 메인 애플리케이션 (검색 모달 및 북마크 토글 보완판)
+ * app.js — TJ노래방 대시보드 메인 애플리케이션
  */
 
 import {
@@ -34,7 +34,7 @@ const els = {
   chartSource: document.getElementById('chart-source'),
   newSongGrid: document.getElementById('newsong-grid'),
   newSource: document.getElementById('newsong-source'),
-  newCount: document.getElementById('new-count'),
+  newCount: document.getElementById('newsong-count'),
   newKeyword: document.getElementById('new-keyword'),
   newSort: document.getElementById('new-sort'),
   vocaGrid: document.getElementById('vocaloid-grid'),
@@ -75,9 +75,9 @@ function closeSearchModal() {
   if (els.modalInput) els.modalInput.value = '';
   if (els.modalResults) {
     els.modalResults.innerHTML = `
-      <div class="search-initial" style="text-align:center; padding:30px 16px;">
-        <span style="font-size:24px; opacity:0.4;">🎵</span>
-        <p style="color:var(--text-muted); font-size:12px; margin-top:6px;">곡 제목 · 가수 · 곡번호로 검색하세요</p>
+      <div class="search-initial">
+        <span class="search-empty-icon">🎵</span>
+        <p class="search-empty-title">곡 제목 · 가수 · 곡번호로 실시간 검색하세요</p>
       </div>`;
   }
 }
@@ -86,7 +86,7 @@ function performGlobalSearch(query) {
   if (!els.modalResults) return;
   const kw = query.toLowerCase().trim();
   if (!kw) {
-    els.modalResults.innerHTML = `<div class="search-initial"><p style="color:var(--text-muted);font-size:12px;">곡 제목 · 가수 · 곡번호로 검색하세요</p></div>`;
+    els.modalResults.innerHTML = `<div class="search-initial"><p class="search-empty-title">곡 제목 · 가수 · 곡번호로 검색하세요</p></div>`;
     return;
   }
 
@@ -102,19 +102,24 @@ function performGlobalSearch(query) {
   );
 
   if (matches.length === 0) {
-    els.modalResults.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:12px;">🔍 검색 결과가 없습니다.</div>`;
+    els.modalResults.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">🔍 검색 결과가 없습니다.</div>`;
     return;
   }
 
-  els.modalResults.innerHTML = matches.map(s => `
-    <div class="global-search-row" style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border-subtle);">
-      <div style="min-width:0; padding-right:8px;">
-        <div style="font-size:13px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.title)}</div>
-        <div style="font-size:11px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.artist)}</div>
-      </div>
-      <span style="font-family:monospace; font-size:11px; font-weight:700; color:var(--accent-gold); background:rgba(255,215,64,0.1); padding:2px 6px; border-radius:4px;">🎤 ${escHtml(s.songNo)}</span>
-    </div>
-  `).join('');
+  els.modalResults.innerHTML = matches.map(s => {
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
+    return `
+      <div class="global-search-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid var(--border-subtle);">
+        <div style="min-width:0; padding-right:8px;">
+          <div style="font-size:14px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.title)}</div>
+          <div style="font-size:12px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.artist)}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-family:monospace; font-size:12px; font-weight:700; color:var(--accent-cyan); background:rgba(0,229,255,0.1); padding:3px 8px; border-radius:4px;">🎤 ${escHtml(s.songNo)}</span>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link" style="font-size:11px; padding:3px 6px;">TJ검색</a>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 // ── 탭 시스템 ──
@@ -153,15 +158,19 @@ function renderBookmarks() {
     els.bookmarkGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted); font-size:13px;">북마크된 곡이 없습니다. 별(★)을 눌러 추가해보세요!</div>`;
     return;
   }
-  els.bookmarkGrid.innerHTML = state.bookmarks.map(s => `
-    <div class="song-card compact">
-      <button class="btn-bookmark active" data-no="${s.songNo}">★</button>
-      <div class="card-title">${escHtml(s.title)}</div>
-      <div class="card-artist">${escHtml(s.artist)}</div>
-      <div class="card-footer">
-        <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
-      </div>
-    </div>`).join('');
+  els.bookmarkGrid.innerHTML = state.bookmarks.map(s => {
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
+    return `
+      <div class="song-card">
+        <button class="btn-bookmark active" data-no="${s.songNo}">★</button>
+        <div class="card-title">${escHtml(s.title)}</div>
+        <div class="card-artist">${escHtml(s.artist)}</div>
+        <div class="card-footer">
+          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
+        </div>
+      </div>`;
+  }).join('');
 
   els.bookmarkGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -174,7 +183,7 @@ function renderBookmarks() {
 // ── 데이터 연동 레이어 ──
 async function loadChartSongs() {
   const mockChart = Array.from({ length: 25 }, (_, i) => ({
-    rank: i + 1, title: `인기 J-POP 순위 트랙 ${i + 1}`, artist: `J-POP 아티스트`, songNo: String(76000 + i), change: i % 3 === 0 ? 1 : (i % 3 === 1 ? -1 : 0)
+    rank: i + 1, title: `인기 J-POP 순위 트랙 명곡 ${i + 1}`, artist: `J-POP 아티스트`, songNo: String(76000 + i), change: i % 3 === 0 ? 1 : (i % 3 === 1 ? -1 : 0)
   }));
   state.chartSongs = mockChart;
   renderChartSongs(mockChart);
@@ -188,6 +197,7 @@ function renderChartSongs(data) {
   els.chartGrid.innerHTML = data.map((s, i) => {
     const ch = getRankChangeText(s.change);
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
       <div class="chart-item">
         <div class="item-rank"><span class="rank-num">${s.rank}</span><span class="rank-change ${ch.cls}">${ch.text}</span></div>
@@ -195,7 +205,10 @@ function renderChartSongs(data) {
           <div class="item-title">${escHtml(s.title)}</div>
           <div class="item-meta"><span class="item-artist">${escHtml(s.artist)}</span><span class="song-no-badge">🎤 NO. ${escHtml(s.songNo)}</span></div>
         </div>
-        <div class="item-actions"><button class="btn-bookmark ${isActive}" data-idx="${i}">★</button></div>
+        <div class="item-actions">
+          <button class="btn-bookmark ${isActive}" data-idx="${i}">★</button>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
+        </div>
       </div>`;
   }).join('');
   els.chartGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
@@ -204,23 +217,28 @@ function renderChartSongs(data) {
 }
 
 async function loadNewSongs() {
-  const { data, source } = await getJPopNewSongs();
+  const { data } = await getJPopNewSongs();
   state.newSongs = data; state.filteredNew = [...data];
   renderNewSongs(data);
   const btn = document.querySelector('[data-tab="newsong"] .tab-count');
   if (btn) btn.textContent = data.length;
+  if (els.newCount) els.newCount.textContent = `${data.length}곡`;
 }
 
 function renderNewSongs(data) {
   if (!els.newSongGrid) return;
   els.newSongGrid.innerHTML = data.map(s => {
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
-      <div class="song-card compact">
+      <div class="song-card">
         <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer"><div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div></div>
+        <div class="card-footer">
+          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
+        </div>
       </div>`;
   }).join('');
   els.newSongGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
@@ -247,6 +265,7 @@ async function loadVocaloid() {
   renderVocaloid(data);
   const btn = document.querySelector('[data-tab="vocaloid"] .tab-count');
   if (btn) btn.textContent = data.length;
+  if (els.vocaCount) els.vocaCount.textContent = `${data.length}곡`;
 }
 
 function renderVocaloid(data) {
@@ -254,12 +273,16 @@ function renderVocaloid(data) {
   els.vocaGrid.innerHTML = data.map(s => {
     const cls = getVocaloidClass(s.vocaloid || s.artist);
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
-      <div class="song-card compact ${cls}">
+      <div class="song-card ${cls}">
         <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer"><div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div></div>
+        <div class="card-footer">
+          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
+        </div>
       </div>`;
   }).join('');
   els.vocaGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
@@ -303,6 +326,11 @@ function bindEvents() {
       filterVocaloid();
     });
   });
+
+  if (els.scrollTopBtn) {
+    window.addEventListener('scroll', () => { els.scrollTopBtn.classList.toggle('visible', window.scrollY > 400); });
+    els.scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

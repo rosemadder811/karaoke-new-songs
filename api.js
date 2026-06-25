@@ -25,7 +25,6 @@ export async function getJPopNewSongs() {
     const data = await res.json();
     return { data: data.songs || data || [], source: 'live' };
   } catch {
-    // 오프라인/실패 시 예시 데이터 반환
     const mock = [
       { songNo: "68992", title: "Idol", artist: "YOASOBI", addedDate: "2024-01-10", isNew: true },
       { songNo: "68341", title: "Lemon", artist: "Yonezu Kenshi", addedDate: "2024-01-05", isNew: false }
@@ -51,11 +50,11 @@ export async function getVocaloidSongs() {
 
 export function getVocaloidClass(vocaloidStr = '') {
   const v = String(vocaloidStr).toLowerCase();
-  if (v.includes('miku') || v.includes('미쿠')) return 'voca-miku';
-  if (v.includes('rin') || v.includes('린')) return 'voca-rin';
-  if (v.includes('len') || v.includes('렌')) return 'voca-len';
-  if (v.includes('luka') || v.includes('루카')) return 'voca-luka';
-  if (v.includes('gumi') || v.includes('구미')) return 'voca-gumi';
+  if (v.includes('miku') || v.includes('미쿠') || v.includes('初音')) return 'voca-miku';
+  if (v.includes('rin') || v.includes('린') || v.includes('鏡音リン')) return 'voca-rin';
+  if (v.includes('len') || v.includes('렌') || v.includes('鏡音レン')) return 'voca-len';
+  if (v.includes('luka') || v.includes('루카') || v.includes('巡音')) return 'voca-luka';
+  if (v.includes('gumi') || v.includes('구미') || v.includes('GUMI')) return 'voca-gumi';
   return 'voca-miku';
 }
 

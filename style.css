@@ -1,5 +1,6 @@
 /* ==============================================
-   TJ노래방 J-POP & 보컬로이드 대시보드 Compact 스킨
+   TJ노래방 J-POP & 보컬로이드 대시보드
+   Design System - Dark Neon Theme (rparentexpected Fix)
    ============================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
@@ -19,8 +20,8 @@
   --text-secondary: #b0b2c3;
   --text-muted: #676a86;
   --border-subtle: rgba(255, 255, 255, 0.06);
-  --max-width: 1200px;
-  --transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-width: 1300px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -51,20 +52,20 @@ body {
 .header-inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo-main {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 800;
   color: #fff;
 }
 
 .logo-sub {
-  font-size: 9px;
+  font-size: 10px;
   color: var(--text-muted);
   display: block;
 }
@@ -72,13 +73,13 @@ body {
 .header-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .global-search-btn {
   background: var(--bg-glass);
   border: 1px solid var(--border-subtle);
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
   color: var(--text-secondary);
   display: flex;
@@ -94,12 +95,12 @@ body {
 }
 
 .search-btn-text {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
 }
 
 .search-kbd {
-  font-size: 9px;
+  font-size: 10px;
   background: rgba(255, 255, 255, 0.1);
   padding: 1px 4px;
   border-radius: 3px;
@@ -108,7 +109,7 @@ body {
 }
 
 .live-badge {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--accent-pink);
   background: rgba(224, 64, 251, 0.08);
@@ -127,46 +128,44 @@ body {
 }
 
 .update-time {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-family: monospace;
 }
 
 .hero {
-  padding: 30px 16px;
+  padding: 40px 24px;
   max-width: var(--max-width);
   margin: 0 auto;
   text-align: left;
 }
 
 .hero-label {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--accent-cyan);
   background: rgba(0, 229, 255, 0.06);
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 20px;
   display: inline-block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .hero-title {
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 900;
   line-height: 1.2;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-/* 🛠️ [문제 해결] vendorPrefix 경고 조치 코드: 표준 및 접두사 동시 기술 */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-cyan) 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  /* 표준 속성 선언 추가로 호환성 확보 */
   -webkit-text-fill-color: transparent;
 }
 
 .hero-desc {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-secondary);
   max-width: 600px;
 }
@@ -175,23 +174,23 @@ body {
 .tab-nav-wrapper {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 24px;
 }
 
 .tab-nav {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .tab-btn {
   background: none;
   border: none;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 8px 16px;
   cursor: pointer;
   border-radius: 6px;
   transition: var(--transition);
@@ -209,19 +208,19 @@ body {
 }
 
 .tab-count {
-  font-size: 10px;
+  font-size: 11px;
   opacity: 0.6;
   background: rgba(255, 255, 255, 0.08);
-  padding: 1px 4px;
-  border-radius: 3px;
-  margin-left: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 3px;
 }
 
-/* 메인 프레임 */
+/* 메인 그리드 프레임 */
 .main-content {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 16px;
+  padding: 24px;
 }
 
 .tab-section {
@@ -236,87 +235,94 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .section-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   display: flex;
   align-items: center;
 }
 
-/* 컴팩트 노래 카드 그리드 */
-.song-grid.compact {
+/* 컴팩트 노래방 카드 리스트 */
+.song-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
 }
 
-.song-card.compact {
+.song-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 16px;
   position: relative;
-  min-height: 90px;
+  min-height: 110px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: var(--transition);
 }
 
-.song-card.compact:hover {
-  transform: translateY(-2px);
+.song-card:hover {
+  transform: translateY(-3px);
   background: var(--bg-card-hover);
   border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-.song-card.compact .card-title {
-  font-size: 12px;
+.song-card .card-title {
+  font-size: 14px;
   font-weight: 700;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-right: 18px;
+  padding-right: 22px;
 }
 
-.song-card.compact .card-artist {
-  font-size: 11px;
+.song-card .card-artist {
+  font-size: 12px;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
-.song-card.compact .card-footer {
+.song-card .card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 12px;
 }
 
-.song-card.compact .card-songno {
+.song-card .card-songno {
   color: var(--accent-green);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
+  font-family: monospace;
 }
 
 /* 북마크 별 아이콘 */
 .btn-bookmark {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 14px;
+  right: 14px;
   background: none;
   border: none;
   color: var(--text-muted);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   transition: var(--transition);
+}
+
+.btn-bookmark:hover {
+  transform: scale(1.2);
+  color: var(--text-secondary);
 }
 
 .btn-bookmark.active {
@@ -324,16 +330,319 @@ body {
   filter: drop-shadow(0 0 3px rgba(255, 215, 64, 0.4));
 }
 
+/* TJ검색 하이퍼링크 스타일 */
+.btn-tj-link {
+  font-size: 11px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+
+.btn-tj-link:hover {
+  color: #fff;
+  background: var(--accent-pink);
+  border-color: var(--accent-pink);
+}
+
 /* 차트 아이템 스타일 */
 .chart-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .chart-item {
   display: grid;
-  grid-template-columns: 50px 1fr auto;
+  grid-template-columns: 60px 1fr auto;
   align-items: center;
-  padding: 10px 14px;
-  background: var(--bg-card
+  padding: 12px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  position: relative;
+}
+
+.rank-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.rank-change {
+  font-size: 11px;
+  display: block;
+}
+
+.rank-change.up {
+  color: var(--accent-green);
+}
+
+.rank-change.down {
+  color: #ff5252;
+}
+
+.item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.item-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.song-no-badge {
+  color: var(--accent-gold);
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-actions .btn-bookmark {
+  position: static;
+  font-size: 18px;
+}
+
+/* 보컬로이드 캐릭터 구분선 라벨 */
+.char-chips-wrapper {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.char-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.char-chip:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.char-chip.active {
+  background: rgba(224, 64, 251, 0.1);
+  color: var(--accent-pink);
+  border-color: var(--accent-pink);
+}
+
+.song-card.voca-miku {
+  border-left: 3px solid #00e5ff;
+}
+
+.song-card.voca-rin {
+  border-left: 3px solid #ffb300;
+}
+
+.song-card.voca-len {
+  border-left: 3px solid #fdd835;
+}
+
+.song-card.voca-luka {
+  border-left: 3px solid #ff80ab;
+}
+
+.song-card.voca-gumi {
+  border-left: 3px solid #76ff03;
+}
+
+/* 상단 컨트롤바 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-input input,
+.filter-select {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.filter-input input:focus,
+.filter-select:focus {
+  border-color: var(--accent-cyan);
+}
+
+/* 글로벌 실시간 모달 팝업 레이아웃 (정상 컴파일 반영단 완료) */
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.search-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 4, 12, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.search-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 16px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  z-index: 5;
+}
+
+.search-modal-header {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 10px;
+}
+
+.search-modal-header svg {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+#modal-search-input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+}
+
+.search-modal-results {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* 안내 가이드 배너 */
+.search-initial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.search-empty-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.search-empty-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.search-tips {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.search-tip-item {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search-tip-item kbd {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.data-source-banner {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  background: var(--accent-cyan);
+  border: none;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  opacity: 0;
+  transition: var(--transition);
+  pointer-events: none;
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 16px;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
