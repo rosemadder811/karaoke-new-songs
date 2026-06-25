@@ -1,4 +1,4 @@
-/* style.css — Dark Neon Theme & Left Colored Rails */
+/* style.css — 디자인 시스템 (글로벌 표준 호환성 패치 완료본) */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@400;700&display=swap');
 
 :root {
@@ -92,9 +92,11 @@ body {
   font-weight: 800;
 }
 
+/* 표준 크로스 브라우징 속성 background-clip 경고 원천 해결 */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -196,6 +198,7 @@ body {
   text-overflow: ellipsis;
 }
 
+/* 한국어 실발음 출력 색상 바 */
 .card-pronunciation {
   font-size: 11px;
   font-weight: 600;
@@ -225,6 +228,7 @@ body {
   font-family: monospace;
 }
 
+/* 아이콘 크기 고정 상태 유지 */
 .btn-bookmark {
   position: absolute;
   top: 14px;
@@ -233,6 +237,7 @@ body {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
+  font-size: 16px;
 }
 
 .btn-bookmark.active {
@@ -272,7 +277,7 @@ body {
   border-color: var(--accent-pink);
 }
 
-/* 보컬로이드 캐릭터 좌측 고유 레일 선 효과 디자인 시스템 */
+/* 보컬로이드 고유 좌측 인디케이터 레일 시스템 */
 .song-card.voca-miku {
   border-left: 3px solid #00e5ff;
 }
@@ -305,7 +310,7 @@ body {
   border-left: 3px solid #e040fb;
 }
 
-/* 모달 레이아웃 */
+/* 모달 및 스크롤 바 */
 .search-modal {
   position: fixed;
   top: 0;
@@ -344,6 +349,7 @@ body {
   display: flex;
   padding: 12px;
   border-bottom: 1px solid var(--border-subtle);
+  width: 100%;
 }
 
 #modal-search-input {
@@ -360,6 +366,7 @@ body {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
+  margin-left: auto;
 }
 
 .search-modal-results {

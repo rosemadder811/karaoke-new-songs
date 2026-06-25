@@ -1,5 +1,5 @@
 /**
- * app.js — TJ노래방 대시보드 메인 애플리케이션
+ * app.js — 대시보드 렌더링 및 핵심 비즈니스 로직 제어 헤드
  */
 
 import {
@@ -67,7 +67,7 @@ function getUniqueList(array) {
   });
 }
 
-// ── 통합 검색 모달 시스템 ──
+// 실시간 통합 검색 엔진 모달
 function openSearchModal() {
   if (!els.searchModal) return;
   els.searchModal.removeAttribute('hidden');
@@ -129,7 +129,7 @@ function performGlobalSearch(query) {
   }).join('');
 }
 
-// ── 탭 체인지 및 북마크 시스템 ──
+// 대형 메인 차트 탭 스위치
 function switchTab(tabName) {
   state.activeTab = tabName;
   els.tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
@@ -161,11 +161,12 @@ function toggleBookmark(song) {
   if (state.activeTab === 'bookmark') renderBookmarks();
 }
 
+// 마이 북마크 히스토리 차트 렌더링
 function renderBookmarks() {
   if (!els.bookmarkGrid) return;
   const list = getUniqueList(state.bookmarks);
   if (list.length === 0) {
-    els.bookmarkGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted); font-size:13px;">북마크된 곡이 없습니다. 별(★)을 눌러 북마크를 지정해 보세요.</div>`;
+    els.bookmarkGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted); font-size:13px;">북마크된 곡이 없습니다. 별(★)을 눌러 나만의 북마크 차트를 채워보세요.</div>`;
     return;
   }
   els.bookmarkGrid.innerHTML = list.map(s => {
@@ -191,7 +192,6 @@ function renderBookmarks() {
   });
 }
 
-// ── 데이터 비즈니스 로직 및 컴포넌트 렌더 내용 ──
 async function loadNewSongs() {
   const { data } = await getJPopNewSongs();
   const clean = getUniqueList(data);
@@ -231,7 +231,7 @@ function renderNewSongs(data) {
 function filterNewSongs() {
   let songs = [...state.newSongs];
   const kw = state.filters.newKeyword.toLowerCase().trim();
-  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || s.pronunciation.includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
+  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || s.pronunciation.toLowerCase().includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
   if (state.filters.newSort === 'title') songs.sort((a, b) => a.title.localeCompare(b.title));
   if (state.filters.newSort === 'songno') songs.sort((a, b) => a.songNo.localeCompare(b.songNo));
   state.filteredNew = getUniqueList(songs);
@@ -252,7 +252,7 @@ function renderJpopLibrary(data) {
   if (!els.jpopGrid) return;
   const clean = getUniqueList(data);
   if (clean.length === 0) {
-    els.jpopGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">검색 조건에 맞는 곡이 없습니다.</div>`;
+    els.jpopGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">검색 조건에 맞는 J-POP 수록곡이 없습니다.</div>`;
     return;
   }
   els.jpopGrid.innerHTML = clean.map(s => {
@@ -300,3 +300,97 @@ async function loadVocaloid() {
   renderVocaloid(clean);
   const btn = document.querySelector('[data-tab="vocaloid"] .tab-count');
   if (btn) btn.textContent = clean.length;
+  if (els.vocaCount) els.vocaCount.textContent = `${clean.length}곡`;
+}
+
+function renderVocaloid(data) {
+  if (!els.vocaGrid) return;
+  const clean = getUniqueList(data);
+  if (clean.length === 0) {
+    els.vocaGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">선택하신 보컬로이드 종류에 매핑된 곡이 없습니다.</div>`;
+    return;
+  }
+  els.vocaGrid.innerHTML = clean.map(s => {
+    const cls = getVocaloidClass(s.vocaloid);
+    const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
+    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
+    return `
+      <div class="song-card ${cls}">
+        <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
+        <div class="card-title">${escHtml(s.title)}</div>
+        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
+        <div class="card-artist">${escHtml(s.artist)}</div>
+        <div class="card-footer">
+          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
+          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
+        </div>
+      </div>`;
+  }).join('');
+  els.vocaGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const song = state.vocaloidSongs.find(s => s.songNo === e.target.dataset.no);
+      if (song) toggleBookmark(song);
+    });
+  });
+}
+
+function filterVocaloid() {
+  let songs = [...state.vocaloidSongs];
+  const kw = state.filters.vocaKeyword.toLowerCase().trim();
+  const chip = state.filters.vocaChar.toLowerCase().trim();
+
+  if (kw) {
+    songs = songs.filter(s =>
+      s.title.toLowerCase().includes(kw) ||
+      s.pronunciation.toLowerCase().includes(kw) ||
+      s.artist.toLowerCase().includes(kw)
+    );
+  }
+
+  if (chip !== 'all') {
+    // 규격화된 소문자 식별 매칭 규칙 엄수
+    songs = songs.filter(s => s.vocaloid === chip);
+  }
+
+  state.filteredVoca = getUniqueList(songs);
+  renderVocaloid(state.filteredVoca);
+}
+
+function bindEvents() {
+  els.tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+  if (els.searchBtn) els.searchBtn.addEventListener('click', (e) => { e.preventDefault(); openSearchModal(); });
+  if (els.modalClose) els.modalClose.addEventListener('click', closeSearchModal);
+  if (els.modalOverlay) els.modalOverlay.addEventListener('click', closeSearchModal);
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); if (els.searchModal?.hasAttribute('hidden')) openSearchModal(); else closeSearchModal(); }
+    if (e.key === 'Escape') closeSearchModal();
+  });
+
+  if (els.modalInput) els.modalInput.addEventListener('input', (e) => performGlobalSearch(e.target.value));
+  if (els.newKeyword) els.newKeyword.addEventListener('input', e => { state.filters.newKeyword = e.target.value; filterNewSongs(); });
+  if (els.newSort) els.newSort.addEventListener('change', e => { state.filters.newSort = e.target.value; filterNewSongs(); });
+  if (els.jpopKeyword) els.jpopKeyword.addEventListener('input', e => { state.filters.jpopKeyword = e.target.value; filterJpopLibrary(); });
+  if (els.vocaKeyword) els.vocaKeyword.addEventListener('input', e => { state.filters.vocaKeyword = e.target.value; filterVocaloid(); });
+
+  els.vocaCharBtns.forEach(chip => {
+    chip.addEventListener('click', () => {
+      els.vocaCharBtns.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      state.filters.vocaChar = chip.dataset.char;
+      filterVocaloid();
+    });
+  });
+
+  if (els.scrollTopBtn) {
+    window.addEventListener('scroll', () => { els.scrollTopBtn.classList.toggle('visible', window.scrollY > 400); });
+    els.scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (els.lastUpdated) { const now = new Date(); els.lastUpdated.textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`; }
+  bindEvents();
+  updateBookmarkBadge();
+  switchTab('newsong');
+});

@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="header-meta">
-        <button id="global-search-btn" class="global-search-btn">
+        <button id="global-search-btn" class="global-search-btn" aria-label="전체 검색 열기">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -32,41 +32,54 @@
           <span class="search-btn-text">곡 검색</span>
           <kbd class="search-kbd">Ctrl+K</kbd>
         </button>
-        <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+        <span class="live-badge"><span class="live-dot" aria-hidden="true"></span>LIVE</span>
         <span class="update-time" id="last-updated">--</span>
       </div>
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero" aria-label="대시보드 소개">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-label">🎵 보컬로이드 완벽 매핑 및 한국어 발음 전용 패널</div>
-        <h1 class="hero-title">J-POP &amp; <span class="gradient-text">보컬로이드</span> 통합 디렉토리</h1>
-        <p class="hero-desc">보컬로이드 캐릭터 분류 칩을 클릭하여 하츠네 미쿠, 카가미네 린/렌 등의 곡을 손쉽게 필터링하세요.</p>
+        <div class="hero-label">🎵 한국어 발음 표기 및 보컬로이드 캐릭터 언어 혼동 완전 교정</div>
+        <h1 class="hero-title">J-POP &amp; <span class="gradient-text">보컬로이드</span><br />통합 디렉토리</h1>
+        <p class="hero-desc">신곡 업데이트와 J-POP 전체 라이브러리, 그리고 캐릭터 칩별로 정밀하게 분류된 보컬로이드 수록곡을 한눈에 확인하세요.</p>
       </div>
     </div>
   </section>
 
-  <nav class="tab-nav-wrapper">
+  <nav class="tab-nav-wrapper" role="navigation" aria-label="콘텐츠 탭">
     <div class="tab-nav" role="tablist">
-      <button class="tab-btn active" data-tab="newsong">✨ 신곡 업데이트 <span class="tab-count">—</span></button>
-      <button class="tab-btn" data-tab="jpoplib">🇯🇵 J-POP 라이브러리 <span class="tab-count">—</span></button>
-      <button class="tab-btn" data-tab="vocaloid">💜 보컬로이드 분류 <span class="tab-count">—</span></button>
-      <button class="tab-btn" data-tab="bookmark">⭐ 북마크 <span class="tab-count">0</span></button>
+      <button id="tab-newsong" class="tab-btn active" role="tab" aria-selected="true" aria-controls="section-newsong"
+        data-tab="newsong">
+        ✨ 신곡 업데이트 <span class="tab-count">—</span>
+      </button>
+      <button id="tab-jpoplib" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-jpoplib"
+        data-tab="jpoplib">
+        🇯🇵 J-POP 라이브러리 <span class="tab-count">—</span>
+      </button>
+      <button id="tab-vocaloid" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-vocaloid"
+        data-tab="vocaloid">
+        💜 보컬로이드 분류 <span class="tab-count">—</span>
+      </button>
+      <button id="tab-bookmark" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-bookmark"
+        data-tab="bookmark">
+        ⭐ 북마크 <span class="tab-count">0</span>
+      </button>
     </div>
   </nav>
 
-  <main class="main-content">
-    <section id="section-newsong" class="tab-section active">
+  <main class="main-content" id="main-content">
+
+    <section id="section-newsong" class="tab-section active" role="tabpanel" aria-labelledby="tab-newsong">
       <div class="section-header">
-        <h2 class="section-title">✨ 최신 신곡 업데이트 <span id="newsong-count"
-            style="font-size:12px;color:var(--text-muted);margin-left:6px"></span></h2>
+        <h2 class="section-title"><span class="section-icon">✨</span> 최신 신곡 업데이트 <span id="newsong-count"
+            style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:6px"></span></h2>
         <div class="filter-bar">
-          <input type="text" id="new-keyword" placeholder="곡명, 가수 검색..."
-            style="background:var(--bg-card);border:1px solid var(--border-subtle);color:#fff;padding:5px 10px;border-radius:4px;" />
-          <select id="new-sort"
-            style="background:var(--bg-card);border:1px solid var(--border-subtle);color:#fff;padding:5px 10px;border-radius:4px;">
+          <div class="filter-input">
+            <input type="text" id="new-keyword" placeholder="곡 제목, 가수, 번호 검색..." />
+          </div>
+          <select id="new-sort" class="filter-select">
             <option value="date">최신순</option>
             <option value="title">제목순</option>
             <option value="songno">번호순</option>
@@ -76,25 +89,27 @@
       <div class="song-grid" id="newsong-grid"></div>
     </section>
 
-    <section id="section-jpoplib" class="tab-section">
+    <section id="section-jpoplib" class="tab-section" role="tabpanel" aria-labelledby="tab-jpoplib">
       <div class="section-header">
-        <h2 class="section-title">🇯🇵 J-POP 전체 라이브러리 <span id="jpoplib-count"
-            style="font-size:12px;color:var(--text-muted);margin-left:6px"></span></h2>
+        <h2 class="section-title"><span class="section-icon">🇯🇵</span> J-POP 전체 라이브러리 <span id="jpoplib-count"
+            style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:6px"></span></h2>
         <div class="filter-bar">
-          <input type="text" id="jpop-keyword" placeholder="곡명, 발음 검색..."
-            style="background:var(--bg-card);border:1px solid var(--border-subtle);color:#fff;padding:5px 10px;border-radius:4px;" />
+          <div class="filter-input">
+            <input type="text" id="jpop-keyword" placeholder="곡 제목, 가수명, 발음 검색..." />
+          </div>
         </div>
       </div>
       <div class="song-grid" id="jpoplib-grid"></div>
     </section>
 
-    <section id="section-vocaloid" class="tab-section">
+    <section id="section-vocaloid" class="tab-section" role="tabpanel" aria-labelledby="tab-vocaloid">
       <div class="section-header">
-        <h2 class="section-title">💜 보컬로이드 분류 수록곡 <span id="vocaloid-count"
-            style="font-size:12px;color:var(--text-muted);margin-left:6px"></span></h2>
+        <h2 class="section-title"><span class="section-icon">💜</span> 보컬로이드 분류 수록곡 <span id="vocaloid-count"
+            style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:6px"></span></h2>
         <div class="filter-bar">
-          <input type="text" id="voca-keyword" placeholder="곡명, 프로듀서 검색..."
-            style="background:var(--bg-card);border:1px solid var(--border-subtle);color:#fff;padding:5px 10px;border-radius:4px;" />
+          <div class="filter-input">
+            <input type="text" id="voca-keyword" placeholder="곡명, 프로듀서, 발음 검색..." />
+          </div>
         </div>
       </div>
       <div class="char-chips-wrapper">
@@ -111,30 +126,40 @@
       <div class="song-grid" id="vocaloid-grid"></div>
     </section>
 
-    <section id="section-bookmark" class="tab-section">
+    <section id="section-bookmark" class="tab-section" role="tabpanel" aria-labelledby="tab-bookmark">
       <div class="section-header">
-        <h2 class="section-title">⭐ 마이 북마크 컬렉션</h2>
+        <h2 class="section-title"><span class="section-icon">⭐</span> 마이 북마크 컬렉션</h2>
       </div>
       <div class="song-grid" id="bookmark-grid"></div>
     </section>
+
   </main>
 
   <div id="global-search-modal" class="search-modal" hidden>
     <div id="modal-overlay-bg" class="search-modal-overlay"></div>
     <div class="search-modal-container">
       <div class="search-modal-header">
-        <input type="search" id="modal-search-input" placeholder="통합 검색 (제목, 발음, 번호)..." autocomplete="off" />
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="search" id="modal-search-input" placeholder="통합 실시간 검색 (제목, 발음, 가수, 번호)..." autocomplete="off" />
         <button id="modal-close-btn" class="modal-close-btn">✕</button>
       </div>
-      <div class="search-modal-results" id="modal-results-container"></div>
+      <div class="search-modal-results" id="modal-results-container">
+        <div class="search-initial">
+          <span class="search-empty-icon">🎵</span>
+          <p class="search-empty-title">곡 제목 · 한국어 발음 · 가수명으로 통합 실시간 검색</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <button id="scroll-top" class="scroll-top">↑</button>
+  <button id="scroll-top" class="scroll-top" aria-label="맨 위로">↑</button>
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <p>© TJ 노래방 J-POP &amp; 보컬로이드 대시보드</p>
+      <p>© TJ 노래방 J-POP &amp; 보컬로이드 발음 가이드 라이브러리</p>
     </div>
   </footer>
 
