@@ -1,5 +1,5 @@
 /**
- * app.js — TJ노래방 대시보드 메인 애플리케이션 (클라이언트 중복 필터링 전면 가드 장착)
+ * app.js — TJ노래방 대시보드 메인 애플리케이션 (발음 정밀 출력 및 분류 보정 제어판)
  */
 
 import {
@@ -57,7 +57,6 @@ function escHtml(str) {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// 클라이언트 렌더링 직전 최종 중복 제거 함수
 function getUniqueList(array) {
   const seen = new Set();
   return array.filter(s => {
@@ -68,7 +67,7 @@ function getUniqueList(array) {
   });
 }
 
-// ── 검색 모달 제어 함수 ──
+// ── 검색 모달 시스템 ──
 function openSearchModal() {
   if (!els.searchModal) return;
   els.searchModal.removeAttribute('hidden');
@@ -100,9 +99,7 @@ function performGlobalSearch(query) {
     return;
   }
 
-  // 검색 풀 생성 단계에서 완벽 중복 제거
   const pool = getUniqueList([...state.newSongs, ...state.jpopLibSongs, ...state.vocaloidSongs]);
-
   const matches = pool.filter(s =>
     s.title.toLowerCase().includes(kw) ||
     (s.pronunciation || '').toLowerCase().includes(kw) ||
@@ -121,7 +118,7 @@ function performGlobalSearch(query) {
       <div class="global-search-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid var(--border-subtle);">
         <div style="min-width:0; padding-right:8px;">
           <div style="font-size:14px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.title)}</div>
-          <div style="font-size:11px; color:var(--accent-pink); margin-bottom: 2px;">[${escHtml(s.pronunciation || '발음 미지정')}]</div>
+          <div style="font-size:11px; color:var(--accent-pink); margin-bottom: 2px;">[${escHtml(s.pronunciation)}]</div>
           <div style="font-size:12px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.artist)}</div>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
@@ -132,7 +129,7 @@ function performGlobalSearch(query) {
   }).join('');
 }
 
-// ── 탭 스위칭 시스템 ──
+// ── 탭 네비게이션 제어 ──
 function switchTab(tabName) {
   state.activeTab = tabName;
   els.tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
@@ -177,7 +174,7 @@ function renderBookmarks() {
       <div class="song-card">
         <button class="btn-bookmark active" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation || '발음 가이드')} ]</div>
+        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
         <div class="card-footer">
           <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
@@ -194,7 +191,7 @@ function renderBookmarks() {
   });
 }
 
-// ── 데이터 바인딩 연동 ──
+// ── 데이터 연동 및 컴포넌트 렌더링 ──
 async function loadNewSongs() {
   const { data } = await getJPopNewSongs();
   const clean = getUniqueList(data);
@@ -215,7 +212,7 @@ function renderNewSongs(data) {
       <div class="song-card">
         <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation || '발음 가이드')} ]</div>
+        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
         <div class="card-footer">
           <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
@@ -234,7 +231,7 @@ function renderNewSongs(data) {
 function filterNewSongs() {
   let songs = [...state.newSongs];
   const kw = state.filters.newKeyword.toLowerCase().trim();
-  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || (s.pronunciation || '').includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
+  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || s.pronunciation.includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
   if (state.filters.newSort === 'title') songs.sort((a, b) => a.title.localeCompare(b.title));
   if (state.filters.newSort === 'songno') songs.sort((a, b) => a.songNo.localeCompare(b.songNo));
   state.filteredNew = getUniqueList(songs);
@@ -265,7 +262,7 @@ function renderJpopLibrary(data) {
       <div class="song-card">
         <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation || '발음 가이드')} ]</div>
+        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
         <div class="card-footer">
           <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
@@ -287,7 +284,7 @@ function filterJpopLibrary() {
   if (kw) {
     songs = songs.filter(s =>
       s.title.toLowerCase().includes(kw) ||
-      (s.pronunciation || '').toLowerCase().includes(kw) ||
+      s.pronunciation.toLowerCase().includes(kw) ||
       s.artist.toLowerCase().includes(kw) ||
       s.songNo.includes(kw)
     );
@@ -309,15 +306,19 @@ async function loadVocaloid() {
 function renderVocaloid(data) {
   if (!els.vocaGrid) return;
   const clean = getUniqueList(data);
+  if (clean.length === 0) {
+    els.vocaGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">해당 카테고리에 수록된 곡이 없습니다.</div>`;
+    return;
+  }
   els.vocaGrid.innerHTML = clean.map(s => {
-    const cls = getVocaloidClass(s.vocaloid || s.artist);
+    const cls = getVocaloidClass(s.vocaloid);
     const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
     const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
     return `
       <div class="song-card ${cls}">
         <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
         <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation || '발음 가이드')} ]</div>
+        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
         <div class="card-artist">${escHtml(s.artist)}</div>
         <div class="card-footer">
           <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
@@ -337,8 +338,19 @@ function filterVocaloid() {
   let songs = [...state.vocaloidSongs];
   const kw = state.filters.vocaKeyword.toLowerCase().trim();
   const chip = state.filters.vocaChar;
-  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || (s.pronunciation || '').includes(kw) || s.artist.toLowerCase().includes(kw));
-  if (chip !== 'all') songs = songs.filter(s => (s.vocaloid || s.artist || '').toLowerCase().includes(chip));
+
+  if (kw) {
+    songs = songs.filter(s =>
+      s.title.toLowerCase().includes(kw) ||
+      s.pronunciation.includes(kw) ||
+      s.artist.toLowerCase().includes(kw)
+    );
+  }
+
+  if (chip !== 'all') {
+    songs = songs.filter(s => s.vocaloid === chip);
+  }
+
   state.filteredVoca = getUniqueList(songs);
   renderVocaloid(state.filteredVoca);
 }

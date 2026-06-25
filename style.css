@@ -216,7 +216,7 @@ body {
   margin-left: 3px;
 }
 
-/* 메인 대시보드 구조 */
+/* 메인 구조 및 레이아웃 */
 .main-content {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -247,7 +247,7 @@ body {
   align-items: center;
 }
 
-/* 컴팩트 카드 가로세로 그리드 및 발음 처리 */
+/* 카드 그리드 스타일 */
 .song-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -284,13 +284,16 @@ body {
   padding-right: 22px;
 }
 
-/* 한국어 발음 전용 라벨 색상 설정 */
+/* 한국어 실성공 발음 텍스트 연동 */
 .card-pronunciation {
   font-size: 11px;
   font-weight: 600;
   color: var(--accent-pink);
   margin-top: 2px;
   letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .song-card .card-artist {
@@ -316,7 +319,7 @@ body {
   font-family: monospace;
 }
 
-/* 북마크 즐겨찾기 액션 */
+/* 북마크 별 */
 .btn-bookmark {
   position: absolute;
   top: 14px;
@@ -327,6 +330,7 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: var(--transition);
+  z-index: 2;
 }
 
 .btn-bookmark:hover {
@@ -339,7 +343,6 @@ body {
   filter: drop-shadow(0 0 3px rgba(255, 215, 64, 0.4));
 }
 
-/* 링크 버튼 */
 .btn-tj-link {
   font-size: 11px;
   text-decoration: none;
@@ -357,7 +360,7 @@ body {
   border-color: var(--accent-pink);
 }
 
-/* 보컬로이드 컬러칩 및 보더 가이드 */
+/* 보컬로이드 정밀 분류 칩 및 전용 보더 가이드 라인 */
 .char-chips-wrapper {
   display: flex;
   gap: 6px;
@@ -387,27 +390,49 @@ body {
   border-color: var(--accent-pink);
 }
 
+/* 보컬로이드 캐릭터 고유 색상 레일 */
 .song-card.voca-miku {
   border-left: 3px solid #00e5ff;
 }
 
+/* 하츠네 미쿠 */
 .song-card.voca-rin {
   border-left: 3px solid #ffb300;
 }
 
+/* 카가미네 린 */
 .song-card.voca-len {
   border-left: 3px solid #fdd835;
 }
 
+/* 카가미네 렌 */
 .song-card.voca-luka {
   border-left: 3px solid #ff80ab;
 }
 
+/* 메구리네 루카 */
+.song-card.voca-kaito {
+  border-left: 3px solid #1e88e5;
+}
+
+/* KAITO */
+.song-card.voca-meiko {
+  border-left: 3px solid #e53935;
+}
+
+/* MEIKO */
 .song-card.voca-gumi {
   border-left: 3px solid #76ff03;
 }
 
-/* 헤더 검색바 및 컨트롤러 */
+/* GUMI */
+.song-card.voca-ia {
+  border-left: 3px solid #e040fb;
+}
+
+/* IA */
+
+/* 컨트롤 및 필터링 바 */
 .filter-bar {
   display: flex;
   align-items: center;
@@ -430,7 +455,7 @@ body {
   border-color: var(--accent-cyan);
 }
 
-/* 모달 및 안내 레이아웃 */
+/* 통합 검색 모달 레이아웃 */
 .search-modal {
   position: fixed;
   top: 0;

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TJ노래방 J-POP & 보컬로이드 라이브러리</title>
-  <meta name="description" content="TJ노래방 J-POP 전체 수록곡, 최신 신곡 업데이트, 보컬로이드 수록곡 및 한국어 발음 안내 대시보드" />
+  <meta name="description" content="TJ노래방 J-POP 전체 수록곡, 최신 신곡 업데이트, 보컬로이드 캐릭터별 분류 및 한국어 발음 안내 대시보드" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>" />
@@ -42,9 +42,9 @@
   <section class="hero" aria-label="대시보드 소개">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-label">🎵 TJ 노래방 중복 정화 처리 완료 라이브러리</div>
+        <div class="hero-label">🎵 한국어 발음 매핑 및 보컬로이드 정밀 분류 완료</div>
         <h1 class="hero-title">J-POP &amp; <span class="gradient-text">보컬로이드</span><br />통합 디렉토리</h1>
-        <p class="hero-desc">신곡 업데이트, 보컬로이드, J-POP 전체 라이브러리와 한국어 발음을 확인하고 나만의 북마크를 관리해 보세요.</p>
+        <p class="hero-desc">신곡 업데이트, 보컬로이드 캐릭터 분류, J-POP 라이브러리를 통해 한국어 발음과 곡 번호를 손쉽게 확인하세요.</p>
       </div>
     </div>
   </section>
@@ -61,7 +61,7 @@
       </button>
       <button id="tab-vocaloid" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-vocaloid"
         data-tab="vocaloid">
-        💜 보컬로이드 <span class="tab-count">—</span>
+        💜 보컬로이드 분류 <span class="tab-count">—</span>
       </button>
       <button id="tab-bookmark" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-bookmark"
         data-tab="bookmark">
@@ -105,11 +105,11 @@
 
     <section id="section-vocaloid" class="tab-section" role="tabpanel" aria-labelledby="tab-vocaloid">
       <div class="section-header">
-        <h2 class="section-title"><span class="section-icon">💜</span> 보컬로이드 수록곡 <span id="vocaloid-count"
+        <h2 class="section-title"><span class="section-icon">💜</span> 보컬로이드 분류 수록곡 <span id="vocaloid-count"
             style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:6px"></span></h2>
         <div class="filter-bar">
           <div class="filter-input">
-            <input type="text" id="voca-keyword" placeholder="곡명, 프로듀서 검색..." />
+            <input type="text" id="voca-keyword" placeholder="곡명, 프로듀서, 발음 검색..." />
           </div>
         </div>
       </div>
@@ -119,7 +119,10 @@
         <button class="char-chip" data-char="rin">카가미네 린</button>
         <button class="char-chip" data-char="len">카가미네 렌</button>
         <button class="char-chip" data-char="luka">메구리네 루카</button>
+        <button class="char-chip" data-char="kaito">KAITO</button>
+        <button class="char-chip" data-char="meiko">MEIKO</button>
         <button class="char-chip" data-char="gumi">GUMI</button>
+        <button class="char-chip" data-char="ia">IA</button>
       </div>
       <div class="song-grid" id="vocaloid-grid"></div>
     </section>
