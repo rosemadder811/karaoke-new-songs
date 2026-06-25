@@ -61,10 +61,7 @@
         곡번호와 함께 한눈에 확인하세요.
       </p>
       <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-number">50</span>
-          <span class="stat-label">인기 차트</span>
-        </div>
+
         <div class="stat-item">
           <span class="stat-number" id="stat-newsong">30+</span>
           <span class="stat-label">최신 신곡</span>
@@ -90,21 +87,10 @@
 <nav class="tab-nav-wrapper" role="navigation" aria-label="콘텐츠 탭">
   <div class="tab-nav" role="tablist">
     <button
-      id="tab-chart"
-      class="tab-btn tab-chart active"
+      id="tab-newsong"
+      class="tab-btn tab-newsong active"
       role="tab"
       aria-selected="true"
-      aria-controls="section-chart"
-      data-tab="chart"
-    >
-      🏆 인기차트
-      <span class="tab-count" aria-label="50곡">50</span>
-    </button>
-    <button
-      id="tab-newsong"
-      class="tab-btn tab-newsong"
-      role="tab"
-      aria-selected="false"
       aria-controls="section-newsong"
       data-tab="newsong"
     >
@@ -128,37 +114,10 @@
 <!-- ════════ 메인 ════════ -->
 <main class="main-content" id="main-content">
 
-  <!-- ─── Tab 1: 인기차트 ─── -->
-  <section
-    id="section-chart"
-    class="tab-section active"
-    role="tabpanel"
-    aria-labelledby="tab-chart"
-  >
-    <div class="section-header">
-      <h2 class="section-title">
-        <span class="section-icon icon-chart" aria-hidden="true">🏆</span>
-        JPOP 인기차트 TOP 50
-      </h2>
-      <div id="chart-source"></div>
-    </div>
-
-    <!-- TOP 3 포디움 -->
-    <div id="chart-top3" class="chart-top3" aria-label="TOP 3 곡" role="list">
-      <div class="loading-container">
-        <div class="loading-spinner"></div>
-        <p class="loading-text">차트 데이터 로딩 중...</p>
-      </div>
-    </div>
-
-    <!-- 4위~ 리스트 -->
-    <ol id="chart-list" class="chart-list" aria-label="4위부터 50위 차트"></ol>
-  </section>
-
   <!-- ─── Tab 2: 신곡 ─── -->
   <section
     id="section-newsong"
-    class="tab-section"
+    class="tab-section active"
     role="tabpanel"
     aria-labelledby="tab-newsong"
   >
@@ -299,15 +258,7 @@
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-links">
-      <a
-        href="https://www.tjmedia.com/tjsong/song_monthPopular.asp"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="footer-link"
-        aria-label="TJ미디어 공식 인기차트 (새 탭)"
-      >
-        🏆 TJ 공식 인기차트 ↗
-      </a>
+
       <a
         href="https://www.tjmedia.com/tjsong/song_search_list.asp"
         target="_blank"

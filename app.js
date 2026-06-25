@@ -4,24 +4,21 @@
  */
 
 import {
-  getJPopChart,
   getJPopNewSongs,
   getVocaloidSongs,
   getVocaloidClass,
-  getRankChangeText,
   getRelativeDateLabel,
 } from './api.js';
 
 // ── 전역 상태 ─────────────────────────────────────────────────
 const state = {
-  activeTab:      'chart',
-  chartData:      [],
+  activeTab:      'newsong',
   newSongs:       [],
   vocaloidSongs:  [],
   filteredNew:    [],
   filteredVoca:   [],
-  isLoading:      { chart: false, newsong: false, vocaloid: false },
-  source:         { chart: null, newsong: null, vocaloid: null },
+  isLoading:      { newsong: false, vocaloid: false },
+  source:         { newsong: null, vocaloid: null },
   filters: {
     newKeyword:   '',
     newSort:      'date',
@@ -34,11 +31,6 @@ const state = {
 const els = {
   tabs:         document.querySelectorAll('.tab-btn'),
   sections:     document.querySelectorAll('.tab-section'),
-  // Chart
-  chartTop3:    document.getElementById('chart-top3'),
-  chartList:    document.getElementById('chart-list'),
-  chartSource:  document.getElementById('chart-source'),
-  chartCount:   document.getElementById('chart-count'),
   // New Songs
   newSongGrid:  document.getElementById('newsong-grid'),
   newSource:    document.getElementById('newsong-source'),
@@ -71,7 +63,6 @@ function switchTab(tabName) {
   history.replaceState(null, '', `#${tabName}`);
 
   // 해당 탭 데이터 로드 (아직 없을 때만)
-  if (tabName === 'chart'   && state.chartData.length === 0)   loadChart();
   if (tabName === 'newsong' && state.newSongs.length === 0)     loadNewSongs();
   if (tabName === 'vocaloid'&& state.vocaloidSongs.length === 0)loadVocaloid();
 }
@@ -107,78 +98,6 @@ function renderSourceBanner(el, source) {
   } else {
     el.className = 'data-source-banner fallback';
     el.innerHTML = '⚠️ &nbsp;오프라인 데이터 (TJ 사이트 점검 중 — 저장된 최신 데이터 표시)';
-  }
-}
-
-// ── 인기차트 렌더링 ──────────────────────────────────────────
-
-async function loadChart() {
-  showLoading('chart-top3');
-  if (els.chartList) els.chartList.innerHTML = '';
-
-  try {
-    const { data, source } = await getJPopChart();
-    state.chartData = data;
-    state.source.chart = source;
-    renderChart(data);
-    renderSourceBanner(els.chartSource, source);
-    setTabCount('chart', data.length);
-  } catch (e) {
-    if (els.chartTop3) {
-      els.chartTop3.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><p>데이터를 불러올 수 없습니다.</p></div>`;
-    }
-  }
-}
-
-function renderChart(data) {
-  const top3   = data.slice(0, 3);
-  const rest   = data.slice(3);
-
-  // TOP 3 포디움
-  if (els.chartTop3) {
-    els.chartTop3.innerHTML = top3.map((song, i) => {
-      const medals = ['🥇', '🥈', '🥉'];
-      const { text: changeText, cls: changeCls } = getRankChangeText(song.rankChange);
-      return `
-        <div class="chart-podium rank-${i + 1} fade-in-up fade-in-up-delay-${i + 1}">
-          <div class="podium-rank">${medals[i]}</div>
-          <div class="podium-title">${escHtml(song.title)}</div>
-          <div class="podium-artist">${escHtml(song.artist)}</div>
-          <div class="podium-songno">
-            🎤 번호&nbsp;<span>${escHtml(song.songNo)}</span>
-          </div>
-          <div class="rank-change ${changeCls}" style="margin-top:8px;font-size:11px">${changeText}</div>
-        </div>`;
-    }).join('');
-  }
-
-  // 4위 이하 리스트
-  if (els.chartList) {
-    els.chartList.innerHTML = rest.map(song => {
-      const { text: changeText, cls: changeCls } = getRankChangeText(song.rankChange);
-      const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(song.title)}`;
-      return `
-        <li class="chart-item fade-in-up">
-          <div class="item-rank">
-            <span class="rank-num">${song.rank}</span>
-            <span class="rank-change ${changeCls}">${changeText}</span>
-          </div>
-          <div class="item-info">
-            <div class="item-title">${escHtml(song.title)}</div>
-            <div class="item-meta">
-              <span class="item-artist">${escHtml(song.artist)}</span>
-              <span class="song-no-badge">
-                <span class="no-label">NO.</span>${escHtml(song.songNo)}
-              </span>
-            </div>
-          </div>
-          <div class="item-actions">
-            <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">
-              TJ검색 ↗
-            </a>
-          </div>
-        </li>`;
-    }).join('');
   }
 }
 
@@ -498,7 +417,7 @@ async function init() {
 
   // URL hash로 초기 탭 결정
   const hash = location.hash.slice(1);
-  const initialTab = ['chart','newsong','vocaloid'].includes(hash) ? hash : 'chart';
+  const initialTab = ['newsong','vocaloid'].includes(hash) ? hash : 'newsong';
 
   bindEvents();
   initParticles();
