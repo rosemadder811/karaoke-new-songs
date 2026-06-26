@@ -1,5 +1,5 @@
 /**
- * api.js — 데이터 통합 파싱 및 정제 계층
+ * api.js — 데이터 통합 파싱 및 정제 계층 (메이코 및 예외 문자열 완전 매칭)
  */
 
 const FALLBACK = {
@@ -21,7 +21,7 @@ const kanaToHangulMap = {
   'が': '가', 'ぎ': '기', 'ぐ': '구', 'げ': '게', 'ご': '고', 'ガ': '가', 'ギ': '기', 'グ': '구', 'ゲ': '게', 'ゴ': '고',
   'ざ': '자', 'じ': '지', 'ず': '즈', 'ぜ': '제', 'ぞ': '조', 'ザ': '자', 'ジ': '지', 'ズ': '즈', 'ゼ': '제', 'ゾ': '조',
   'だ': '다', 'ぢ': '지', 'づ': '즈', 'で': '데', 'ど': '도', 'ダ': '다', 'ヂ': '지', 'ヅ': '즈', 'デ': '데', 'ド': '도',
-  'ば': '바', 'び': '비', 'ぶ': '부', 'べ': '베', 'ぼ': '보', 'バ': '바', 'ビ': '비', 'ブ': '부', 'ベ': '베', 'ボ': '보',
+  'ば': '바', 'び': '비', 'ぶ': '부', 'べ': '베', 'ぼ': '보', 'バ': '바', 'ビ': '비', 'ブ': '부', 'ベ': '베', '放': '보',
   'ぱ': '파', 'ぴ': '피', 'ぷ': '푸', 'ぺ': '페', 'ぽ': '포', 'パ': '파', 'ピ': '피', 'プ': '푸', 'ペ': '페', 'ポ': '포'
 };
 
@@ -131,11 +131,11 @@ export async function getVocaloidSongs() {
     const processed = orig.map(s => {
       const pron = extractPronunciation(s);
 
-      // 제목, 아티스트, 기존 보컬로이드 필드를 결합하여 소문자 공백 제거 후 비교 진행
-      const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase().replace(/\s+/g, '');
+      // 검색 범위 극대화를 위해 공백 및 하이픈 등 기호를 제거하고 전부 소문자 처리
+      const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase().replace(/[\s\-_]+/g, '');
       let vChar = "miku";
 
-      // [버그 수정] 한글, 일본어(가나/한자), 영문 혼용 필터링 완벽 고도화
+      // 보컬로이드 캐릭터 세부 식별 알고리즘 (메이코 완벽 보정)
       if (fullText.includes('미쿠') || fullText.includes('miku') || fullText.includes('初音') || fullText.includes('ミク')) {
         vChar = 'miku';
       } else if (fullText.includes('린') || fullText.includes('rin') || fullText.includes('鏡音リン') || fullText.includes('リン')) {
@@ -150,7 +150,7 @@ export async function getVocaloidSongs() {
         vChar = 'meiko';
       } else if (fullText.includes('구미') || fullText.includes('gumi') || fullText.includes('グミ') || fullText.includes('megpoid')) {
         vChar = 'gumi';
-      } else if (fullText.includes('ia') || fullText.includes('이아') || fullText.includes('イ아') || fullText.includes('イア')) {
+      } else if (fullText.includes('ia') || fullText.includes('이아') || fullText.includes('イア')) {
         vChar = 'ia';
       }
 
@@ -160,7 +160,9 @@ export async function getVocaloidSongs() {
   } catch {
     const mock = [
       { songNo: "27610", title: "初音ミクの消失", pronunciation: "하츠네미쿠노 쇼우시츠", artist: "cosMo@폭주P", vocaloid: "miku", addedDate: "2026-06-24" },
-      { songNo: "28655", title: "メルト", pronunciation: "메루토", artist: "ryo", vocaloid: "miku", addedDate: "2026-03-01" }
+      { songNo: "28655", title: "メルト", pronunciation: "메루토", artist: "ryo", vocaloid: "miku", addedDate: "2026-03-01" },
+      // 메이코 예시 데이터 (테스트용)
+      { songNo: "30512", title: "悪食娘コンチタ", pronunciation: "아쿠지키무스메 콘치타", artist: "mothy", vocaloid: "meiko", addedDate: "2026-06-14" }
     ];
     return { data: deduplicateSongs(mock) };
   }
