@@ -1,69 +1,118 @@
 /* ════════════════════════════════════════════════════════
-   app.js — TJ 일본노래 검색기 메인 로직
-   songs.json 구조: { id, title, artist, category, isStar, tieup }
-   카테고리: "0-9/ENG" | "가~다" | "라~바" | "사~아" | "자~하" | "보컬로이드/기타"
+   app.js — 개편된 대분류/소목록 및 한국어 발음 통합 검색 엔진
    ════════════════════════════════════════════════════════ */
 
 (async () => {
-  /* ─── 배경 파티클 캔버스 ─── */
   initParticles();
 
-  /* ─── 데이터 로드 ─── */
   let db = await MusicAPI.loadDatabase();
   if (db.length === 0) {
-    showFatalError('songs.json 파일을 불러올 수 없습니다.<br>파일이 같은 폴더에 있는지 확인해주세요.');
+    document.getElementById('songsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;">데이터 로드에 실패했습니다. songs.json 파일 위치를 확인하세요.</div>';
     return;
   }
 
-  /* ─── 상태 ─── */
+  /* ─── 상태 컨트롤러 ─── */
   const state = {
-    category: 'ALL',
+    category: 'animation',  // animation, jpop, vocaloid, BOOKMARK
+    subGroup: 'ALL',        // 소목록 필터 타겟값
     query: '',
     sort: 'default',
     starOnly: false,
     page: 1,
-    perPage: 60,
-    bookmarks: JSON.parse(localStorage.getItem('tj_bm_v2') || '[]'),
-    selectedSong: null,
+    perPage: 30,
+    bookmarks: JSON.parse(localStorage.getItem('tj_bm_v2') || '[]')
   };
 
-  /* ─── DOM refs ─── */
-  const $grid       = document.getElementById('songsGrid');
-  const $search     = document.getElementById('searchInput');
-  const $clear      = document.getElementById('searchClear');
-  const $result     = document.getElementById('resultCount');
-  const $total      = document.getElementById('totalCount');
-  const $starCount  = document.getElementById('starCount');
-  const $bmCount    = document.getElementById('bmCount');
+  /* ─── DOM 참조 객체 ─── */
+  const $grid = document.getElementById('songsGrid');
+  const $search = document.getElementById('searchInput');
+  const $clear = document.getElementById('searchClear');
+  const $result = document.getElementById('resultCount');
+  const $total = document.getElementById('totalCount');
+  const $starCount = document.getElementById('starCount');
+  const $bmCount = document.getElementById('bmCount');
   const $pagination = document.getElementById('pagination');
-  const $sortSel    = document.getElementById('sortSelect');
-  const $starOnly   = document.getElementById('starOnly');
-  const $modal      = document.getElementById('modalOverlay');
-  const $modalBody  = document.getElementById('modalContent');
+  const $sortSel = document.getElementById('sortSelect');
+  const $starOnly = document.getElementById('starOnly');
+  const $modal = document.getElementById('modalOverlay');
+  const $modalBody = document.getElementById('modalContent');
   const $modalClose = document.getElementById('modalClose');
-  const $catNav     = document.getElementById('categoryNav');
+  const $subSidebar = document.getElementById('subSidebar');
+  const $sidebarTitle = document.getElementById('sidebarTitle');
+  const $subList = document.getElementById('subList');
 
-  /* ─── 초기 통계 설정 ─── */
-  const totalStars = db.filter(s => s.isStar).length;
+  // 상단 스펙 통계 세팅
   $total.textContent = db.length.toLocaleString();
-  $starCount.textContent = totalStars.toLocaleString();
-  updateBmCount();
+  $starCount.textContent = db.filter(s => s.isStar).length.toLocaleString();
+  $bmCount.textContent = state.bookmarks.length.toLocaleString();
 
-  /* ─── 카테고리 탭 동적 생성 ─── */
-  buildCategoryTabs(db);
+  // 최초 사이드바 유효성 트리거 초기화
+  switchCategory(state.category);
 
-  /* ─── 카테고리 탭 이벤트 (event delegation) ─── */
+  /* ─── 대분류 탭 이벤트 위임 ─── */
   document.getElementById('categoryNav').addEventListener('click', e => {
     const btn = e.target.closest('.cat-btn');
     if (!btn) return;
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
     state.category = btn.dataset.cat;
+    state.subGroup = 'ALL';
     state.page = 1;
-    render();
+    switchCategory(state.category);
   });
 
-  /* ─── 검색 이벤트 ─── */
+  function switchCategory(cat) {
+    if (cat === 'jpop' || cat === 'vocaloid') {
+      $subSidebar.style.display = 'flex';
+      $sidebarTitle.textContent = cat === 'jpop' ? '가수별 소목록' : '보컬로이드 기종';
+      buildSubSidebar(cat);
+    } else {
+      $subSidebar.style.display = 'none';
+    }
+    render();
+  }
+
+  /* ─── 소목록(아코디언) 빌더 ─── */
+  function buildSubSidebar(cat) {
+    $subList.innerHTML = '';
+    const filtered = db.filter(s => s.type === cat);
+
+    const groups = {};
+    filtered.forEach(s => {
+      if (s.subGroup) groups[s.subGroup] = (groups[s.subGroup] || 0) + 1;
+    });
+
+    // 전체보기 기본 생성
+    const allLi = document.createElement('li');
+    allLi.className = `sub-item ${state.subGroup === 'ALL' ? 'active' : ''}`;
+    allLi.textContent = `전체보기 (${filtered.length})`;
+    allLi.addEventListener('click', () => {
+      document.querySelectorAll('.sub-item').forEach(li => li.classList.remove('active'));
+      allLi.classList.add('active');
+      state.subGroup = 'ALL';
+      state.page = 1;
+      render();
+    });
+    $subList.appendChild(allLi);
+
+    // 내부 가수명 기준 가나다/알파벳 순 정렬 출력
+    Object.keys(groups).sort().forEach(g => {
+      const li = document.createElement('li');
+      li.className = `sub-item ${state.subGroup === g ? 'active' : ''}`;
+      li.textContent = `${g} (${groups[g]})`;
+      li.addEventListener('click', () => {
+        document.querySelectorAll('.sub-item').forEach(li => li.classList.remove('active'));
+        li.classList.add('active');
+        state.subGroup = g;
+        state.page = 1;
+        render();
+      });
+      $subList.appendChild(li);
+    });
+  }
+
+  /* ─── 실시간 인풋 제어 핸들러 ─── */
   $search.addEventListener('input', () => {
     state.query = $search.value.trim().toLowerCase();
     state.page = 1;
@@ -76,407 +125,190 @@
     state.query = '';
     state.page = 1;
     $clear.classList.remove('visible');
-    $search.focus();
     render();
   });
 
-  /* ─── 정렬 이벤트 ─── */
-  $sortSel.addEventListener('change', () => {
-    state.sort = $sortSel.value;
-    state.page = 1;
-    render();
-  });
-
-  /* ─── 전용곡 필터 ─── */
-  $starOnly.addEventListener('change', () => {
-    state.starOnly = $starOnly.checked;
-    state.page = 1;
-    render();
-  });
-
-  /* ─── 모달 닫기 ─── */
+  $sortSel.addEventListener('change', () => { state.sort = $sortSel.value; state.page = 1; render(); });
+  $starOnly.addEventListener('change', () => { state.starOnly = $starOnly.checked; state.page = 1; render(); });
   $modalClose.addEventListener('click', closeModal);
   $modal.addEventListener('click', e => { if (e.target === $modal) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* ════════════════════════════════════
-     FILTER + SORT
-     ════════════════════════════════════ */
+  /* ─── 다차원 필터 및 정렬 연산 처리 ─── */
   function getFiltered() {
     let arr = db;
 
-    /* 카테고리 필터 */
     if (state.category === 'BOOKMARK') {
       arr = arr.filter(s => state.bookmarks.includes(s.id));
-    } else if (state.category !== 'ALL') {
-      arr = arr.filter(s => s.category === state.category);
+    } else {
+      arr = arr.filter(s => s.type === state.category);
+      if ((state.category === 'jpop' || state.category === 'vocaloid') && state.subGroup !== 'ALL') {
+        arr = arr.filter(s => s.subGroup === state.subGroup);
+      }
     }
 
-    /* 전용곡 필터 */
     if (state.starOnly) arr = arr.filter(s => s.isStar);
 
-    /* 검색어 필터 */
+    /* 한국어 발음 표기(titleYomi, artistYomi) 연동 실시간 다차원 필터링 */
     if (state.query) {
       const q = state.query;
       arr = arr.filter(s =>
         s.id.includes(q) ||
         s.title.toLowerCase().includes(q) ||
+        (s.titleKana && s.titleKana.toLowerCase().includes(q)) ||
+        (s.titleYomi && s.titleYomi.includes(q)) || // 한국어 발음 매칭 규칙
         s.artist.toLowerCase().includes(q) ||
-        (s.tieup && s.tieup.toLowerCase().includes(q))
+        (s.artistYomi && s.artistYomi.includes(q)) || // 아티스트 한국어 발음 매칭
+        (s.tieUp && s.tieUp.toLowerCase().includes(q))
       );
     }
 
-    /* 정렬 */
-    switch (state.sort) {
-      case 'id-asc':    arr = [...arr].sort((a,b) => Number(a.id) - Number(b.id)); break;
-      case 'id-desc':   arr = [...arr].sort((a,b) => Number(b.id) - Number(a.id)); break;
-      case 'title-asc': arr = [...arr].sort((a,b) => a.title.localeCompare(b.title, 'ko')); break;
-      case 'title-desc':arr = [...arr].sort((a,b) => b.title.localeCompare(a.title, 'ko')); break;
-      default: break;
-    }
+    if (state.sort === 'id-asc') arr = [...arr].sort((a, b) => Number(a.id) - Number(b.id));
+    if (state.sort === 'id-desc') arr = [...arr].sort((a, b) => Number(b.id) - Number(a.id));
+    if (state.sort === 'title-asc') arr = [...arr].sort((a, b) => a.title.localeCompare(b.title, 'ko'));
 
     return arr;
   }
 
-  /* ════════════════════════════════════
-     MAIN RENDER
-     ════════════════════════════════════ */
+  /* ─── 메인 UI 렌더링 ─── */
   function render() {
     const filtered = getFiltered();
-    const total    = filtered.length;
-    const pages    = Math.ceil(total / state.perPage);
+    const total = filtered.length;
+    const pages = Math.ceil(total / state.perPage);
 
-    // 페이지 범위 보정
     if (state.page > pages && pages > 0) state.page = pages;
-
     $result.textContent = total.toLocaleString();
 
-    // 슬라이스
     const start = (state.page - 1) * state.perPage;
     const slice = filtered.slice(start, start + state.perPage);
 
-    // 그리드 렌더
     $grid.innerHTML = '';
 
     if (total === 0) {
-      $grid.innerHTML = `
-        <div class="empty-state">
-          <span class="empty-icon">🔍</span>
-          <h3>${state.category === 'BOOKMARK' ? '즐겨찾기가 비어있어요!' : '검색 결과가 없습니다'}</h3>
-          <p>${state.category === 'BOOKMARK'
-            ? '카드의 ☆ 버튼을 눌러 즐겨찾기를 추가해보세요.'
-            : '"' + (state.query || state.category) + '"에 해당하는 곡을 찾을 수 없습니다.'
-          }</p>
-        </div>`;
+      $grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:6px;color:var(--text-secondary);margin-top:40px;">조건에 일치하는 데이터가 존재하지 않습니다.</div>`;
       $pagination.innerHTML = '';
       return;
     }
 
-    const frag = document.createDocumentFragment();
-    slice.forEach((song, i) => {
-      const card = createCard(song, i);
-      frag.appendChild(card);
-    });
-    $grid.appendChild(frag);
+    slice.forEach((song) => {
+      const isBm = state.bookmarks.includes(song.id);
+      const card = document.createElement('div');
+      card.className = `song-card`;
 
-    // 페이지네이션
+      const starBadge = song.isStar ? `<span class="badge-star">★ 전용곡</span>` : '';
+      const yomiLine = song.titleYomi ? `<div class="song-yomi">[발음: ${escHtml(song.titleYomi)}]</div>` : '';
+      const tieupLine = song.tieUp ? `<div class="card-tieup">📺 ${escHtml(song.tieUp)}</div>` : '';
+      const artistYomi = song.artistYomi ? ` (${escHtml(song.artistYomi)})` : '';
+
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="card-id">TJ ${escHtml(song.id)}</span>
+          <div>${starBadge}</div>
+        </div>
+        <div class="song-title">${escHtml(song.title)}</div>
+        ${yomiLine}
+        ${tieupLine}
+        <div class="card-bottom">
+          <div class="card-artist">가수: <span>${escHtml(song.artist)}${artistYomi}</span></div>
+          <button class="bm-btn ${isBm ? 'active' : ''}">${isBm ? '⭐' : '☆'}</button>
+        </div>
+      `;
+
+      card.addEventListener('click', e => {
+        if (!e.target.closest('.bm-btn')) openModal(song);
+      });
+
+      card.querySelector('.bm-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        toggleBm(song.id);
+      });
+
+      $grid.appendChild(card);
+    });
+
     renderPagination(pages);
-
-    // 부드럽게 스크롤 (페이지 이동 시)
-    if (state.page > 1) {
-      $grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   }
 
-  /* ════════════════════════════════════
-     CARD FACTORY
-     ════════════════════════════════════ */
-  function createCard(song, animIdx) {
-    const isBm = state.bookmarks.includes(song.id);
-    const div  = document.createElement('div');
-    div.className = `song-card${song.isStar ? ' star-card' : ''}`;
-    div.style.animationDelay = `${Math.min(animIdx * 15, 400)}ms`;
-
-    const starBadge = song.isStar
-      ? `<span class="badge-star">★ 전용곡</span>`
-      : '';
-    const catBadge  = `<span class="badge-cat">${song.category}</span>`;
-
-    const tieupLine = song.tieup && song.tieup !== song.title
-      ? `<div class="card-tieup">📺 ${escHtml(song.tieup)}</div>`
-      : '';
-
-    div.innerHTML = `
-      <div class="card-top">
-        <span class="card-id">TJ ${escHtml(song.id)}</span>
-        <div class="card-badges">${starBadge}${catBadge}</div>
-      </div>
-      <div class="card-title">${escHtml(song.title)}</div>
-      ${tieupLine}
-      <div class="card-bottom">
-        <div class="card-artist">가수: <span>${escHtml(song.artist)}</span></div>
-        <button class="bm-btn${isBm ? ' active' : ''}" data-id="${song.id}" title="${isBm ? '즐겨찾기 해제' : '즐겨찾기 추가'}">
-          ${isBm ? '⭐' : '☆'}
-        </button>
-      </div>`;
-
-    /* 카드 클릭 → 모달 */
-    div.addEventListener('click', e => {
-      if (!e.target.closest('.bm-btn')) openModal(song);
-    });
-
-    /* 즐겨찾기 버튼 */
-    div.querySelector('.bm-btn').addEventListener('click', e => {
-      e.stopPropagation();
-      toggleBm(song.id);
-    });
-
-    return div;
-  }
-
-  /* ════════════════════════════════════
-     PAGINATION
-     ════════════════════════════════════ */
   function renderPagination(pages) {
     $pagination.innerHTML = '';
     if (pages <= 1) return;
-
     const cur = state.page;
 
-    const mkBtn = (label, page, disabled = false, active = false) => {
+    const addBtn = (label, targetPage, disabled = false, active = false) => {
       const btn = document.createElement('button');
-      btn.className = `page-btn${active ? ' active' : ''}`;
+      btn.className = `page-btn ${active ? 'active' : ''}`;
       btn.textContent = label;
       btn.disabled = disabled;
       if (!disabled && !active) {
-        btn.addEventListener('click', () => { state.page = page; render(); });
+        btn.addEventListener('click', () => { state.page = targetPage; render(); });
       }
-      return btn;
+      $pagination.appendChild(btn);
     };
 
-    // 이전
-    $pagination.appendChild(mkBtn('‹', cur - 1, cur === 1));
-
-    // 페이지 번호 (최대 9개 표시)
-    const range = buildPageRange(cur, pages);
-    range.forEach(item => {
-      if (item === '…') {
-        const el = document.createElement('span');
-        el.className = 'page-ellipsis';
-        el.textContent = '…';
-        $pagination.appendChild(el);
-      } else {
-        $pagination.appendChild(mkBtn(item, item, false, item === cur));
+    addBtn('‹', cur - 1, cur === 1);
+    for (let i = 1; i <= pages; i++) {
+      if (i === 1 || i === pages || (i >= cur - 2 && i <= cur + 2)) {
+        addBtn(i, i, false, i === cur);
+      } else if (i === cur - 3 || i === cur + 3) {
+        const span = document.createElement('span');
+        span.textContent = '…';
+        span.style.padding = '0 5px';
+        $pagination.appendChild(span);
       }
-    });
-
-    // 다음
-    $pagination.appendChild(mkBtn('›', cur + 1, cur === pages));
-  }
-
-  function buildPageRange(cur, total) {
-    if (total <= 9) return Array.from({length: total}, (_, i) => i + 1);
-    const pages = new Set([1, total]);
-    for (let i = Math.max(2, cur - 2); i <= Math.min(total - 1, cur + 2); i++) pages.add(i);
-    const sorted = [...pages].sort((a,b) => a - b);
-    const result = [];
-    let prev = 0;
-    for (const p of sorted) {
-      if (p - prev > 1) result.push('…');
-      result.push(p);
-      prev = p;
     }
-    return result;
+    addBtn('›', cur + 1, cur === pages);
   }
 
-  /* ════════════════════════════════════
-     MODAL
-     ════════════════════════════════════ */
+  function toggleBm(id) {
+    const idx = state.bookmarks.indexOf(id);
+    if (idx === -1) state.bookmarks.push(id);
+    else state.bookmarks.splice(idx, 1);
+
+    localStorage.setItem('tj_bm_v2', JSON.stringify(state.bookmarks));
+    $bmCount.textContent = state.bookmarks.length.toLocaleString();
+    if (state.category === 'BOOKMARK') render();
+    else render();
+  }
+
   function openModal(song) {
-    state.selectedSong = song;
-    renderModal(song);
-    $modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    $modal.classList.remove('open');
-    document.body.style.overflow = '';
-    state.selectedSong = null;
-  }
-
-  function renderModal(song) {
     const isBm = state.bookmarks.includes(song.id);
-    const ytQ  = encodeURIComponent(`${song.title} ${song.artist}`);
-
     $modalBody.innerHTML = `
       <div class="modal-id">TJ ${escHtml(song.id)}</div>
       <div class="modal-title">${escHtml(song.title)}</div>
-      <div class="modal-badges">
-        ${song.isStar ? '<span class="badge-star">★ 전용곡</span>' : ''}
-        <span class="badge-cat">${escHtml(song.category)}</span>
-      </div>
-      <div class="modal-divider"></div>
-      <div class="modal-row">
-        <span class="modal-label">🎤 가수</span>
-        <span class="modal-value">${escHtml(song.artist)}</span>
-      </div>
-      <div class="modal-row">
-        <span class="modal-label">📺 타이업</span>
-        <span class="modal-value">${escHtml(song.tieup || '정보 없음')}</span>
-      </div>
-      <div class="modal-row">
-        <span class="modal-label">📂 카테고리</span>
-        <span class="modal-value">${escHtml(song.category)}</span>
-      </div>
+      <div class="modal-row"><span class="modal-label">🎤 가수</span><span>${escHtml(song.artist)}</span></div>
+      <div class="modal-row"><span class="modal-label">📺 타이업</span><span>${escHtml(song.tieUp || '없음')}</span></div>
       <div class="modal-actions">
-        <a class="btn-youtube" href="https://www.youtube.com/results?search_query=${ytQ}" target="_blank" rel="noopener">
-          ▶ YouTube 검색
-        </a>
-        <button class="btn-bm-modal${isBm ? ' active' : ''}" id="modalBmBtn">
-          ${isBm ? '⭐ 즐겨찾기 해제' : '☆ 즐겨찾기 추가'}
-        </button>
-      </div>`;
-
-    document.getElementById('modalBmBtn').addEventListener('click', () => {
-      toggleBm(song.id);
-      renderModal(song); // 버튼 상태 새로고침
-    });
+        <a class="btn-youtube" href="https://www.youtube.com/results?search_query=${encodeURIComponent(song.title + ' ' + song.artist)}" target="_blank">▶ YouTube 검색</a>
+        <button class="btn-bm-modal" id="modalBmBtn">${isBm ? '⭐ 해제' : '☆ 추가'}</button>
+      </div>
+    `;
+    $modal.classList.add('open');
+    document.getElementById('modalBmBtn').addEventListener('click', () => { toggleBm(song.id); closeModal(); });
   }
 
-  /* ════════════════════════════════════
-     BOOKMARK
-     ════════════════════════════════════ */
-  function toggleBm(id) {
-    const idx = state.bookmarks.indexOf(id);
-    if (idx === -1) {
-      state.bookmarks.push(id);
-    } else {
-      state.bookmarks.splice(idx, 1);
-    }
-    localStorage.setItem('tj_bm_v2', JSON.stringify(state.bookmarks));
-    updateBmCount();
-    // 즐겨찾기 탭이라면 다시 렌더
-    if (state.category === 'BOOKMARK') render();
-    else {
-      // 해당 카드 버튼만 업데이트
-      const btn = $grid.querySelector(`.bm-btn[data-id="${id}"]`);
-      if (btn) {
-        const isBm = state.bookmarks.includes(id);
-        btn.classList.toggle('active', isBm);
-        btn.textContent = isBm ? '⭐' : '☆';
-        btn.title = isBm ? '즐겨찾기 해제' : '즐겨찾기 추가';
-      }
-    }
-  }
+  function closeModal() { $modal.classList.remove('open'); }
+  function escHtml(str) { return str ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''; }
 
-  function updateBmCount() {
-    document.getElementById('bmCount').textContent = state.bookmarks.length.toLocaleString();
-  }
-
-  /* ════════════════════════════════════
-     UTILITIES
-     ════════════════════════════════════ */
-  function escHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  /* ════════════════════════════════════
-     DYNAMIC CATEGORY TABS
-     ════════════════════════════════════ */
-  function buildCategoryTabs(songs) {
-    // 카테고리 목록 추출 (중복 제거, 정렬)
-    const cats = [...new Set(songs.map(s => s.category))].sort((a, b) => {
-      // "0-9/ENG" 맨 앞, "보컬로이드/기타" 맨 뒤
-      if (a === '0-9/ENG') return -1;
-      if (b === '0-9/ENG') return 1;
-      if (a === '보컬로이드/기타') return 1;
-      if (b === '보컬로이드/기타') return -1;
-      return a.localeCompare(b, 'ko');
-    });
-
-    const catIcons = {
-      '0-9/ENG': '🔤',
-      '가~다': '가',
-      '라~바': '라',
-      '사~아': '사',
-      '자~차': '자',
-      '카~하': '카',
-      '보컬로이드/기타': '🤖',
-    };
-
-    const $bookmarkBtn = $catNav.querySelector('[data-cat="BOOKMARK"]');
-    cats.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'cat-btn';
-      btn.dataset.cat = cat;
-      const icon = catIcons[cat] || cat.charAt(0);
-      const count = songs.filter(s => s.category === cat).length;
-      btn.innerHTML = `<span class="cat-icon">${icon}</span> ${cat} <span class="cat-count">(${count.toLocaleString()})</span>`;
-      $catNav.insertBefore(btn, $bookmarkBtn);
-    });
-  }
-
-  function showFatalError(msg) {
-    $grid.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><h3>데이터 로드 오류</h3><p>${msg}</p></div>`;
-  }
-
-  /* ─── 초기 렌더 ─── */
-  render();
-
-  /* ════════════════════════════════════
-     BACKGROUND PARTICLES
-     ════════════════════════════════════ */
+  /* ─── 파티클 백그라운드 엔진 ─── */
   function initParticles() {
     const canvas = document.getElementById('bg-canvas');
-    const ctx    = canvas.getContext('2d');
-    let W, H, particles;
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-
-    function mkParticle() {
-      return {
-        x:  Math.random() * W,
-        y:  Math.random() * H,
-        r:  Math.random() * 1.8 + 0.3,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        a:  Math.random() * 0.55 + 0.05,
-        hue: Math.random() < 0.7 ? 270 : Math.random() < 0.5 ? 220 : 300,
-      };
-    }
-
-    function init() {
-      resize();
-      const count = Math.min(Math.floor((W * H) / 9000), 140);
-      particles = Array.from({length: count}, mkParticle);
-    }
-
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth, H = canvas.height = window.innerHeight;
+    let pts = Array.from({ length: 60 }, () => ({
+      x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2 + 0.5,
+      vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2, a: Math.random() * 0.5
+    }));
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      for (const p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 70%, 70%, ${p.a})`;
-        ctx.fill();
-
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -5) p.x = W + 5;
-        if (p.x > W + 5) p.x = -5;
-        if (p.y < -5) p.y = H + 5;
-        if (p.y > H + 5) p.y = -5;
-      }
+      pts.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(157, 78, 221, ${p.a})`; ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+      });
       requestAnimationFrame(draw);
     }
-
-    init();
     draw();
-    window.addEventListener('resize', () => { resize(); });
+    window.addEventListener('resize', () => { if (canvas) { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; } });
   }
-
 })();

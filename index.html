@@ -1,121 +1,585 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎤 TJ 일본노래 검색기 — 신곡 완전 수록</title>
-  <meta name="description" content="TJ 노래방 일본 노래 전곡 검색기. 곡 번호, 제목, 가수, 타이업 통합 검색.">
+  <title>🎤 TJ 일본노래 검색기 — 마스터 에디션</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #08060f;
+      --bg-surface: #120f1f;
+      --border-purple: rgba(157, 78, 221, 0.3);
+      --color-accent: #9d4edd;
+      --text-primary: #f3f0f7;
+      --text-secondary: #9a95a6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header & Stats */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-purple);
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+    }
+
+    .logo-text h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(to right, #e0aaff, #9d4edd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-sub {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 10px;
+    }
+
+    .stat-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-purple);
+      padding: 8px 16px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #e0aaff;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Search */
+    .search-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-purple);
+      padding: 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      color: var(--text-secondary);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 15px 14px 45px;
+      background: #08060f;
+      border: 1px solid var(--border-purple);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #e0aaff;
+      box-shadow: 0 0 10px rgba(224, 170, 255, 0.2);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+      display: none;
+    }
+
+    .search-clear.visible {
+      display: block;
+    }
+
+    /* Navigation */
+    .category-nav {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid var(--border-purple);
+      padding-bottom: 10px;
+      overflow-x: auto;
+    }
+
+    .cat-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    /* Main Container Split Layout */
+    .main-workspace {
+      display: flex;
+      gap: 20px;
+      min-height: 600px;
+    }
+
+    .sub-sidebar {
+      width: 280px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-purple);
+      border-radius: 16px;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sub-sidebar h3 {
+      font-size: 1.1rem;
+      border-bottom: 1px solid var(--border-purple);
+      padding-bottom: 10px;
+      color: #e0aaff;
+    }
+
+    .sub-list {
+      list-style: none;
+      overflow-y: auto;
+      max-height: 650px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sub-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: 0.2s;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub-item:hover,
+    .sub-item.active {
+      background: rgba(157, 78, 221, 0.2);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .songs-grid {
+      flex-grow: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      align-content: flex-start;
+    }
+
+    /* Song Card */
+    .song-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-purple);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .song-card:hover {
+      transform: translateY(-3px);
+      border-color: #e0aaff;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .card-id {
+      font-weight: bold;
+      color: #e0aaff;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+
+    .badge-star {
+      background: rgba(255, 90, 90, 0.15);
+      color: #ff5a5a;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .song-title {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .song-yomi {
+      font-size: 0.85rem;
+      color: #9d4edd;
+      font-weight: 500;
+    }
+
+    .card-tieup {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 10px;
+    }
+
+    .card-artist {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .card-artist span {
+      color: #fff;
+    }
+
+    .bm-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      filter: grayscale(1);
+      transition: 0.2s;
+    }
+
+    .bm-btn.active {
+      filter: grayscale(0);
+    }
+
+    /* Controls & Pagination */
+    .control-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-purple);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .sort-select {
+      background: #08060f;
+      color: #fff;
+      border: 1px solid var(--border-purple);
+      padding: 6px 12px;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 20px 0;
+    }
+
+    .page-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-purple);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .page-btn.active {
+      background: var(--color-accent);
+      border-color: #e0aaff;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid #e0aaff;
+      padding: 30px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-id {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #e0aaff;
+      margin-bottom: 5px;
+    }
+
+    .modal-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .modal-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-label {
+      color: var(--text-secondary);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-youtube {
+      flex: 1;
+      background: #ff0000;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .btn-bm-modal {
+      flex: 1;
+      background: #ffbc00;
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
   <canvas id="bg-canvas"></canvas>
 
   <div class="app-container">
-    <!-- ── HEADER ── -->
     <header class="site-header">
-      <div class="header-inner">
-        <div class="logo-group">
-          <div class="logo-icon">🎤</div>
-          <div class="logo-text">
-            <h1>TJ 일본노래 검색기</h1>
-            <p class="logo-sub">신곡 완전 수록판</p>
-          </div>
+      <div class="logo-group">
+        <div class="logo-icon">🎤</div>
+        <div class="logo-text">
+          <h1>TJ 일본노래 검색기</h1>
+          <p class="logo-sub">애니송·JPOP·보컬로이드 완벽 매칭 에디션</p>
         </div>
-        <div class="header-stats" id="headerStats">
-          <div class="stat-chip">
-            <span class="stat-num" id="totalCount">로딩중...</span>
-            <span class="stat-label">전체 곡</span>
-          </div>
-          <div class="stat-chip star-chip">
-            <span class="stat-num" id="starCount">—</span>
-            <span class="stat-label">★ 전용곡</span>
-          </div>
-          <div class="stat-chip bm-chip" id="bmChip">
-            <span class="stat-num" id="bmCount">0</span>
-            <span class="stat-label">즐겨찾기</span>
-          </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-chip">
+          <span class="stat-num" id="totalCount">—</span>
+          <span class="stat-label">전체 수록곡</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-num" id="starCount">—</span>
+          <span class="stat-label">★ 전용곡</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-num" id="bmCount">0</span>
+          <span class="stat-label">즐겨찾기</span>
         </div>
       </div>
     </header>
 
-    <!-- ── SEARCH BAR ── -->
     <section class="search-section">
       <div class="search-wrapper">
         <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input"
-          placeholder="곡 번호, 제목, 가수, 타이업 검색..." autocomplete="off" spellcheck="false">
-        <button class="search-clear" id="searchClear" title="검색 초기화">✕</button>
-      </div>
-      <div class="search-tips" id="searchTips">
-        <span class="tip-tag">💡 곡번호</span>
-        <span class="tip-tag">🎵 제목</span>
-        <span class="tip-tag">🎤 가수</span>
-        <span class="tip-tag">📺 타이업</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="곡 번호, 제목, 가수, 발음, 타이업 실시간 통합 검색..."
+          autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="searchClear">✕</button>
       </div>
     </section>
 
-    <!-- ── CATEGORY TABS (populated by app.js) ── -->
     <nav class="category-nav" id="categoryNav">
-      <button class="cat-btn active" data-cat="ALL">
-        <span class="cat-icon">🎶</span> 전체
-      </button>
-      <!-- Category buttons will be inserted here by app.js -->
-      <button class="cat-btn bookmark-tab" data-cat="BOOKMARK">
-        <span class="cat-icon">⭐</span> 즐겨찾기
-      </button>
+      <button class="cat-btn active" data-cat="animation">🎬 애니 노래</button>
+      <button class="cat-btn" data-cat="jpop">🎸 J-POP</button>
+      <button class="cat-btn" data-cat="vocaloid">🤖 보컬로이드</button>
+      <button class="cat-btn" data-cat="BOOKMARK">⭐ 즐겨찾기 목록</button>
     </nav>
 
-    <!-- ── CONTROL BAR ── -->
     <div class="control-bar">
       <div class="result-info">
         <span id="resultCount" class="result-count">—</span>
-        <span class="result-label">곡 표시 중</span>
+        <span class="result-label">곡 매칭됨</span>
       </div>
       <div class="controls-right">
-        <div class="sort-group">
-          <label for="sortSelect" class="sort-label">정렬</label>
-          <select id="sortSelect" class="sort-select">
-            <option value="default">기본 순서</option>
-            <option value="id-asc">곡번호 ↑</option>
-            <option value="id-desc">곡번호 ↓</option>
-            <option value="title-asc">제목 가나다 ↑</option>
-            <option value="title-desc">제목 가나다 ↓</option>
-          </select>
-        </div>
-        <label class="star-toggle">
-          <input type="checkbox" id="starOnly"> ★ 전용곡만
-        </label>
+        <select id="sortSelect" class="sort-select">
+          <option value="default">기본 순서</option>
+          <option value="id-asc">곡번호 ↑</option>
+          <option value="id-desc">곡번호 ↓</option>
+          <option value="title-asc">제목 가나다 ↑</option>
+        </select>
+        <label><input type="checkbox" id="starOnly"> ★ 전용곡만</label>
       </div>
     </div>
 
-    <!-- ── SONG GRID ── -->
-    <main class="songs-grid" id="songsGrid">
-      <div class="loading-state" id="loadingState">
-        <div class="spinner"></div>
-        <p>곡 데이터를 불러오는 중...</p>
-      </div>
-    </main>
+    <div class="main-workspace">
+      <aside class="sub-sidebar" id="subSidebar">
+        <h3 id="sidebarTitle">소목록</h3>
+        <ul class="sub-list" id="subList"></ul>
+      </aside>
 
-    <!-- ── PAGINATION ── -->
+      <main class="songs-grid" id="songsGrid"></main>
+    </div>
+
     <div class="pagination" id="pagination"></div>
-
-    <!-- ── FOOTER ── -->
-    <footer class="site-footer">
-      <p>🎤 TJ 일본노래 검색기 — songs.json 기반 수록 데이터</p>
-    </footer>
   </div>
 
-  <!-- ── MODAL ── -->
   <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-box" id="modalBox">
+    <div class="modal-box">
       <button class="modal-close" id="modalClose">✕</button>
       <div class="modal-content" id="modalContent"></div>
     </div>
   </div>
 
+  <script src="api.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
