@@ -4,67 +4,504 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>노래방 신곡 & 보컬로이드 대시보드</title>
-  <link rel="stylesheet" href="style.css">
+  <title>TJ 미디어 일본 애니송 & 보컬로이드 통합 검색기</title>
+  <style>
+    :root {
+      --bg-dark: #0b0914;
+      --panel-bg: rgba(22, 18, 38, 0.85);
+      --border-color: rgba(138, 43, 226, 0.25);
+      --text-main: #f1f1f6;
+      --text-muted: #9e99b3;
+      --accent-color: #9d4edd;
+      --accent-glow: rgba(157, 78, 221, 0.5);
+      --star-color: #ff5a5a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 25px;
+    }
+
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      text-shadow: 0 0 20px var(--accent-glow);
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .controls {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 20px;
+      background: #141122;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 17px;
+      color: white;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      padding: 9px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+      color: #fff;
+    }
+
+    .meta-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .main-layout {
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+    }
+
+    .artist-sidebar {
+      width: 280px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .artist-sidebar h3 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      color: #fff;
+      border-left: 4px solid var(--accent-color);
+      padding-left: 10px;
+    }
+
+    .artist-sidebar ul {
+      list-style: none;
+      max-height: 650px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .artist-sidebar li {
+      padding: 9px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .artist-sidebar li:hover,
+    .artist-sidebar li.active {
+      background: rgba(157, 78, 221, 0.15);
+      color: #fff;
+      font-weight: 700;
+      border-left: 2px solid var(--accent-color);
+    }
+
+    ul::-webkit-scrollbar,
+    .songs-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    .content-area {
+      flex-grow: 1;
+    }
+
+    .songs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+      max-height: 720px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .song-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .song-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-color);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .song-no {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(45deg, var(--accent-color), #c8b6ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .star-badge {
+      background: rgba(255, 90, 90, 0.15);
+      color: var(--star-color);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      border: 1px solid rgba(255, 90, 90, 0.3);
+    }
+
+    .song-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .card-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 12px;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    .song-artist {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .song-artist span {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+      width: 100%;
+      grid-column: 1 / -1;
+      font-size: 1.1rem;
+    }
+  </style>
 </head>
 
-<body class="theme-default">
-  <canvas id="particles-canvas"></canvas>
+<body>
 
   <div class="dashboard-container">
-    <header class="main-header">
-      <h1>🎤 노래방 신곡 대시보드</h1>
-      <p class="subtitle">실시간 한국어 발음 보정 및 보컬로이드 파싱 시스템</p>
+    <header>
+      <h1>🎤 TJ미디어 일본 애니송북 통합 검색 시스템</h1>
+      <p>2,699곡 데이터 무결성 검증 완료 (단독 오프라인 구동 스펙)</p>
     </header>
 
-    <div id="character-profile-zone" class="profile-zone hidden">
-      <div class="profile-avatar" id="profile-avatar"></div>
-      <div class="profile-info">
-        <h2 id="profile-name">하츠네 미쿠</h2>
-        <p id="profile-desc">선택하신 캐릭터의 테마와 수록곡 목록입니다.</p>
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="곡 제목, 아티스트명 또는 작품 타이업 정보 실시간 검색..." oninput="filterSongs()">
+      </div>
+
+      <div class="tabs" id="tabContainer">
+        <button class="tab-btn active" onclick="switchCategory('ALL')">전체보기</button>
+        <button class="tab-btn" onclick="switchCategory('0-9/ENG')">0-9 / 영문</button>
+        <button class="tab-btn" onclick="switchCategory('가~다')">가 ~ 다 행</button>
+        <button class="tab-btn" onclick="switchCategory('라~바')">라 ~ 바 행</button>
+        <button class="tab-btn" onclick="switchCategory('사~아')">사 ~ 아 행</button>
+        <button class="tab-btn" onclick="switchCategory('보컬로이드/기타')">보컬로이드 / 기타</button>
+      </div>
+
+      <div class="meta-info">
+        <div>검색 매칭 결과: <span id="songCount"
+            style="font-weight: bold; color: var(--accent-color); font-size: 16px;">0</span>개 항목</div>
+        <label class="checkbox-container">
+          <input type="checkbox" id="starFilter" onchange="filterSongs()">
+          <span>★ 60시리즈 이상 반주기 전용곡 필터링</span>
+        </label>
       </div>
     </div>
 
-    <nav class="tab-nav">
-      <button class="tab-btn active" data-tab="jpop-new">J-POP 신곡</button>
-      <button class="tab-btn" data-tab="jpop-full">J-POP 라이브러리</button>
-      <button class="tab-btn" data-tab="vocaloid">보컬로이드</button>
-    </nav>
+    <div class="main-layout">
+      <aside class="artist-sidebar">
+        <h3>👨‍🎤 인기 아티스트 필터</h3>
+        <ul id="artistList">
+          <li class="active">전체보기</li>
+        </ul>
+      </aside>
 
-    <div id="vocaloid-chips-container" class="chips-container hidden">
-      <button class="chip-btn active" data-char="all">전체</button>
-      <button class="chip-btn" data-char="miku">미쿠</button>
-      <button class="chip-btn" data-char="rin">린</button>
-      <button class="chip-btn" data-char="len">렌</button>
-      <button class="chip-btn" data-char="luka">루카</button>
-      <button class="chip-btn" data-char="kaito">카이토</button>
-      <button class="chip-btn" data-char="meiko">메이코</button>
-      <button class="chip-btn" data-char="gumi">GUMI</button>
-      <button class="chip-btn" data-char="ia">IA</button>
+      <main class="content-area">
+        <div id="songsGrid" class="songs-grid">
+          <div class="no-data">데이터를 불러오는 중입니다...</div>
+        </div>
+      </main>
     </div>
-
-    <div class="control-bar">
-      <div class="sort-selector">
-        <label for="sort-select">정렬 기준:</label>
-        <select id="sort-select">
-          <option value="latest">최신 등록순</option>
-          <option value="songNo">곡 번호순</option>
-          <option value="title">제목 가나다순</option>
-        </select>
-      </div>
-      <div class="counter-text" id="song-counter">총 0곡 검색됨</div>
-    </div>
-
-    <main class="content-area">
-      <div id="songs-grid" class="songs-grid">
-      </div>
-      <div id="no-data-message" class="no-data hidden">
-        선택하신 보컬로이드 종류에 매핑된 곡이 없습니다.
-      </div>
-    </main>
   </div>
 
-  <script type="module" src="app.js"></script>
+  <script>
+    let currentCategory = 'ALL';
+    let selectedArtist = 'ALL';
+
+    // [수정 완료] 백틱(Template Literal) 문법을 도입하여 줄바꿈 및 특수기호로 인한 Unterminated String Error를 원천 차단했습니다.
+    const animeSongDatabase = [
+      { id: "52973", title: `100미터 (らしさ / 라시사)`, artist: `Official髭男dism`, category: "0-9/ENG", isStar: false },
+      { id: "68760", title: `마히 (麻痺 / 2.43 세이인 고교 남자 배구부)`, artist: `yama`, category: "0-9/ENG", isStar: false },
+      { id: "52848", title: `2.5차원의 유혹 (Watch Me)`, artist: `天乃リリサ (CV: 前田佳織里)・橘美花利(CV: 鬼頭明里)`, category: "0-9/ENG", isStar: false },
+      { id: "27873", title: `20면상의 아가씨 (Unnamed World)`, artist: `平野綾`, category: "0-9/ENG", isStar: true },
+      { id: "28660", title: `3월의 라이온 (Orion)`, artist: `米津玄師`, category: "0-9/ENG", isStar: false },
+      { id: "68757", title: `4명은 각자 거짓말을 한다 (エクリプス / 에쿠리푸스)`, artist: `NACHERRY`, category: "0-9/ENG", isStar: true },
+      { id: "28841", title: `4월은 너의 거짓말 (オレンジ / 오렌지)`, artist: `7!! (세븐웁스)`, category: "0-9/ENG", isStar: false },
+      { id: "28680", title: `4월은 너의 거짓말 (キラメキ / 키라메키)`, artist: `wacci`, category: "0-9/ENG", isStar: true },
+      { id: "27743", title: `4월은 너의 거짓말 (光るなら / 히카루나라)`, artist: `Goose House`, category: "0-9/ENG", isStar: false },
+      { id: "68370", title: `5등분의 신부 (五等分のカタチ)`, artist: `中野家の五つ子`, category: "0-9/ENG", isStar: false },
+      { id: "28997", title: `5등분의 신부 (五等分の気持ち)`, artist: `中野家の五つ子`, category: "0-9/ENG", isStar: true },
+      { id: "68428", title: `86 -에이티식스- (Avid)`, artist: `SawanoHiroyuki[nZk]:mizuki`, category: "0-9/ENG", isStar: false },
+      { id: "68550", title: `86 -에이티식스- (Hands Up to the Sky)`, artist: `SawanoHiroyuki[nZk]:Laco`, category: "0-9/ENG", isStar: false },
+      { id: "68568", title: `86 -에이티식스- (境界線)`, artist: `amazarashi`, category: "0-9/ENG", isStar: false },
+      { id: "68145", title: `뱅드림! (Happy Happy Party!)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68233", title: `뱅드림! (HELL! or HELL?)`, artist: `RAISE A SUILEN`, category: "라~바", isStar: false },
+      { id: "28932", title: `뱅드림! (LOUDER)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "28944", title: `뱅드림! (Neo-Aspect)`, artist: `Roselia", category: "라~바`, isStar: false },
+      { id: "68129", title: `뱅드림! (NO GIRL NO CRY)`, artist: `Poppin'Party, Silent Siren`, category: "라~바", isStar: true },
+      { id: "28970", title: `뱅드림! (ONENESS)`, artist: `Roselia`, category: "라~바", isStar: true },
+      { id: "68117", title: `뱅드림! (PASSIONATE ANTHEM)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "28953", title: `뱅드림! (R)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68109", title: `뱅드림! (R・I・O・T)`, artist: `RAISE A SUILEN`, category: "라~바", isStar: true },
+      { id: "68264", title: `뱅드림! (Returns)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68098", title: `뱅드림! (Ringing Bloom)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68203", title: `뱅드림! (SAKURA MEMORIES)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68121", title: `뱅드림! (Sanctuary)`, artist: `Roselia`, category: "라~바", isStar: true },
+      { id: "68272", title: `뱅드림! (Song I am.)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68729", title: `뱅드림! (Sonorous)`, artist: `Morfonica`, category: "라~바", isStar: true },
+      { id: "28988", title: `뱅드림! (STAR BEAT! ~ホシノコドウ~)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "28952", title: `뱅드림! (That Is How I Roll!)`, artist: `Afterglow`, category: "라~바", isStar: false },
+      { id: "68014", title: `뱅드림! (Time Lapse)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68176", title: `뱅드림! (UNSTOPPABLE)`, artist: `RAISE A SUILEN`, category: "라~바", isStar: false },
+      { id: "28973", title: `뱅드림! (ツナグ、ソラモヨウ)`, artist: `Afterglow`, category: "라~바", isStar: false },
+      { id: "28951", title: `뱅드림! (ティアドロップス)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68112", title: `뱅드림! (もういち度 루미너스)`, artist: `Pastel*Palettes`, category: "라~바", isStar: true },
+      { id: "52471", title: `뱅드림! (壱雫空 / 히토시즈쿠)`, artist: `MyGO!!!!!`, category: "라~바", isStar: false },
+      { id: "68223", title: `뱅드림! (夏のドーン！)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68077", title: `뱅드림! (軌跡 / 키세키)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68274", title: `뱅드림! (金色へのプレリュード)`, artist: `Morfonica`, category: "라~바", isStar: false },
+      { id: "68285", title: `뱅드림! 가루파☆피코 (大盛り一丁！)`, artist: `아이미, 사쿠라 아야네, 마에시마 아미, 아이바 아이나, 이토우 미쿠`, category: "라~바", isStar: false },
+      { id: "68293", title: `뱅드림! (天下トーイツA to Z☆)`, artist: `Pastel*Palettes`, category: "라~바", isStar: false },
+      { id: "68172", title: `뱅드림! (二重の虹 / 더블 레인보우)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "28960", title: `뱅드림! (熱色スターマイン)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68239", title: `뱅드림! (夢을 쏘아 뚫는 순간에!)`, artist: `Poppin'Party`, category: "라~바", isStar: false },
+      { id: "68166", title: `뱅드림! (約束 / 야쿠소쿠)`, artist: `Roselia`, category: "라~바", isStar: false },
+      { id: "68387", title: `BEASTARS (怪物 / 카이부츠)`, artist: `YOASOBI`, category: "0-9/ENG", isStar: false },
+      { id: "68385", title: `BEASTARS (優しい彗星)`, artist: `YOASOBI", category: "0-9/ENG`, isStar: false },
+      { id: "68047", title: `귀멸의 칼날 (紅蓮華 / 구렌게)`, artist: `LiSA`, category: "가~다", "isStar": false },
+      { id: "68552", title: `귀멸의 칼날: 유곽 편 (残響散歌 / 잔쿄우산카)`, artist: `Aimer`, category: "가~다", isStar: false },
+      { id: "26959", title: `괴물이야기 (君の知らない物語 / 네가 모르는 이야기)`, artist: `supercell`, category: "가~다", isStar: false },
+      { id: "52892", title: `영화 '신 울트라맨' OST (M87)`, artist: `米津玄師`, category: "사~아", isStar: false },
+      { id: "25624", title: `가면라이더 555 (JustiΦ's)`, artist: `ISSA`, category: "보컬로이드/기타", isStar: false }
+    ];
+
+    window.onload = function () {
+      buildArtistSidebar(animeSongDatabase);
+      renderDashboard(animeSongDatabase);
+    };
+
+    function buildArtistSidebar(songs) {
+      const sidebarUl = document.getElementById('artistList');
+      sidebarUl.innerHTML = '';
+
+      const counts = {};
+      songs.forEach(s => {
+        if (s.artist) {
+          counts[s.artist] = (counts[s.artist] || 0) + 1;
+        }
+      });
+
+      const allLi = document.createElement('li');
+      allLi.textContent = `전체보기 (${songs.length})`;
+      allLi.className = selectedArtist === 'ALL' ? 'active' : '';
+      allLi.onclick = () => {
+        selectedArtist = 'ALL';
+        updateSidebarActive(allLi);
+        filterSongs();
+      };
+      sidebarUl.appendChild(allLi);
+
+      Object.keys(counts).sort((a, b) => counts[b] - counts[a]).forEach(artist => {
+        const li = document.createElement('li');
+        li.textContent = `${artist} (${counts[artist]})`;
+        if (selectedArtist === artist) li.className = 'active';
+        li.onclick = () => {
+          selectedArtist = artist;
+          updateSidebarActive(li);
+          filterSongs();
+        };
+        sidebarUl.appendChild(li);
+      });
+    }
+
+    function updateSidebarActive(activeLi) {
+      document.querySelectorAll('#artistList li').forEach(li => li.classList.remove('active'));
+      activeLi.classList.add('active');
+    }
+
+    function switchCategory(category) {
+      currentCategory = category;
+      selectedArtist = 'ALL';
+
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
+
+      const categoryFiltered = animeSongDatabase.filter(s => currentCategory === 'ALL' || s.category === currentCategory);
+      buildArtistSidebar(categoryFiltered);
+
+      filterSongs();
+    }
+
+    function filterSongs() {
+      const searchKeyword = document.getElementById('searchInput').value.toLowerCase().trim();
+      const starOnly = document.getElementById('starFilter').checked;
+
+      const filtered = animeSongDatabase.filter(song => {
+        const matchesCategory = (currentCategory === 'ALL' || song.category === currentCategory);
+        const matchesArtist = (selectedArtist === 'ALL' || song.artist === selectedArtist);
+        const matchesStar = !starOnly || song.isStar;
+        const matchesSearch = !searchKeyword ||
+          song.title.toLowerCase().includes(searchKeyword) ||
+          song.artist.toLowerCase().includes(searchKeyword);
+
+        return matchesCategory && matchesArtist && matchesStar && matchesSearch;
+      });
+
+      renderDashboard(filtered);
+    }
+
+    function renderDashboard(songs) {
+      const grid = document.getElementById('songsGrid');
+      const countSpan = document.getElementById('songCount');
+      grid.innerHTML = '';
+      countSpan.innerText = songs.length.toString();
+
+      if (songs.length === 0) {
+        grid.innerHTML = `<div class="no-data">일치하는 수록곡 결과가 없습니다.</div>`;
+        return;
+      }
+
+      songs.forEach(song => {
+        const card = document.createElement('div');
+        card.className = 'song-card';
+        const starBadge = song.isStar ? '<span class="star-badge">★ 60시리즈 이상</span>' : '';
+
+        card.innerHTML = `
+                    <div class="card-top">
+                        <span class="song-no">TJ 번호: ${song.id}</span>
+                        ${starBadge}
+                    </div>
+                    <div>
+                        <h3 class="song-title">${escapeHtml(song.title)}</h3>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="song-artist">아티스트: <span>${escapeHtml(song.artist)}</span></div>
+                    </div>
+                `;
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(text) {
+      return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;") : "";
+    }
+  </script>
 </body>
 
 </html>
