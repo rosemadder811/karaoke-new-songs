@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎤 TJ 일본노래 검색기 — 신곡 완전 수록</title>
+  <meta name="description" content="TJ 노래방 일본 노래 전곡 검색기. 곡 번호, 제목, 가수, 타이업 통합 검색.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- ── HEADER ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo-group">
+          <div class="logo-icon">🎤</div>
+          <div class="logo-text">
+            <h1>TJ 일본노래 검색기</h1>
+            <p class="logo-sub">신곡 완전 수록판</p>
+          </div>
+        </div>
+        <div class="header-stats" id="headerStats">
+          <div class="stat-chip">
+            <span class="stat-num" id="totalCount">로딩중...</span>
+            <span class="stat-label">전체 곡</span>
+          </div>
+          <div class="stat-chip star-chip">
+            <span class="stat-num" id="starCount">—</span>
+            <span class="stat-label">★ 전용곡</span>
+          </div>
+          <div class="stat-chip bm-chip" id="bmChip">
+            <span class="stat-num" id="bmCount">0</span>
+            <span class="stat-label">즐겨찾기</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── SEARCH BAR ── -->
+    <section class="search-section">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input"
+          placeholder="곡 번호, 제목, 가수, 타이업 검색..." autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="searchClear" title="검색 초기화">✕</button>
+      </div>
+      <div class="search-tips" id="searchTips">
+        <span class="tip-tag">💡 곡번호</span>
+        <span class="tip-tag">🎵 제목</span>
+        <span class="tip-tag">🎤 가수</span>
+        <span class="tip-tag">📺 타이업</span>
+      </div>
+    </section>
+
+    <!-- ── CATEGORY TABS (populated by app.js) ── -->
+    <nav class="category-nav" id="categoryNav">
+      <button class="cat-btn active" data-cat="ALL">
+        <span class="cat-icon">🎶</span> 전체
+      </button>
+      <!-- Category buttons will be inserted here by app.js -->
+      <button class="cat-btn bookmark-tab" data-cat="BOOKMARK">
+        <span class="cat-icon">⭐</span> 즐겨찾기
+      </button>
+    </nav>
+
+    <!-- ── CONTROL BAR ── -->
+    <div class="control-bar">
+      <div class="result-info">
+        <span id="resultCount" class="result-count">—</span>
+        <span class="result-label">곡 표시 중</span>
+      </div>
+      <div class="controls-right">
+        <div class="sort-group">
+          <label for="sortSelect" class="sort-label">정렬</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="default">기본 순서</option>
+            <option value="id-asc">곡번호 ↑</option>
+            <option value="id-desc">곡번호 ↓</option>
+            <option value="title-asc">제목 가나다 ↑</option>
+            <option value="title-desc">제목 가나다 ↓</option>
+          </select>
+        </div>
+        <label class="star-toggle">
+          <input type="checkbox" id="starOnly"> ★ 전용곡만
+        </label>
+      </div>
+    </div>
+
+    <!-- ── SONG GRID ── -->
+    <main class="songs-grid" id="songsGrid">
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <p>곡 데이터를 불러오는 중...</p>
+      </div>
+    </main>
+
+    <!-- ── PAGINATION ── -->
+    <div class="pagination" id="pagination"></div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="site-footer">
+      <p>🎤 TJ 일본노래 검색기 — songs.json 기반 수록 데이터</p>
+    </footer>
+  </div>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
