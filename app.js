@@ -3,7 +3,6 @@
  */
 import { getJPopNewSongs, getVocaloidSongs, getJPopFullLibrary } from './api.js';
 
-// 캐릭터 프로필 및 메타 데이터셋 정의
 const CHARACTER_META = {
   miku: { name: "하츠네 미쿠 (初音ミク)", desc: "대표곡: 멜트, 하츠네 미쿠의 소실 | 테마: 민트그린", emoji: "01" },
   rin: { name: "카가미네 린 (鏡音リン)", desc: "대표곡: 악의 하인, 로스트원의 호곡 | 테마: 오렌지옐로우", emoji: "🍊" },
@@ -19,7 +18,6 @@ let currentTab = 'jpop-new';
 let currentSubChar = 'all';
 let allRawSongs = [];
 
-// DOM 캐싱
 const grid = document.getElementById('songs-grid');
 const noDataMsg = document.getElementById('no-data-message');
 const counter = document.getElementById('song-counter');
@@ -27,7 +25,6 @@ const sortSelect = document.getElementById('sort-select');
 const vChipsContainer = document.getElementById('vocaloid-chips-container');
 const profileZone = document.getElementById('character-profile-zone');
 
-// [신규] 7일 이내 데이터 판별용 D-Day 배지 체크 로직
 function isNewSong(dateStr) {
   if (!dateStr) return false;
   const songDate = new Date(dateStr);
@@ -37,7 +34,6 @@ function isNewSong(dateStr) {
   return diffDays <= 7;
 }
 
-// [신규] 유기적 정렬(최신순, 번호순, 제목순) 실행 함수
 function sortSongs(songs, criterion) {
   return [...songs].sort((a, b) => {
     if (criterion === 'latest') {
@@ -51,17 +47,14 @@ function sortSongs(songs, criterion) {
   });
 }
 
-// 데이터 스크린 렌더링 코어 함수
 function renderDashboard() {
   grid.innerHTML = '';
 
-  // 1. 보컬로이드 칩 보조 필터 필터링 적용
   let filtered = allRawSongs;
   if (currentTab === 'vocaloid' && currentSubChar !== 'all') {
     filtered = allRawSongs.filter(s => s.vocaloid === currentSubChar);
   }
 
-  // 2. 선택된 정렬 방식 드롭다운 바인딩
   const sorted = sortSongs(filtered, sortSelect.value);
   counter.textContent = `총 ${sorted.length}곡 검색됨`;
 
@@ -71,13 +64,11 @@ function renderDashboard() {
   }
   noDataMsg.classList.add('hidden');
 
-  // 3. 카드 제작 및 유튜브 동적 검색 쿼리 삽입
   sorted.forEach(song => {
     const card = document.createElement('div');
     card.className = `song-card`;
 
     const isNew = isNewSong(song.addedDate);
-    // 유튜브 검색 쿼리 스트링 변환 연동 ('가수명 제목')
     const ytQuery = encodeURIComponent(`${song.artist} ${song.title}`);
 
     card.innerHTML = `
@@ -100,9 +91,8 @@ function renderDashboard() {
   });
 }
 
-// [신규] 보컬로이드 캐릭터 선택 시 전체 테마 인스턴스 스위칭 헬퍼
 function updateCharacterTheme(char) {
-  document.body.className = ''; // 기존 테마 지우기
+  document.body.className = '';
 
   if (char === 'all' || currentTab !== 'vocaloid') {
     document.body.classList.add('theme-default');
@@ -120,7 +110,6 @@ function updateCharacterTheme(char) {
   }
 }
 
-// 데이터 수집 비동기 오케스트레이터
 async function loadTabData(tab) {
   if (tab === 'jpop-new') {
     const res = await getJPopNewSongs();
@@ -138,7 +127,6 @@ async function loadTabData(tab) {
   renderDashboard();
 }
 
-// 이벤트 리스너 이니셜라이저
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -153,7 +141,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
 document.querySelectorAll('.chip-btn').forEach(chip => {
   chip.addEventListener('click', (e) => {
-    document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('remove', 'active'));
+    // [버그 수정] 기존 코드의 .classList.remove('remove', 'active') 오타 해결
+    document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
     e.target.classList.add('active');
     currentSubChar = e.target.dataset.char;
     updateCharacterTheme(currentSubChar);
@@ -163,7 +152,7 @@ document.querySelectorAll('.chip-btn').forEach(chip => {
 
 sortSelect.addEventListener('change', renderDashboard);
 
-// 가벼운 백그라운드 파티클 애니메이션 스크립트 (UI 생동감 부여)
+// 백그라운드 파티클 엔진
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -196,5 +185,4 @@ function animate() {
 }
 animate();
 
-// 초기 부팅 호출
 loadTabData('jpop-new');

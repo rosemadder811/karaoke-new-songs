@@ -130,17 +130,29 @@ export async function getVocaloidSongs() {
 
     const processed = orig.map(s => {
       const pron = extractPronunciation(s);
-      const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase();
+
+      // 제목, 아티스트, 기존 보컬로이드 필드를 결합하여 소문자 공백 제거 후 비교 진행
+      const fullText = (String(s.title) + " " + String(s.artist) + " " + String(s.vocaloid || "")).toLowerCase().replace(/\s+/g, '');
       let vChar = "miku";
 
-      if (fullText.includes('미쿠') || fullText.includes('miku') || fullText.includes('初音')) vChar = 'miku';
-      else if (fullText.includes('린') || fullText.includes('rin')) vChar = 'rin';
-      else if (fullText.includes('렌') || fullText.includes('len')) vChar = 'len';
-      else if (fullText.includes('루카') || fullText.includes('luka')) vChar = 'luka';
-      else if (fullText.includes('카이토') || fullText.includes('kaito')) vChar = 'kaito';
-      else if (fullText.includes('메이코') || fullText.includes('meiko')) vChar = 'meiko';
-      else if (fullText.includes('구미') || fullText.includes('gumi')) vChar = 'gumi';
-      else if (fullText.includes('ia') || fullText.includes('이아')) vChar = 'ia';
+      // [버그 수정] 한글, 일본어(가나/한자), 영문 혼용 필터링 완벽 고도화
+      if (fullText.includes('미쿠') || fullText.includes('miku') || fullText.includes('初音') || fullText.includes('ミク')) {
+        vChar = 'miku';
+      } else if (fullText.includes('린') || fullText.includes('rin') || fullText.includes('鏡音リン') || fullText.includes('リン')) {
+        vChar = 'rin';
+      } else if (fullText.includes('렌') || fullText.includes('len') || fullText.includes('鏡音レン') || fullText.includes('レン')) {
+        vChar = 'len';
+      } else if (fullText.includes('루카') || fullText.includes('luka') || fullText.includes('巡音ルカ') || fullText.includes('ルカ')) {
+        vChar = 'luka';
+      } else if (fullText.includes('카이토') || fullText.includes('kaito') || fullText.includes('カイト')) {
+        vChar = 'kaito';
+      } else if (fullText.includes('메이코') || fullText.includes('meiko') || fullText.includes('メイコ')) {
+        vChar = 'meiko';
+      } else if (fullText.includes('구미') || fullText.includes('gumi') || fullText.includes('グミ') || fullText.includes('megpoid')) {
+        vChar = 'gumi';
+      } else if (fullText.includes('ia') || fullText.includes('이아') || fullText.includes('イ아') || fullText.includes('イア')) {
+        vChar = 'ia';
+      }
 
       return { ...s, pronunciation: pron, vocaloid: vChar, addedDate: s.addedDate || "2026-06-15" };
     });
