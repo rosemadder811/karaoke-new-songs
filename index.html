@@ -1,252 +1,121 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TJ 일본송 마스터 검색기</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --bg-base: #08060f;
-      --bg-surface: #120f1f;
-      --border-purple: rgba(157, 78, 221, 0.3);
-      --color-accent: #9d4edd;
-      --text-primary: #f3f0f7;
-      --text-secondary: #9a95a6;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
-
-    body {
-      background: var(--bg-base);
-      color: var(--text-primary);
-      padding: 20px;
-    }
-
-    .wrapper {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    header {
-      text-align: center;
-      padding: 10px;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 5px;
-      background: linear-gradient(to right, #e0aaff, #9d4edd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .search-area {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-purple);
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .search-area input {
-      width: 100%;
-      padding: 12px 15px;
-      background: #08060f;
-      border: 1px solid var(--border-purple);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .search-area input:focus {
-      border-color: #e0aaff;
-    }
-
-    .nav-tabs {
-      display: flex;
-      gap: 10px;
-      border-bottom: 2px solid var(--border-purple);
-      padding-bottom: 10px;
-    }
-
-    .tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 16px;
-      font-weight: bold;
-      padding: 8px 16px;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-
-    .tab-btn.active,
-    .tab-btn:hover {
-      background: var(--color-accent);
-      color: #fff;
-    }
-
-    .main-container {
-      display: flex;
-      gap: 20px;
-      min-height: 500px;
-    }
-
-    .sub-sidebar {
-      width: 300px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-purple);
-      border-radius: 12px;
-      padding: 15px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .sub-sidebar h3 {
-      font-size: 1.1rem;
-      border-bottom: 1px solid var(--border-purple);
-      padding-bottom: 8px;
-      margin-bottom: 5px;
-    }
-
-    .sub-list {
-      list-style: none;
-      overflow-y: auto;
-      max-height: 600px;
-    }
-
-    .sub-item {
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: 0.2s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .sub-item:hover,
-    .sub-item.active {
-      background: rgba(157, 78, 221, 0.2);
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .grid-view {
-      flex-grow: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 15px;
-      align-content: flex-start;
-    }
-
-    .song-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-purple);
-      border-radius: 10px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      position: relative;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      font-weight: bold;
-      color: #e0aaff;
-    }
-
-    .bookmark-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .bookmark-btn.active {
-      color: #ffbc00;
-    }
-
-    .song-title {
-      font-size: 1.15rem;
-      font-weight: bold;
-      color: #fff;
-      line-height: 1.3;
-    }
-
-    .song-yomi {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .song-artist {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 8px;
-      margin-top: auto;
-    }
-
-    .song-artist span {
-      color: #fff;
-    }
-
-    .star-tag {
-      background: rgba(255, 90, 90, 0.15);
-      color: #ff5a5a;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-  </style>
+  <title>🎤 TJ 일본노래 검색기 — 신곡 완전 수록</title>
+  <meta name="description" content="TJ 노래방 일본 노래 전곡 검색기. 곡 번호, 제목, 가수, 타이업 통합 검색.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="wrapper">
-    <header>
-      <h1>🎤 TJ 일본송 통합 데이터 허브</h1>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- ── HEADER ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo-group">
+          <div class="logo-icon">🎤</div>
+          <div class="logo-text">
+            <h1>TJ 일본노래 검색기</h1>
+            <p class="logo-sub">신곡 완전 수록판</p>
+          </div>
+        </div>
+        <div class="header-stats" id="headerStats">
+          <div class="stat-chip">
+            <span class="stat-num" id="totalCount">로딩중...</span>
+            <span class="stat-label">전체 곡</span>
+          </div>
+          <div class="stat-chip star-chip">
+            <span class="stat-num" id="starCount">—</span>
+            <span class="stat-label">★ 전용곡</span>
+          </div>
+          <div class="stat-chip bm-chip" id="bmChip">
+            <span class="stat-num" id="bmCount">0</span>
+            <span class="stat-label">즐겨찾기</span>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <div class="search-area">
-      <input type="text" id="mainSearch" placeholder="곡 번호, 제목, 아티스트, 독음, 타이업 실시간 통합 검색...">
-    </div>
+    <!-- ── SEARCH BAR ── -->
+    <section class="search-section">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input"
+          placeholder="곡 번호, 제목, 가수, 타이업 검색..." autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="searchClear" title="검색 초기화">✕</button>
+      </div>
+      <div class="search-tips" id="searchTips">
+        <span class="tip-tag">💡 곡번호</span>
+        <span class="tip-tag">🎵 제목</span>
+        <span class="tip-tag">🎤 가수</span>
+        <span class="tip-tag">📺 타이업</span>
+      </div>
+    </section>
 
-    <nav class="nav-tabs">
-      <button class="tab-btn active" data-type="animation">애니 노래</button>
-      <button class="tab-btn" data-type="jpop">J-POP</button>
-      <button class="tab-btn" data-type="vocaloid">보컬로이드</button>
-      <button class="tab-btn" data-type="bookmark">★ 즐겨찾기</button>
+    <!-- ── CATEGORY TABS (populated by app.js) ── -->
+    <nav class="category-nav" id="categoryNav">
+      <button class="cat-btn active" data-cat="ALL">
+        <span class="cat-icon">🎶</span> 전체
+      </button>
+      <!-- Category buttons will be inserted here by app.js -->
+      <button class="cat-btn bookmark-tab" data-cat="BOOKMARK">
+        <span class="cat-icon">⭐</span> 즐겨찾기
+      </button>
     </nav>
 
-    <div class="main-container">
-      <aside class="sub-sidebar" id="subSidebar">
-        <h3 id="sidebarTitle">소목록</h3>
-        <ul class="sub-list" id="subList"></ul>
-      </aside>
-      <main class="grid-view" id="gridView"></main>
+    <!-- ── CONTROL BAR ── -->
+    <div class="control-bar">
+      <div class="result-info">
+        <span id="resultCount" class="result-count">—</span>
+        <span class="result-label">곡 표시 중</span>
+      </div>
+      <div class="controls-right">
+        <div class="sort-group">
+          <label for="sortSelect" class="sort-label">정렬</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="default">기본 순서</option>
+            <option value="id-asc">곡번호 ↑</option>
+            <option value="id-desc">곡번호 ↓</option>
+            <option value="title-asc">제목 가나다 ↑</option>
+            <option value="title-desc">제목 가나다 ↓</option>
+          </select>
+        </div>
+        <label class="star-toggle">
+          <input type="checkbox" id="starOnly"> ★ 전용곡만
+        </label>
+      </div>
+    </div>
+
+    <!-- ── SONG GRID ── -->
+    <main class="songs-grid" id="songsGrid">
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <p>곡 데이터를 불러오는 중...</p>
+      </div>
+    </main>
+
+    <!-- ── PAGINATION ── -->
+    <div class="pagination" id="pagination"></div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="site-footer">
+      <p>🎤 TJ 일본노래 검색기 — songs.json 기반 수록 데이터</p>
+    </footer>
+  </div>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-content" id="modalContent"></div>
     </div>
   </div>
 
-  <script src="api.js"></script>
   <script src="app.js"></script>
 </body>
-
 </html>
