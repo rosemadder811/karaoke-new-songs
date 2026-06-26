@@ -1,405 +1,343 @@
-/* style.css — 디자인 시스템 (글로벌 표준 호환성 패치 완료본) */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@400;700&display=swap');
-
 :root {
-  --bg-primary: #070714;
-  --bg-secondary: #0d0d24;
-  --bg-card: #11112a;
-  --bg-card-hover: #191938;
-  --bg-glass: rgba(255, 255, 255, 0.04);
-  --accent-pink: #e040fb;
-  --accent-cyan: #00e5ff;
-  --accent-violet: #7c4dff;
-  --accent-gold: #ffd740;
-  --accent-green: #69ff47;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b2c3;
-  --text-muted: #676a86;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --max-width: 1300px;
-  --transition: all 0.2s ease;
+  --bg-dark: #0f0c1b;
+  --panel-bg: rgba(25, 20, 45, 0.75);
+  --border-color: rgba(138, 43, 226, 0.3);
+  --text-main: #f1f1f6;
+  --text-muted: #a39eb5;
+
+  /* 기본 테마 강조색 */
+  --accent-color: #8a2be2;
+  --accent-glow: rgba(138, 43, 226, 0.6);
+}
+
+/* ─── [신규] 캐릭터별 동적 테마 정의 ─── */
+body.theme-miku {
+  --accent-color: #39c5bb;
+  --accent-glow: rgba(57, 197, 187, 0.6);
+}
+
+body.theme-rin {
+  --accent-color: #ffb11b;
+  --accent-glow: rgba(255, 177, 27, 0.6);
+}
+
+body.theme-len {
+  --accent-color: #ffee12;
+  --accent-glow: rgba(255, 238, 18, 0.6);
+}
+
+body.theme-luka {
+  --accent-color: #ffb4c4;
+  --accent-glow: rgba(255, 180, 196, 0.6);
+}
+
+body.theme-kaito {
+  --accent-color: #1e90ff;
+  --accent-glow: rgba(30, 144, 255, 0.6);
+}
+
+body.theme-meiko {
+  --accent-color: #de1623;
+  --accent-glow: rgba(222, 22, 35, 0.6);
+}
+
+body.theme-gumi {
+  --accent-color: #3cb371;
+  --accent-glow: rgba(60, 179, 113, 0.6);
+}
+
+body.theme-ia {
+  --accent-color: #ffc0cb;
+  --accent-glow: rgba(255, 192, 203, 0.6);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(7, 7, 20, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.header-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo-main {
-  font-size: 16px;
-  font-weight: 800;
-}
-
-.logo-sub {
-  font-size: 10px;
-  color: var(--text-muted);
-  display: block;
-}
-
-.global-search-btn {
-  background: var(--bg-glass);
-  border: 1px solid var(--border-subtle);
-  padding: 6px 12px;
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.search-kbd {
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1px 4px;
-  border-radius: 3px;
-  color: var(--text-muted);
-}
-
-.hero {
-  padding: 40px 24px;
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 32px;
-  font-weight: 800;
-}
-
-/* 표준 크로스 브라우징 속성 background-clip 경고 원천 해결 */
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
-
-.tab-nav-wrapper {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.tab-nav {
-  display: flex;
-  gap: 6px;
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 6px;
-}
-
-.tab-btn {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.tab-btn.active {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--accent-cyan);
-}
-
-.tab-count {
-  font-size: 11px;
-  opacity: 0.6;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 1px 5px;
-  border-radius: 4px;
-}
-
-.main-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.tab-section {
-  display: none;
-}
-
-.tab-section.active {
-  display: block;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.song-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
-}
-
-.song-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow-x: hidden;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 125px;
-  transition: var(--transition);
+  transition: background 0.5s ease;
 }
 
-.song-card:hover {
-  transform: translateY(-2px);
-  background: var(--bg-card-hover);
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  padding-right: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 한국어 실발음 출력 색상 바 */
-.card-pronunciation {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent-pink);
-  margin-top: 2px;
-}
-
-.card-artist {
-  font-size: 12px;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-}
-
-.card-songno {
-  color: var(--accent-green);
-  font-size: 13px;
-  font-weight: 700;
-  font-family: monospace;
-}
-
-/* 아이콘 크기 고정 상태 유지 */
-.btn-bookmark {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.btn-bookmark.active {
-  color: var(--accent-gold);
-}
-
-.btn-tj-link {
-  font-size: 11px;
-  text-decoration: none;
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border-subtle);
-}
-
-.char-chips-wrapper {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-
-.char-chip {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  font-size: 12px;
-  padding: 5px 12px;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-.char-chip.active {
-  background: rgba(224, 64, 251, 0.1);
-  color: var(--accent-pink);
-  border-color: var(--accent-pink);
-}
-
-/* 보컬로이드 고유 좌측 인디케이터 레일 시스템 */
-.song-card.voca-miku {
-  border-left: 3px solid #00e5ff;
-}
-
-.song-card.voca-rin {
-  border-left: 3px solid #ffb300;
-}
-
-.song-card.voca-len {
-  border-left: 3px solid #fdd835;
-}
-
-.song-card.voca-luka {
-  border-left: 3px solid #ff80ab;
-}
-
-.song-card.voca-kaito {
-  border-left: 3px solid #1e88e5;
-}
-
-.song-card.voca-meiko {
-  border-left: 3px solid #e53935;
-}
-
-.song-card.voca-gumi {
-  border-left: 3px solid #76ff03;
-}
-
-.song-card.voca-ia {
-  border-left: 3px solid #e040fb;
-}
-
-/* 모달 및 스크롤 바 */
-.search-modal {
+#particles-canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3000;
-  display: none;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 60px;
-}
-
-.search-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(4, 4, 12, 0.85);
-  backdrop-filter: blur(4px);
-}
-
-.search-modal-container {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  z-index: 5;
-  overflow: hidden;
-}
-
-.search-modal-header {
-  display: flex;
-  padding: 12px;
-  border-bottom: 1px solid var(--border-subtle);
-  width: 100%;
-}
-
-#modal-search-input {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  width: 100%;
-  outline: none;
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.search-modal-results {
-  max-height: 320px;
-  overflow-y: auto;
-  padding: 8px;
-}
-
-.scroll-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 36px;
-  height: 36px;
-  background: var(--accent-cyan);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  opacity: 0;
-  transition: var(--transition);
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
   pointer-events: none;
 }
 
-.scroll-top.visible {
-  opacity: 1;
-  pointer-events: auto;
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.site-footer {
-  border-top: 1px solid var(--border-subtle);
-  padding: 16px;
+.main-header {
   text-align: center;
-  font-size: 12px;
+  margin-bottom: 30px;
+}
+
+.main-header h1 {
+  font-size: 2.5rem;
+  text-shadow: 0 0 15px var(--accent-glow);
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.subtitle {
   color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* 프로필 존 스타일 */
+.profile-zone {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.4s ease;
+}
+
+.profile-avatar {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 네비게이션 및 컨트롤 바 */
+.tab-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+  color: var(--accent-color);
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-btn.active,
+.chip-btn:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 5px;
+}
+
+.sort-selector select {
+  background: #19142d;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.counter-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* 카드 리스트 디자인 */
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.song-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.song-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-glow);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.song-no {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 0.5px;
+}
+
+/* [신규] NEW 배지 디자인 */
+.new-badge {
+  background: linear-gradient(45deg, #ff0055, #ff5500);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(255, 0, 85, 0.6);
+}
+
+.card-middle {
+  margin: 5px 0;
+}
+
+.song-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.song-pronunciation {
+  font-size: 0.95rem;
+  color: var(--accent-color);
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 12px;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* [신규] 유튜브 연동 버튼 디자인 */
+.youtube-btn {
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.youtube-btn:hover {
+  background: #cc0000;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+}
+
+.no-data {
+  text-align: center;
+  padding: 6px 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  width: 100%;
+  grid-column: 1 / -1;
   margin-top: 40px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,396 +1,200 @@
 /**
- * app.js — 대시보드 렌더링 및 핵심 비즈니스 로직 제어 헤드
+ * app.js — 메인 런타임 제어 및 인터랙션 스크립트
  */
+import { getJPopNewSongs, getVocaloidSongs, getJPopFullLibrary } from './api.js';
 
-import {
-  getJPopNewSongs,
-  getVocaloidSongs,
-  getJPopFullLibrary,
-  getVocaloidClass
-} from './api.js';
-
-const state = {
-  activeTab: 'newsong',
-  newSongs: [],
-  jpopLibSongs: [],
-  vocaloidSongs: [],
-  bookmarks: JSON.parse(localStorage.getItem('tj_bookmarks')) || [],
-  filteredNew: [],
-  filteredJpop: [],
-  filteredVoca: [],
-  filters: {
-    newKeyword: '',
-    newSort: 'date',
-    jpopKeyword: '',
-    vocaChar: 'all',
-    vocaKeyword: '',
-  },
+// 캐릭터 프로필 및 메타 데이터셋 정의
+const CHARACTER_META = {
+  miku: { name: "하츠네 미쿠 (初音ミク)", desc: "대표곡: 멜트, 하츠네 미쿠의 소실 | 테마: 민트그린", emoji: "01" },
+  rin: { name: "카가미네 린 (鏡音リン)", desc: "대표곡: 악의 하인, 로스트원의 호곡 | 테마: 오렌지옐로우", emoji: "🍊" },
+  len: { name: "카가미네 렌 (鏡音レン)", desc: "대표곡: 파라디클로로벤젠, 파이어플라워 | 테마: 바나나옐로우", emoji: "🍌" },
+  luka: { name: "메구리네 루카 (巡音ルカ)", desc: "대표곡: 더블 래리어트, 저스트 비 프렌즈 | 테마: 소프트핑크", emoji: "🌸" },
+  kaito: { name: "카이토 (KAITO)", desc: "대표곡: 신들의 태엽장치, 죽으니 해봐라 | 테마: 딥블루", emoji: "🍦" },
+  meiko: { name: "메이코 (MEIKO)", desc: "대표곡: 악식딸 콘치타, 망각주중 | 테마: 크림슨레드", emoji: "🍷" },
+  gumi: { name: "구미 (GUMI / Megpoid)", desc: "대표곡: 겁쟁이 몽블랑, 에코 | 테마: 비비드그린", emoji: "🥕" },
+  ia: { name: "이아 (IA)", desc: "대표곡: 육조년과 하룻밤 이야기, 아야노의 행복이론 | 테마: 메이릴리", emoji: "🎻" }
 };
 
-const els = {
-  tabs: document.querySelectorAll('.tab-btn'),
-  sections: document.querySelectorAll('.tab-section'),
-  newSongGrid: document.getElementById('newsong-grid'),
-  newCount: document.getElementById('newsong-count'),
-  newKeyword: document.getElementById('new-keyword'),
-  newSort: document.getElementById('new-sort'),
-  jpopGrid: document.getElementById('jpoplib-grid'),
-  jpopCount: document.getElementById('jpoplib-count'),
-  jpopKeyword: document.getElementById('jpop-keyword'),
-  vocaGrid: document.getElementById('vocaloid-grid'),
-  vocaCount: document.getElementById('vocaloid-count'),
-  vocaKeyword: document.getElementById('voca-keyword'),
-  vocaCharBtns: document.querySelectorAll('.char-chip'),
-  bookmarkGrid: document.getElementById('bookmark-grid'),
-  searchBtn: document.getElementById('global-search-btn'),
-  searchModal: document.getElementById('global-search-modal'),
-  modalOverlay: document.getElementById('modal-overlay-bg'),
-  modalClose: document.getElementById('modal-close-btn'),
-  modalInput: document.getElementById('modal-search-input'),
-  modalResults: document.getElementById('modal-results-container'),
-  scrollTopBtn: document.getElementById('scroll-top'),
-  lastUpdated: document.getElementById('last-updated'),
-};
+let currentTab = 'jpop-new';
+let currentSubChar = 'all';
+let allRawSongs = [];
 
-function escHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// DOM 캐싱
+const grid = document.getElementById('songs-grid');
+const noDataMsg = document.getElementById('no-data-message');
+const counter = document.getElementById('song-counter');
+const sortSelect = document.getElementById('sort-select');
+const vChipsContainer = document.getElementById('vocaloid-chips-container');
+const profileZone = document.getElementById('character-profile-zone');
+
+// [신규] 7일 이내 데이터 판별용 D-Day 배지 체크 로직
+function isNewSong(dateStr) {
+  if (!dateStr) return false;
+  const songDate = new Date(dateStr);
+  const today = new Date();
+  const diffTime = Math.abs(today - songDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays <= 7;
 }
 
-function getUniqueList(array) {
-  const seen = new Set();
-  return array.filter(s => {
-    if (!s || !s.songNo) return false;
-    if (seen.has(s.songNo)) return false;
-    seen.add(s.songNo);
-    return true;
+// [신규] 유기적 정렬(최신순, 번호순, 제목순) 실행 함수
+function sortSongs(songs, criterion) {
+  return [...songs].sort((a, b) => {
+    if (criterion === 'latest') {
+      return new Date(b.addedDate || 0) - new Date(a.addedDate || 0);
+    } else if (criterion === 'songNo') {
+      return Number(a.songNo) - Number(b.songNo);
+    } else if (criterion === 'title') {
+      return a.title.localeCompare(b.title, 'ko-KR');
+    }
+    return 0;
   });
 }
 
-// 실시간 통합 검색 엔진 모달
-function openSearchModal() {
-  if (!els.searchModal) return;
-  els.searchModal.removeAttribute('hidden');
-  els.searchModal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => { if (els.modalInput) els.modalInput.focus(); }, 50);
-}
+// 데이터 스크린 렌더링 코어 함수
+function renderDashboard() {
+  grid.innerHTML = '';
 
-function closeSearchModal() {
-  if (!els.searchModal) return;
-  els.searchModal.setAttribute('hidden', '');
-  els.searchModal.style.display = 'none';
-  document.body.style.overflow = '';
-  if (els.modalInput) els.modalInput.value = '';
-  if (els.modalResults) {
-    els.modalResults.innerHTML = `
-      <div class="search-initial">
-        <span class="search-empty-icon">🎵</span>
-        <p class="search-empty-title">곡 제목 · 한국어 발음 · 가수명으로 통합 실시간 검색</p>
-      </div>`;
+  // 1. 보컬로이드 칩 보조 필터 필터링 적용
+  let filtered = allRawSongs;
+  if (currentTab === 'vocaloid' && currentSubChar !== 'all') {
+    filtered = allRawSongs.filter(s => s.vocaloid === currentSubChar);
   }
+
+  // 2. 선택된 정렬 방식 드롭다운 바인딩
+  const sorted = sortSongs(filtered, sortSelect.value);
+  counter.textContent = `총 ${sorted.length}곡 검색됨`;
+
+  if (sorted.length === 0) {
+    noDataMsg.classList.remove('hidden');
+    return;
+  }
+  noDataMsg.classList.add('hidden');
+
+  // 3. 카드 제작 및 유튜브 동적 검색 쿼리 삽입
+  sorted.forEach(song => {
+    const card = document.createElement('div');
+    card.className = `song-card`;
+
+    const isNew = isNewSong(song.addedDate);
+    // 유튜브 검색 쿼리 스트링 변환 연동 ('가수명 제목')
+    const ytQuery = encodeURIComponent(`${song.artist} ${song.title}`);
+
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="song-no">No. ${song.songNo}</span>
+        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+      </div>
+      <div class="card-middle">
+        <h3 class="song-title" title="${song.title}">${song.title}</h3>
+        <span class="song-pronunciation">[ ${song.pronunciation} ]</span>
+      </div>
+      <div class="card-bottom">
+        <span class="song-artist">${song.artist}</span>
+        <a href="https://www.youtube.com/results?search_query=${ytQuery}" target="_blank" class="youtube-btn">
+          ▶ YouTube
+        </a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
-function performGlobalSearch(query) {
-  if (!els.modalResults) return;
-  const kw = query.toLowerCase().trim();
-  if (!kw) {
-    els.modalResults.innerHTML = `<div class="search-initial"><p class="search-empty-title">검색어를 입력해 주세요.</p></div>`;
+// [신규] 보컬로이드 캐릭터 선택 시 전체 테마 인스턴스 스위칭 헬퍼
+function updateCharacterTheme(char) {
+  document.body.className = ''; // 기존 테마 지우기
+
+  if (char === 'all' || currentTab !== 'vocaloid') {
+    document.body.classList.add('theme-default');
+    profileZone.classList.add('hidden');
     return;
   }
 
-  const pool = getUniqueList([...state.newSongs, ...state.jpopLibSongs, ...state.vocaloidSongs]);
-  const matches = pool.filter(s =>
-    s.title.toLowerCase().includes(kw) ||
-    (s.pronunciation || '').toLowerCase().includes(kw) ||
-    (s.artist || '').toLowerCase().includes(kw) ||
-    s.songNo.includes(kw)
-  );
-
-  if (matches.length === 0) {
-    els.modalResults.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">🔍 검색 결과가 없습니다.</div>`;
-    return;
+  document.body.classList.add(`theme-${char}`);
+  const meta = CHARACTER_META[char];
+  if (meta) {
+    document.getElementById('profile-avatar').textContent = meta.emoji;
+    document.getElementById('profile-name').textContent = meta.name;
+    document.getElementById('profile-desc').textContent = meta.desc;
+    profileZone.classList.remove('hidden');
   }
-
-  els.modalResults.innerHTML = matches.map(s => {
-    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
-    return `
-      <div class="global-search-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid var(--border-subtle);">
-        <div style="min-width:0; padding-right:8px;">
-          <div style="font-size:14px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.title)}</div>
-          <div style="font-size:11px; color:var(--accent-pink); margin-bottom: 2px;">[${escHtml(s.pronunciation)}]</div>
-          <div style="font-size:12px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escHtml(s.artist)}</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-          <span style="font-family:monospace; font-size:12px; font-weight:700; color:var(--accent-cyan); background:rgba(0,229,255,0.1); padding:3px 8px; border-radius:4px;">🎤 ${escHtml(s.songNo)}</span>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link" style="font-size:11px; padding:3px 6px;">TJ검색</a>
-        </div>
-      </div>`;
-  }).join('');
 }
 
-// 대형 메인 차트 탭 스위치
-function switchTab(tabName) {
-  state.activeTab = tabName;
-  els.tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
-  els.sections.forEach(sec => sec.classList.toggle('active', sec.id === `section-${tabName}`));
-
-  if (tabName === 'newsong' && state.newSongs.length === 0) loadNewSongs();
-  if (tabName === 'jpoplib' && state.jpopLibSongs.length === 0) loadJpopLibrary();
-  if (tabName === 'vocaloid' && state.vocaloidSongs.length === 0) loadVocaloid();
-  if (tabName === 'bookmark') renderBookmarks();
-}
-
-function updateBookmarkBadge() {
-  const btn = document.querySelector('[data-tab="bookmark"] .tab-count');
-  if (btn) btn.textContent = getUniqueList(state.bookmarks).length;
-}
-
-function toggleBookmark(song) {
-  let list = getUniqueList(state.bookmarks);
-  const idx = list.findIndex(b => b.songNo === song.songNo);
-  if (idx > -1) { list.splice(idx, 1); }
-  else { list.push(song); }
-  state.bookmarks = list;
-  localStorage.setItem('tj_bookmarks', JSON.stringify(list));
-  updateBookmarkBadge();
-
-  if (state.activeTab === 'newsong') renderNewSongs(state.filteredNew);
-  if (state.activeTab === 'jpoplib') renderJpopLibrary(state.filteredJpop);
-  if (state.activeTab === 'vocaloid') renderVocaloid(state.filteredVoca);
-  if (state.activeTab === 'bookmark') renderBookmarks();
-}
-
-// 마이 북마크 히스토리 차트 렌더링
-function renderBookmarks() {
-  if (!els.bookmarkGrid) return;
-  const list = getUniqueList(state.bookmarks);
-  if (list.length === 0) {
-    els.bookmarkGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted); font-size:13px;">북마크된 곡이 없습니다. 별(★)을 눌러 나만의 북마크 차트를 채워보세요.</div>`;
-    return;
+// 데이터 수집 비동기 오케스트레이터
+async function loadTabData(tab) {
+  if (tab === 'jpop-new') {
+    const res = await getJPopNewSongs();
+    allRawSongs = res.data;
+    vChipsContainer.classList.add('hidden');
+  } else if (tab === 'jpop-full') {
+    allRawSongs = await getJPopFullLibrary();
+    vChipsContainer.classList.add('hidden');
+  } else if (tab === 'vocaloid') {
+    const res = await getVocaloidSongs();
+    allRawSongs = res.data;
+    vChipsContainer.classList.remove('hidden');
   }
-  els.bookmarkGrid.innerHTML = list.map(s => {
-    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
-    return `
-      <div class="song-card">
-        <button class="btn-bookmark active" data-no="${s.songNo}">★</button>
-        <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
-        <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer">
-          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
-        </div>
-      </div>`;
-  }).join('');
+  updateCharacterTheme(currentSubChar);
+  renderDashboard();
+}
 
-  els.bookmarkGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const song = state.bookmarks.find(b => b.songNo === e.target.dataset.no);
-      if (song) toggleBookmark(song);
-    });
+// 이벤트 리스너 이니셜라이저
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentTab = e.target.dataset.tab;
+    currentSubChar = 'all';
+    document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
+    document.querySelector(".chip-btn[data-char='all']").classList.add('active');
+    loadTabData(currentTab);
   });
-}
-
-async function loadNewSongs() {
-  const { data } = await getJPopNewSongs();
-  const clean = getUniqueList(data);
-  state.newSongs = clean; state.filteredNew = [...clean];
-  renderNewSongs(clean);
-  const btn = document.querySelector('[data-tab="newsong"] .tab-count');
-  if (btn) btn.textContent = clean.length;
-  if (els.newCount) els.newCount.textContent = `${clean.length}곡`;
-}
-
-function renderNewSongs(data) {
-  if (!els.newSongGrid) return;
-  const clean = getUniqueList(data);
-  els.newSongGrid.innerHTML = clean.map(s => {
-    const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
-    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
-    return `
-      <div class="song-card">
-        <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
-        <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
-        <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer">
-          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
-        </div>
-      </div>`;
-  }).join('');
-  els.newSongGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const song = state.newSongs.find(s => s.songNo === e.target.dataset.no);
-      if (song) toggleBookmark(song);
-    });
-  });
-}
-
-function filterNewSongs() {
-  let songs = [...state.newSongs];
-  const kw = state.filters.newKeyword.toLowerCase().trim();
-  if (kw) songs = songs.filter(s => s.title.toLowerCase().includes(kw) || s.pronunciation.toLowerCase().includes(kw) || s.artist.toLowerCase().includes(kw) || s.songNo.includes(kw));
-  if (state.filters.newSort === 'title') songs.sort((a, b) => a.title.localeCompare(b.title));
-  if (state.filters.newSort === 'songno') songs.sort((a, b) => a.songNo.localeCompare(b.songNo));
-  state.filteredNew = getUniqueList(songs);
-  renderNewSongs(state.filteredNew);
-}
-
-async function loadJpopLibrary() {
-  const data = await getJPopFullLibrary();
-  const clean = getUniqueList(data);
-  state.jpopLibSongs = clean; state.filteredJpop = [...clean];
-  renderJpopLibrary(clean);
-  const btn = document.querySelector('[data-tab="jpoplib"] .tab-count');
-  if (btn) btn.textContent = clean.length;
-  if (els.jpopCount) els.jpopCount.textContent = `${clean.length}곡`;
-}
-
-function renderJpopLibrary(data) {
-  if (!els.jpopGrid) return;
-  const clean = getUniqueList(data);
-  if (clean.length === 0) {
-    els.jpopGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">검색 조건에 맞는 J-POP 수록곡이 없습니다.</div>`;
-    return;
-  }
-  els.jpopGrid.innerHTML = clean.map(s => {
-    const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
-    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
-    return `
-      <div class="song-card">
-        <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
-        <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
-        <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer">
-          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
-        </div>
-      </div>`;
-  }).join('');
-  els.jpopGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const song = state.jpopLibSongs.find(s => s.songNo === e.target.dataset.no);
-      if (song) toggleBookmark(song);
-    });
-  });
-}
-
-function filterJpopLibrary() {
-  let songs = [...state.jpopLibSongs];
-  const kw = state.filters.jpopKeyword.toLowerCase().trim();
-  if (kw) {
-    songs = songs.filter(s =>
-      s.title.toLowerCase().includes(kw) ||
-      s.pronunciation.toLowerCase().includes(kw) ||
-      s.artist.toLowerCase().includes(kw) ||
-      s.songNo.includes(kw)
-    );
-  }
-  state.filteredJpop = getUniqueList(songs);
-  renderJpopLibrary(state.filteredJpop);
-}
-
-async function loadVocaloid() {
-  const { data } = await getVocaloidSongs();
-  const clean = getUniqueList(data);
-  state.vocaloidSongs = clean; state.filteredVoca = [...clean];
-  renderVocaloid(clean);
-  const btn = document.querySelector('[data-tab="vocaloid"] .tab-count');
-  if (btn) btn.textContent = clean.length;
-  if (els.vocaCount) els.vocaCount.textContent = `${clean.length}곡`;
-}
-
-function renderVocaloid(data) {
-  if (!els.vocaGrid) return;
-  const clean = getUniqueList(data);
-  if (clean.length === 0) {
-    els.vocaGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);">선택하신 보컬로이드 종류에 매핑된 곡이 없습니다.</div>`;
-    return;
-  }
-  els.vocaGrid.innerHTML = clean.map(s => {
-    const cls = getVocaloidClass(s.vocaloid);
-    const isActive = state.bookmarks.some(b => b.songNo === s.songNo) ? 'active' : '';
-    const tjLink = `https://www.tjmedia.com/tjsong/song_search_list.asp?strType=4&strText=${encodeURIComponent(s.title)}`;
-    return `
-      <div class="song-card ${cls}">
-        <button class="btn-bookmark ${isActive}" data-no="${s.songNo}">★</button>
-        <div class="card-title">${escHtml(s.title)}</div>
-        <div class="card-pronunciation">[ ${escHtml(s.pronunciation)} ]</div>
-        <div class="card-artist">${escHtml(s.artist)}</div>
-        <div class="card-footer">
-          <div class="card-songno">🎤 NO. ${escHtml(s.songNo)}</div>
-          <a href="${tjLink}" target="_blank" rel="noopener" class="btn-tj-link">TJ검색 ↗</a>
-        </div>
-      </div>`;
-  }).join('');
-  els.vocaGrid.querySelectorAll('.btn-bookmark').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const song = state.vocaloidSongs.find(s => s.songNo === e.target.dataset.no);
-      if (song) toggleBookmark(song);
-    });
-  });
-}
-
-function filterVocaloid() {
-  let songs = [...state.vocaloidSongs];
-  const kw = state.filters.vocaKeyword.toLowerCase().trim();
-  const chip = state.filters.vocaChar.toLowerCase().trim();
-
-  if (kw) {
-    songs = songs.filter(s =>
-      s.title.toLowerCase().includes(kw) ||
-      s.pronunciation.toLowerCase().includes(kw) ||
-      s.artist.toLowerCase().includes(kw)
-    );
-  }
-
-  if (chip !== 'all') {
-    // 규격화된 소문자 식별 매칭 규칙 엄수
-    songs = songs.filter(s => s.vocaloid === chip);
-  }
-
-  state.filteredVoca = getUniqueList(songs);
-  renderVocaloid(state.filteredVoca);
-}
-
-function bindEvents() {
-  els.tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-  if (els.searchBtn) els.searchBtn.addEventListener('click', (e) => { e.preventDefault(); openSearchModal(); });
-  if (els.modalClose) els.modalClose.addEventListener('click', closeSearchModal);
-  if (els.modalOverlay) els.modalOverlay.addEventListener('click', closeSearchModal);
-
-  window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); if (els.searchModal?.hasAttribute('hidden')) openSearchModal(); else closeSearchModal(); }
-    if (e.key === 'Escape') closeSearchModal();
-  });
-
-  if (els.modalInput) els.modalInput.addEventListener('input', (e) => performGlobalSearch(e.target.value));
-  if (els.newKeyword) els.newKeyword.addEventListener('input', e => { state.filters.newKeyword = e.target.value; filterNewSongs(); });
-  if (els.newSort) els.newSort.addEventListener('change', e => { state.filters.newSort = e.target.value; filterNewSongs(); });
-  if (els.jpopKeyword) els.jpopKeyword.addEventListener('input', e => { state.filters.jpopKeyword = e.target.value; filterJpopLibrary(); });
-  if (els.vocaKeyword) els.vocaKeyword.addEventListener('input', e => { state.filters.vocaKeyword = e.target.value; filterVocaloid(); });
-
-  els.vocaCharBtns.forEach(chip => {
-    chip.addEventListener('click', () => {
-      els.vocaCharBtns.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      state.filters.vocaChar = chip.dataset.char;
-      filterVocaloid();
-    });
-  });
-
-  if (els.scrollTopBtn) {
-    window.addEventListener('scroll', () => { els.scrollTopBtn.classList.toggle('visible', window.scrollY > 400); });
-    els.scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (els.lastUpdated) { const now = new Date(); els.lastUpdated.textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`; }
-  bindEvents();
-  updateBookmarkBadge();
-  switchTab('newsong');
 });
+
+document.querySelectorAll('.chip-btn').forEach(chip => {
+  chip.addEventListener('click', (e) => {
+    document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('remove', 'active'));
+    e.target.classList.add('active');
+    currentSubChar = e.target.dataset.char;
+    updateCharacterTheme(currentSubChar);
+    renderDashboard();
+  });
+});
+
+sortSelect.addEventListener('change', renderDashboard);
+
+// 가벼운 백그라운드 파티클 애니메이션 스크립트 (UI 생동감 부여)
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedY = Math.random() * -0.4 - 0.1;
+    this.opacity = Math.random() * 0.5 + 0.2;
+  }
+  update() {
+    this.y += this.speedY;
+    if (this.y < 0) { this.y = canvas.height; this.x = Math.random() * canvas.width; }
+  }
+  draw() {
+    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+  }
+}
+for (let i = 0; i < 45; i++) particles.push(new Particle());
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// 초기 부팅 호출
+loadTabData('jpop-new');
