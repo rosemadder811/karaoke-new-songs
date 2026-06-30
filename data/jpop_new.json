@@ -1,13 +1,2254 @@
 {
-  "lastUpdated": "2026-06-29",
+  "lastUpdated": "2026-06-30",
   "type": "JPOP_NEW",
   "songs": [
     {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70367",
+      "title": "적월[赤月]",
+      "titleKo": "적월[赤月]",
+      "artist": "융터르(Feat.이오몽)",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "70365",
+      "title": "PARADE",
+      "titleKo": "生",
+      "artist": "송소희",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52546",
+      "title": "mosi mosi?",
+      "titleKo": "mosi mosi?",
+      "artist": "楽音",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52545",
+      "title": "光の街",
+      "titleKo": "光の街",
+      "artist": "back number",
+      "addedDate": "2026-06-30",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52544",
+      "title": "夏の影",
+      "titleKo": "キリン '午後の紅茶' CM",
+      "artist": "Mrs. GREEN APPLE",
+      "addedDate": "2026-06-30",
       "genre": "J-POP",
       "isNew": true
     },
@@ -18,439 +2259,7 @@
       "artist": "향성(向性)(Feat.악월)",
       "addedDate": "2026-06-26",
       "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70347",
-      "title": "Anti Buzzing Club",
-      "titleKo": "Anti Buzzing Club",
-      "artist": "향성(向性)(Feat.악월)",
-      "addedDate": "2026-06-26",
-      "genre": "J-POP",
-      "isNew": true
+      "isNew": false
     }
   ]
 }
