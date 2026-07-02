@@ -1,15 +1,1365 @@
 {
-  "lastUpdated": "2026-07-01",
+  "lastUpdated": "2026-07-02",
   "type": "JPOP_NEW",
   "songs": [
     {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52549",
+      "title": "ラストバージン",
+      "titleKo": "ラストバージン",
+      "artist": "RADWIMPS",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52548",
+      "title": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "titleKo": "犬かキャットかで 死ぬまで喧嘩しよう!",
+      "artist": "Official髭男dism",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
+      "songNo": "52547",
+      "title": "さんかくゲーム",
+      "titleKo": "TVアニメ 'ただいま, おじゃまされます!' ED",
+      "artist": "『ユイカ』",
+      "addedDate": "2026-07-02",
+      "genre": "J-POP",
+      "isNew": true
+    },
+    {
       "songNo": "70385",
       "title": "blue daisy",
       "titleKo": "blue daisy",
       "artist": "can't be blue(캔트비블루)(Feat.紫今)",
       "addedDate": "2026-07-01",
       "genre": "J-POP",
-      "isNew": true
+      "isNew": false
     },
     {
       "songNo": "70367",
@@ -18,889 +1368,7 @@
       "artist": "융터르(Feat.이오몽)",
       "addedDate": "2026-06-30",
       "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70385",
-      "title": "blue daisy",
-      "titleKo": "blue daisy",
-      "artist": "can't be blue(캔트비블루)(Feat.紫今)",
-      "addedDate": "2026-07-01",
-      "genre": "J-POP",
-      "isNew": true
-    },
-    {
-      "songNo": "70367",
-      "title": "적월[赤月]",
-      "titleKo": "적월[赤月]",
-      "artist": "융터르(Feat.이오몽)",
-      "addedDate": "2026-06-30",
-      "genre": "J-POP",
-      "isNew": true
+      "isNew": false
     },
     {
       "songNo": "70365",
