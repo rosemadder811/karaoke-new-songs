@@ -26,11 +26,11 @@ app.get('/api/songs/search', (req, res) => {
 
   const filtered = songs.filter(song => {
     return (
-      song.id.includes(keyword) ||
+      song.id.toLowerCase().includes(keyword) ||
       song.title.toLowerCase().includes(keyword) ||
       song.artist.toLowerCase().includes(keyword) ||
       song.artistOrig.toLowerCase().includes(keyword) ||
-      song.composer.toLowerCase().includes(keyword) || // ★작곡가 검색 조건 추가
+      (song.composer && song.composer.toLowerCase().includes(keyword)) || // ★작곡가 검색 조건 추가
       (song.tieUp && song.tieUp.toLowerCase().includes(keyword))
     );
   });
