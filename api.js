@@ -1,12 +1,25 @@
 const Api = {
-  searchSongs: async (keyword) => {
+  getAllSongs: async () => {
     try {
-      const response = await fetch(`/api/songs/search?q=${encodeURIComponent(keyword)}`);
+      const response = await fetch('songs.json');
       return await response.json();
     } catch (error) {
-      console.error('검색 API 통신 실패:', error);
+      console.error('데이터 로드 실패:', error);
       return [];
     }
+  },
+  searchSongs: async (keyword) => {
+    const all = await Api.getAllSongs();
+    if (!keyword) return all;
+    const q = keyword.toLowerCase().trim();
+    return all.filter(song =>
+      song.id.toLowerCase().includes(q) ||
+      song.title.toLowerCase().includes(q) ||
+      song.artist.toLowerCase().includes(q) ||
+      song.artistOrig.toLowerCase().includes(q) ||
+      (song.composer && song.composer.toLowerCase().includes(q)) ||
+      (song.tieUp && song.tieUp.toLowerCase().includes(q))
+    );
   },
 
   getSongsByCategory: async (type) => {

@@ -1,4 +1,6 @@
-const express = require('express');
+// No server needed. This project is a static site that loads songs.json directly in the browser.
+
+
 const fs = require('fs');
 const path = require('path');
 const app = express();
@@ -17,25 +19,9 @@ try {
 }
 
 // 🔍 통합 검색 라우터 (번호, 제목, 가수, 한자명, 작곡가, 애니명 완벽 커버)
-app.get('/api/songs/search', (req, res) => {
-  const keyword = req.query.q ? req.query.q.toLowerCase().trim() : '';
-
-  if (!keyword) {
-    return res.json(songs.slice(0, 50)); // 검색어 없을 때 브라우저 과부하 방지용 상위 50개만 반환
-  }
-
-  const filtered = songs.filter(song => {
-    return (
-      song.id.toLowerCase().includes(keyword) ||
-      song.title.toLowerCase().includes(keyword) ||
-      song.artist.toLowerCase().includes(keyword) ||
-      song.artistOrig.toLowerCase().includes(keyword) ||
-      (song.composer && song.composer.toLowerCase().includes(keyword)) || // ★작곡가 검색 조건 추가
-      (song.tieUp && song.tieUp.toLowerCase().includes(keyword))
-    );
-  });
-
-  res.json(filtered);
+// Return all songs (no search, no pagination)
+app.get('/api/songs', (req, res) => {
+  res.json(songs);
 });
 
 app.get('/api/songs/category/:type', (req, res) => {
