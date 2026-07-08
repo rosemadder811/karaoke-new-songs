@@ -196,26 +196,56 @@
   <div class="container">
     <h1>🎶 일본곡 통합 노래방 검색기</h1>
 
-<!-- Search UI removed: displaying all songs -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="곡 번호, 제목, 보컬로이드 캐릭터, 작곡가(프로듀서) 검색...">
+        <button id="searchBtn">검색</button>
+      </div>
 
-<!-- Tabs removed: only full list displayed -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('all')">전체 목록</button>
+        <button class="tab-btn" onclick="switchTab('jpop')">J-POP</button>
+        <button class="tab-btn" onclick="switchTab('animation')">애니메이션</button>
+        <button class="tab-btn" onclick="switchTab('vocaloid')">보컬로이드</button>
+      </div>
 
-    <div id="songList" class="list-container"></div>
-  </div>
+      <div id="songList" class="list-container"></div>
+    </div>
 
-  <script src="api.js"></script>
-  <script>
-    // 페이지 로드 시 전체 곡 리스트를 불러와 표시합니다.
-    document.addEventListener('DOMContentLoaded', async () => {
-      const allSongs = await Api.getAllSongs();
-      Api.renderSongList(allSongs, 'songList');
-    });
+    <script src="api.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const initialSongs = await Api.getAllSongs();
+        Api.renderSongList(initialSongs, 'songList');
 
-    // 즐겨찾기 토글 (필요 시 사용)
-    function toggleFavorite(btn, id) {
-      btn.classList.toggle('active');
-    }
-  </script>
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') handleSearch();
+        });
+        document.getElementById('searchBtn').addEventListener('click', handleSearch);
+      });
+
+      async function handleSearch() {
+        const query = document.getElementById('searchInput').value;
+        const results = await Api.searchSongs(query);
+        Api.renderSongList(results, 'songList');
+      }
+
+      async function switchTab(type) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        let songs = [];
+        if (type === 'all') {
+          songs = await Api.getAllSongs();
+        } else {
+          songs = await Api.getSongsByCategory(type);
+        }
+        Api.renderSongList(songs, 'songList');
+      }
+
+      function toggleFavorite(btn, id) {
+        btn.classList.toggle('active');
+      }
+    </script>
 </body>
 
 </html>

@@ -24,10 +24,10 @@ const Api = {
 
   getSongsByCategory: async (type) => {
     try {
-      const response = await fetch(`/api/songs/category/${type}`);
-      return await response.json();
+      const all = await Api.getAllSongs();
+      return all.filter(song => song.type === type);
     } catch (error) {
-      console.error('카테고리 API 통신 실패:', error);
+      console.error('카테고리 로드 실패:', error);
       return [];
     }
   },
