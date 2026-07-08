@@ -4,442 +4,248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TJ 미디어 일본 애니송 & J-POP 검색기</title>
+  <title>TJ 노래방 통합 일어곡 검색 플랫폼</title>
   <style>
-    /* ════════════════════════════════════════════════════════
-       기본 스타일 & 테마 정의
-       ════════════════════════════════════════════════════════ */
-    :root {
-      --bg-dark: #0f0c1b;
-      --card-bg: rgba(25, 20, 45, 0.65);
-      --text-main: #f1f0fa;
-      --text-muted: #a5a1b8;
-      --accent-purple: #8b5cf6;
-      --accent-pink: #ec4899;
-      --border-color: rgba(255, 255, 255, 0.08);
-
-      /* 카테고리별 고유 색상 */
-      --color-anime: #3b82f6;
-      --color-vocaloid: #10b981;
-      --color-jpop: #f59e0b;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 60px;
-    }
-
-    /* 배경 파티클 캔버스 */
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      pointer-events: none;
+      font-family: 'Malgun Gothic', sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+      color: #334155;
     }
 
     .container {
-      max-width: 1300px;
+      max-width: 750px;
       margin: 0 auto;
-      padding: 20px;
     }
 
-    header {
+    h1 {
       text-align: center;
-      margin: 40px 0 30px;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
+      font-size: 28px;
+      color: #0f172a;
+      margin-bottom: 25px;
       font-weight: 800;
-      background: linear-gradient(135deg, #a78bfa, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
     }
 
-    header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ════════════════════════════════════════════════════════
-       컨트롤러 세션 (검색창, 정렬, 탭)
-       ════════════════════════════════════════════════════════ */
-    .controls-wrapper {
-      background: rgba(20, 15, 35, 0.5);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-
-    .search-box-row {
-      position: relative;
-      margin-bottom: 15px;
-    }
-
-    .search-box-row input {
-      width: 100%;
-      padding: 14px 50px 14px 20px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1.05rem;
-      transition: all 0.3s ease;
-    }
-
-    .search-box-row input:focus {
-      outline: none;
-      border-color: var(--accent-purple);
-      box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .filter-options-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    /* 🚨 탭 버튼 영역 (data-tab 규격 일치화 완료) */
-    .tab-container {
+    .search-box {
       display: flex;
       gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      background: white;
+    }
+
+    .search-box input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .search-box button {
+      padding: 0 24px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 25px;
+      justify-content: center;
     }
 
     .tab-btn {
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid transparent;
-      border-radius: 8px;
-      color: var(--text-muted);
-      font-weight: 600;
+      padding: 10px 20px;
+      background: #e2e8f0;
+      border: none;
+      border-radius: 20px;
       cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .tab-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      font-weight: bold;
+      font-size: 14px;
+      color: #475569;
     }
 
     .tab-btn.active {
-      background: var(--accent-purple);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
+      background: #0f172a;
+      color: white;
     }
 
-    .meta-selectors {
+    .list-container {
       display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .meta-selectors select {
-      padding: 8px 12px;
-      background: rgba(0, 0, 0, 0.4);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .bookmark-toggle-wrap {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-
-    /* 통계치 구역 */
-    .status-counter-bar {
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .status-counter-bar span {
-      color: var(--accent-pink);
-      font-weight: bold;
-    }
-
-    /* ════════════════════════════════════════════════════════
-       곡 카드 그리드 레이아웃
-       ════════════════════════════════════════════════════════ */
-    .songs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .song-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
-    }
-
-    .song-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(139, 92, 246, 0.4);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      background: white;
+      padding: 16px;
+      border-radius: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border-left: 6px solid #cbd5e1;
     }
 
-    .song-id-badge {
-      font-family: monospace;
-      font-size: 1.15rem;
-      font-weight: bold;
-      color: #38bdf8;
+    .song-card.jpop {
+      border-left-color: #3b82f6;
     }
 
-    .btn-bookmark {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.3rem;
-      cursor: pointer;
-      transition: color 0.2s;
+    .song-card.animation {
+      border-left-color: #ef4444;
     }
 
-    .btn-bookmark.active {
-      color: #facc15;
+    .song-card.vocaloid {
+      border-left-color: #10b981;
     }
 
-    .card-body {
-      flex-grow: 1;
-      margin-bottom: 15px;
+    .song-id {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1d4ed8;
+      width: 95px;
+      letter-spacing: -0.5px;
+    }
+
+    .song-info {
+      flex: 1;
+    }
+
+    .song-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .song-title {
-      font-size: 1.1rem;
+      font-size: 16.5px;
       font-weight: 700;
-      color: #fff;
-      margin-bottom: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: #0f172a;
     }
 
-    .song-yomi {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      min-height: 18px;
-    }
-
-    .meta-info-row {
-      display: flex;
-      font-size: 0.85rem;
-      margin-bottom: 4px;
-    }
-
-    .info-label {
-      width: 45px;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-
-    .info-value {
-      color: #e2e0ee;
-    }
-
-    .text-ellipsis {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* 뱃지 스타일링 */
-    .badge-type {
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 3px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-
-    .badge-type.type-animation {
-      background: rgba(59, 130, 246, 0.2);
-      color: var(--color-anime);
-    }
-
-    .badge-type.type-vocaloid {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--color-vocaloid);
-    }
-
-    .badge-type.type-jpop {
-      background: rgba(245, 158, 171, 0.2);
-      color: var(--color-jpop);
-    }
-
-    .badge-subgroup {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      max-width: 140px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    /* 페이지네이션 구역 */
-    .pagination-wrap {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 40px;
-    }
-
-    .page-btn {
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
       border-radius: 6px;
-      color: var(--text-main);
-      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tieup-badge {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .vocaloid-badge {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .song-meta-row {
+      display: flex;
+      gap: 15px;
+      margin-top: 6px;
+      font-size: 13.5px;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+
+    .song-artist {
       font-weight: 500;
     }
 
-    .page-btn.active {
-      background: var(--accent-purple);
-      border-color: transparent;
+    .song-composer {
+      color: #0ea5e9;
+      font-weight: 500;
     }
 
-    .page-btn:hover:not(.active) {
-      background: rgba(255, 255, 255, 0.12);
+    .fav-btn {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #e2e8f0;
     }
 
-    /* 에러 및 빈 검색 결과 피드백 박스 */
-    .empty-state,
-    .fatal-error-box {
-      grid-column: 1 / -1;
+    .fav-btn.active {
+      color: #eab308;
+    }
+
+    .no-result {
       text-align: center;
-      padding: 50px 20px;
-      color: var(--text-muted);
-      border: 1px dashed var(--border-color);
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      color: #64748b;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-  <canvas id="bg-canvas"></canvas>
-
   <div class="container">
-    <header>
-      <h1>TJ 애니송 & J-POP 통합 검색기</h1>
-      <p>데이터 허브 연동 및 레이아웃 자동 방어 시스템 가동 중</p>
-    </header>
+    <h1>🎶 일본곡 통합 노래방 검색기</h1>
 
-    <div class="controls-wrapper">
-      <div class="search-box-row">
-        <input type="text" id="searchInput" placeholder="곡 번호, 제목, 가수, 타이업 작품명으로 자유롭게 검색하세요...">
-        <button class="search-clear" id="searchClear">×</button>
-      </div>
-
-      <div class="filter-options-row">
-        <div class="tab-container">
-          <button class="tab-btn active" data-tab="ALL">전체</button>
-          <button class="tab-btn" data-tab="animation">애니메이션</button>
-          <button class="tab-btn" data-tab="vocaloid">보컬로이드</button>
-          <button class="tab-btn" data-tab="jpop">J-POP</button>
-        </div>
-
-        <div class="meta-selectors">
-          <label class="bookmark-toggle-wrap">
-            <input type="checkbox" id="starOnly"> <span>★ 즐겨찾기만 보기</span>
-          </label>
-          <select id="sortSelect">
-            <option value="default">기본 등록순</option>
-            <option value="id-asc">번호 낮은순</option>
-            <option value="id-desc">번호 높은순</option>
-            <option value="title-asc">제목 오름차순</option>
-            <option value="title-desc">제목 내림차순</option>
-          </select>
-        </div>
-      </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="곡 번호, 제목, 보컬로이드 캐릭터, 작곡가(프로듀서) 검색...">
+      <button id="searchBtn">검색</button>
     </div>
 
-    <div class="status-counter-bar">
-      검색 결과: <span id="resultCount">0</span>곡 / 전체 수록: <span id="totalCount">0</span>곡
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('all')">전체 목록</button>
+      <button class="tab-btn" onclick="switchTab('jpop')">J-POP</button>
+      <button class="tab-btn" onclick="switchTab('animation')">애니메이션</button>
+      <button class="tab-btn" onclick="switchTab('vocaloid')">보컬로이드</button>
     </div>
 
-    <main class="songs-grid" id="songsGrid">
-      <div class="empty-state">데이터베이스를 동기화하는 중입니다...</div>
-    </main>
-
-    <div class="pagination-wrap" id="pagination"></div>
+    <div id="songList" class="list-container"></div>
   </div>
 
+  <script src="api.js"></script>
   <script>
-    // songs.json 로드를 담당하는 미니 프록시 클래스
-    const MusicAPI = {
-      async loadDatabase() {
-        try {
-          const res = await fetch('songs.json');
-          if (!res.ok) return [];
-          return await res.json();
-        } catch (e) {
-          console.error("데이터 로딩 실패:", e);
-          return [];
-        }
+    document.addEventListener('DOMContentLoaded', async () => {
+      const initialSongs = await Api.searchSongs('');
+      Api.renderSongList(initialSongs, 'songList');
+
+      document.getElementById('searchInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSearch();
+      });
+      document.getElementById('searchBtn').addEventListener('click', handleSearch);
+    });
+
+    async function handleSearch() {
+      const query = document.getElementById('searchInput').value;
+      const results = await Api.searchSongs(query);
+      Api.renderSongList(results, 'songList');
+    }
+
+    async function switchTab(type) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      let songs = [];
+      if (type === 'all') {
+        songs = await Api.searchSongs('');
+      } else {
+        songs = await Api.getSongsByCategory(type);
       }
-    };
+      Api.renderSongList(songs, 'songList');
+    }
+
+    function toggleFavorite(btn, id) {
+      btn.classList.toggle('active');
+    }
   </script>
-  <script src="app.js"></script>
 </body>
 
 </html>
